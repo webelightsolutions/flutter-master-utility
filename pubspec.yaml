@@ -1,5 +1,5 @@
 name: master_utility
-description: A new Flutter package project.
+description: A package that enables you to use a comprehensive set of utilities in a single package with customization. It includes features like Size Helper, Navigation Helper, Image Picker Helper, Date Time Helper, Auto Size Text Helper, Toast Helper, Email Dispose, Log Helper, Dialog Helper, Cache Network Image Helper, Validation Helper, Api Helper, and Shared Preference Helper.
 version: 0.0.1
 homepage: https://github.com/webelightsolutions/flutter-master-utility.git
 
