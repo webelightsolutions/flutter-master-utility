@@ -1,7 +1,7 @@
 name: master_utility
 description: A new Flutter package project.
 version: 0.0.1
-homepage: https://gitlab.com/inamh_webelight/master_utility.git
+homepage: https://github.com/webelightsolutions/flutter-master-utility.git
 
 environment:
   sdk: ">=2.16.0 <4.0.0"
