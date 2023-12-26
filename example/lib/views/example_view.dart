@@ -1,8 +1,10 @@
+import 'package:example/views/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:master_utility/master_utility.dart';
 
 class ExampleView extends StatelessWidget {
-  const ExampleView({super.key});
+  final FocusNode focusNode = FocusNode();
+  ExampleView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,12 @@ class ExampleView extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              AppTextField(
+                focusNode: focusNode,
+                label: "TextField to View Done Keyboard",
+                showDoneKeyboard: true, // by default done view is false
+                isNextButton: true,
+              ),
               ElevatedButton(
                 onPressed: () {
                   ToastHelper.showToast(message: "Default Toast");
