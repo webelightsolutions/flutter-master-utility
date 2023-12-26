@@ -29,7 +29,7 @@ A package that enables you to use a comprehensive set of utilities in a single p
 
 ## Done Keyboard View For Android and IOS
 
-    You need to add the below line into FocusNode, which you can manage with Custom Text Filed. You have the option to hide the done keyboard, and you can enable the prevoius and next buttons for focus next filed and prevoius filed. 
+    You need to add the below line into FocusNode, which you can manage with Custom Text Filed. You have the option to hide the done keyboard, and you can enable the previous and next buttons to focus on the next and previous fields.
 
 ----
 
