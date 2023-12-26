@@ -64,7 +64,7 @@ class APIService {
     }
   }
 
-  Future<APIResponse<dynamic>> GetApiResponse(
+  Future<APIResponse<dynamic>> getApiResponse(
     APIRequest request, {
     Function(dynamic)? apiResponse,
   }) async {

@@ -1,6 +1,6 @@
 # Master Utility Package
 
-A package that enables you to use a comprehensive set of utilities in a single package with customization. It includes features like Size Helper, Navigation Helper, Image Picker Helper, Date Time Helper, Auto Size Text Helper, Toast Helper, Email Dispose, Log Helper, Dialog Helper, Cache Network Image Helper, Validation Helper, Api Helper, and Shared Preference Helper.
+A package that enables you to use a comprehensive set of utilities in a single package with customization. It includes features like Done Keyboard View For Android and IOS, Size Helper, Navigation Helper, Image Picker Helper, Date Time Helper, Auto Size Text Helper, Toast Helper, Email Dispose, Log Helper, Dialog Helper, Cache Network Image Helper, Validation Helper, Api Helper, and Shared Preference Helper.
 
 ![](https://i.ibb.co/f427WkD/ezgif-com-video-to-gif-converted.gif)
 
@@ -26,6 +26,38 @@ A package that enables you to use a comprehensive set of utilities in a single p
     Use this as a MaterialApp();
 
 ### This package contains the below points as of now. We can improve and add new points as per requirements in the future
+
+## Done Keyboard View For Android and IOS
+
+    You need to add the below line into FocusNode, which you can manage with Custom Text Filed. You have the option to hide the done keyboard, and you can enable the prevoius and next buttons for focus next filed and prevoius filed. 
+
+----
+
+    focusNode: showDoneKeyboard
+      ? (focusNode..addListener(() {
+            final hasFocus = focusNode.hasFocus;
+            if (hasFocus) {
+            KeyboardOverlay.showOverlay(
+                context: context,
+                isNextButton: isNextButton,
+                isPrevious: isPrevious,
+                isShowButton: (isNextButton || isPrevious),
+                  );
+                } else {
+                  KeyboardOverlay.removeOverlay();
+                }
+              })
+      ): focusNode,
+
+----
+
+    AppTextField(
+        focusNode: focusNode,
+        label: "TextField to View Done Keyboard",
+        showDoneKeyboard: true, // by default done view is false
+    ),
+
+![](https://i.ibb.co/W6CsKK4/Simulator-Screenshot-i-Phone-12-Pro-2023-12-26-at-14-09-03.png)
 
 ## **Navigation helper**
 
