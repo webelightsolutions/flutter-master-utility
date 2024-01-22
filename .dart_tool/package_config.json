@@ -92,14 +92,26 @@
       "languageVersion": "2.19"
     },
     {
-      "name": "dio",
-      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/dio-4.0.6",
+      "name": "device_info_plus",
+      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/device_info_plus-9.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "device_info_plus_platform_interface",
+      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/device_info_plus_platform_interface-7.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
+      "name": "dio",
+      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/dio-5.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "dio_http_formatter",
-      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/dio_http_formatter-2.1.1",
+      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/dio_http_formatter-3.2.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -165,7 +177,7 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///Users/mac-mini-7/FlutterSDK/flutter/packages/flutter",
+      "rootUri": "file:///Users/mac-mini-7/Downloads/flutter_3_13_5/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -231,13 +243,13 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///Users/mac-mini-7/FlutterSDK/flutter/packages/flutter_test",
+      "rootUri": "file:///Users/mac-mini-7/Downloads/flutter_3_13_5/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///Users/mac-mini-7/FlutterSDK/flutter/packages/flutter_web_plugins",
+      "rootUri": "file:///Users/mac-mini-7/Downloads/flutter_3_13_5/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -264,6 +276,24 @@
       "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/http_parser-4.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "image_cropper",
+      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/image_cropper-5.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "image_cropper_for_web",
+      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/image_cropper_for_web-3.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "image_cropper_platform_interface",
+      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/image_cropper_platform_interface-5.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
     },
     {
       "name": "image_picker",
@@ -338,12 +368,6 @@
       "languageVersion": "2.19"
     },
     {
-      "name": "jwt_decoder",
-      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/jwt_decoder-2.0.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "lints",
       "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/lints-2.1.1",
       "packageUri": "lib/",
@@ -351,9 +375,9 @@
     },
     {
       "name": "logger",
-      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/logger-1.4.0",
+      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/logger-2.0.2+1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "macos_ui",
@@ -440,6 +464,36 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "permission_handler",
+      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/permission_handler-11.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "permission_handler_android",
+      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/permission_handler_android-11.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "permission_handler_apple",
+      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/permission_handler_apple-9.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "permission_handler_platform_interface",
+      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/permission_handler_platform_interface-3.12.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "permission_handler_windows",
+      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/permission_handler_windows-0.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "platform",
       "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/platform-3.1.3",
       "packageUri": "lib/",
@@ -501,7 +555,7 @@
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///Users/mac-mini-7/FlutterSDK/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///Users/mac-mini-7/Downloads/flutter_3_13_5/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -602,6 +656,12 @@
       "languageVersion": "3.1"
     },
     {
+      "name": "win32_registry",
+      "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/win32_registry-1.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
       "name": "xdg_directories",
       "rootUri": "file:///Users/mac-mini-7/.pub-cache/hosted/pub.dev/xdg_directories-1.0.3",
       "packageUri": "lib/",
@@ -617,10 +677,10 @@
       "name": "master_utility",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "2.16"
+      "languageVersion": "2.17"
     }
   ],
-  "generated": "2023-12-26T09:22:48.888935Z",
+  "generated": "2024-01-10T11:31:37.591819Z",
   "generator": "pub",
   "generatorVersion": "3.1.2"
 }

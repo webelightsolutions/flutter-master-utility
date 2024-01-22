@@ -40,7 +40,9 @@ class DioClient {
 
   DioClient setConfiguration(String baseUrl) {
     _dio = Dio(BaseOptions(
-      connectTimeout: 30000,
+      connectTimeout: const Duration(
+        milliseconds: 30000,
+      ),
       baseUrl: baseUrl,
       responseType: ResponseType.json,
       contentType: ContentType.json.toString(),

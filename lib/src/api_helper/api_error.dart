@@ -20,29 +20,32 @@ class APIConstError {
 class ErrorHandler {
   static ErrorHandler instance = ErrorHandler();
 
-  String getDioError(DioError error) {
+  String getDioError(DioException error) {
     switch (error.type) {
-      case DioErrorType.cancel:
-        return APIConstError.kCancelled;
-
-      case DioErrorType.connectTimeout:
+      case DioExceptionType.connectionTimeout:
         return APIConstError.kTimeOut;
 
-      case DioErrorType.other:
-        return APIConstError.kNoInternetConnection2;
+      case DioExceptionType.sendTimeout:
+        return APIConstError.kSendTimeOUT;
 
-      case DioErrorType.receiveTimeout:
+      case DioExceptionType.receiveTimeout:
         return APIConstError.kReceiveTimeOut;
 
-      case DioErrorType.response:
+      case DioExceptionType.badCertificate:
+        return APIConstError.kSomethingWentWrong;
+
+      case DioExceptionType.badResponse:
         return APIConstError.kInvalidStatusCode(
           statusCode: error.response?.statusCode ?? 0,
         );
 
-      case DioErrorType.sendTimeout:
-        return APIConstError.kSendTimeOUT;
+      case DioExceptionType.cancel:
+        return APIConstError.kCancelled;
 
-      default:
+      case DioExceptionType.connectionError:
+        return APIConstError.kNoInternetConnection2;
+
+      case DioExceptionType.unknown:
         return APIConstError.kSomethingWentWrong;
     }
   }

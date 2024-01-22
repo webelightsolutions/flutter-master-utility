@@ -82,7 +82,7 @@ class APIService {
       return APIResponse<dynamic>.custom(
         message: APIConstError.kSomethingWentWrong,
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response != null) {
         final APIResponse<dynamic> errorModel;
         if (e.response?.statusCode == 422) {

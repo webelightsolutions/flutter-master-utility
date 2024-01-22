@@ -1,10 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:jwt_decoder/jwt_decoder.dart';
-
 // Project imports:
+import 'package:master_utility/src/jwt_decoder/jwt_decoder.dart';
 import '../master_utility.dart';
 
 class JWTHelper {
