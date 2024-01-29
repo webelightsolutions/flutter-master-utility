@@ -7,3 +7,13 @@
 ## 0.0.2
 
 * Implemented done keyboard view for Android and iOS
+
+## 0.0.3
+
+* Image cropper feature added.
+* Generics Enums for the API status code added.
+* Debounce Timer with milliseconds option added.
+* Read more for long text added.
+* Double-click redundant added.
+* Permission handler with custom type added.
+* Cookie in base response class added.

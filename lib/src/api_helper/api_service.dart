@@ -1,13 +1,9 @@
 // Dart imports:
 import 'dart:io';
 
-// Package imports:
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:master_utility/master_utility.dart';
 import 'package:master_utility/src/api_helper/api_error_model.dart';
-
-// Project imports:
-import 'package:master_utility/src/api_helper/dio_client.dart';
 
 part 'api_error.dart';
 part 'api_helper.dart';
@@ -82,7 +78,7 @@ class APIService {
       return APIResponse<dynamic>.custom(
         message: APIConstError.kSomethingWentWrong,
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response != null) {
         final APIResponse<dynamic> errorModel;
         if (e.response?.statusCode == 422) {

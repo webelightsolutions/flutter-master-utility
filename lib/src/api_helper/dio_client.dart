@@ -38,13 +38,21 @@ class DioClient {
     return _dio!;
   }
 
-  DioClient setConfiguration(String baseUrl) {
-    _dio = Dio(BaseOptions(
-      connectTimeout: 30000,
-      baseUrl: baseUrl,
-      responseType: ResponseType.json,
-      contentType: ContentType.json.toString(),
-    ));
+  DioClient setConfiguration(
+    String baseUrl, {
+    Map<String, dynamic>? headers,
+  }) {
+    _dio = Dio(
+      BaseOptions(
+        connectTimeout: const Duration(
+          milliseconds: 30000,
+        ),
+        baseUrl: baseUrl,
+        responseType: ResponseType.json,
+        contentType: ContentType.json.toString(),
+        headers: headers,
+      ),
+    );
 
     return this;
   }

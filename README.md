@@ -1,6 +1,6 @@
 # Master Utility Package
 
-A package that enables you to use a comprehensive set of utilities in a single package with customization. It includes features like Done Keyboard View For Android and IOS, Size Helper, Navigation Helper, Image Picker Helper, Date Time Helper, Auto Size Text Helper, Toast Helper, Email Dispose, Log Helper, Dialog Helper, Cache Network Image Helper, Validation Helper, Api Helper, and Shared Preference Helper.
+A package that enables you to use a comprehensive set of utilities in a single package with customization. It includes features like Done Keyboard View For Android and IOS, Size Helper, Navigation Helper, Image Picker Helper, Date Time Helper, Auto Size Text Helper, Toast Helper, Email Dispose, Log Helper, Dialog Helper, Cache Network Image Helper, Validation Helper, Api Helper, Shared Preference Helper,image cropper helper, Debounce helper, Read more Text Helper, duble click redundant Helper and Permission handler with custom type Helper.
 
 ![](https://i.ibb.co/f427WkD/ezgif-com-video-to-gif-converted.gif)
 
@@ -330,3 +330,78 @@ For remove single value and clear all from Shared Preference
     await PreferenceServiceHelper().removePrefValue(key: key);
 
     String getValue = await PreferenceServiceHelper().clearAll();
+
+## image cropper Helper
+
+    croppedImage = await ImageCropperHelper.cropImage(imagePath: fileResult.path);
+
+    LogHelper.logInfo("croppedImage result $croppedImage");
+
+![](https://i.ibb.co/Y7Yw0DX/Screenshot-2024-01-10-15-56-08-77-082aea295e0e2b19157fadadca43d2cc.jpg)
+
+## Read more and less more text Helper
+
+    ReadMoreTextHelper(
+        'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
+        trimLines: 2,
+        colorClickableText: Colors.blue,
+        trimMode: TrimMode.Line,
+        trimCollapsedText: 'Show more',
+        trimExpandedText: 'Show less',
+        moreStyle: TextStyle(
+        fontSize: 14, fontWeight: FontWeight.bold),
+    ),
+   
+
+![](https://i.ibb.co/d4MvSgm/Screenshot-2024-01-10-at-4-41-23-PM.png)
+
+![](https://i.ibb.co/Nsj1YCM/Screenshot-2024-01-10-at-4-41-07-PM.png)
+
+## Debounce Timer with milliseconds option Helper
+
+    final debouncer = DebouncerHelper();
+
+    debouncer.run(() {
+        /// add your code here
+    });
+
+## double clicked redundant Helper
+
+    ElevatedButton(
+        onPressed: () {
+            DoubleClickReduntHelper.handleDoubleClick();
+            ToastHelper.showToast(message: "Default Toast");
+        },
+        child: const Text("Show Default Toast"),
+    )
+
+## Permission Handler Helper
+
+     PermissionHandlerService.handlePermissions(
+        type: PermissionType.PHOTO,
+
+        /// You can pass custom Dialog
+        permissionDeniedDialog: () {
+           return showDialog(
+                context: context,
+                builder: (context) {
+                 return const AlertDialog(title: Text("Custom Dialog"));
+                            },
+                        );
+                    },
+            callBack: () async {
+                 final fileResult = await ImagePickerHelper.customMediaPicker(
+                                    pickerActionType: PickerActionType.gallery,
+                                  );
+                LogHelper.logInfo("result $fileResult");
+                if (fileResult != null) {
+                    croppedImage.value =await ImageCropperHelper.cropImage(imagePath: fileResult.path);
+
+                LogHelper.logInfo("croppedImage result $croppedImage");
+                                  }
+                },
+        )
+
+![](https://i.ibb.co/XZ5qt3n/Screenshot-2024-01-10-14-53-01-30-082aea295e0e2b19157fadadca43d2cc.jpg)
+
+![](https://i.ibb.co/0MR0YG3/Record-2024-01-10-15-58-43-ezgif-com-video-to-gif-converter.gif)

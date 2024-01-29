@@ -1,6 +1,10 @@
 part of 'api_service.dart';
 
 class APIResponse<T> {
+  static const String _setCookieKey = "Set-Cookie";
+  static const String _messageKey = "message";
+  static const String _errorKey = "error";
+
   APIResponse({
     required this.hasError,
     this.message,
@@ -18,10 +22,10 @@ class APIResponse<T> {
       hasError = true;
     }
     try {
-      if (response.data['message'] != null) {
-        message = response.data?['message'];
-      } else if (response.data['error'] != null) {
-        message = response.data?['error'];
+      if (response.data[_messageKey] != null) {
+        message = response.data?[_messageKey];
+      } else if (response.data[_errorKey] != null) {
+        message = response.data?[_errorKey];
       } else {
         message = response.statusMessage;
       }
@@ -35,6 +39,13 @@ class APIResponse<T> {
             response.data,
           )
         : null;
+    try {
+      if (response.headers[_setCookieKey] != null) {
+        cookie = response.headers[_setCookieKey]?.first ?? '';
+      }
+    } catch (e) {
+      LogHelper.logError(e, stackTrace: StackTrace.current);
+    }
   }
 
   factory APIResponse.custom({required String message}) {
@@ -45,4 +56,5 @@ class APIResponse<T> {
   String? message;
   int? statusCode;
   dynamic data;
+  String? cookie;
 }
