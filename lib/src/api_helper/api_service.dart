@@ -1,13 +1,9 @@
 // Dart imports:
 import 'dart:io';
 
-// Package imports:
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:master_utility/master_utility.dart';
 import 'package:master_utility/src/api_helper/api_error_model.dart';
-
-// Project imports:
-import 'package:master_utility/src/api_helper/dio_client.dart';
 
 part 'api_error.dart';
 part 'api_helper.dart';
