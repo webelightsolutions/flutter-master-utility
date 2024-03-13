@@ -1,10 +1,7 @@
 // Dart imports:
-
-// Dart imports:
 import 'dart:io';
 
 // Flutter imports:
-import 'package:dio/browser.dart';
 import 'package:flutter/foundation.dart';
 
 // Package imports:
@@ -13,8 +10,6 @@ import 'package:dio_http_formatter/dio_http_formatter.dart';
 
 // Project imports:
 import 'package:master_utility/src/api_helper/interceptor/authorization.dart';
-
-// Flutter imports:
 
 DioClient dioClient = DioClient();
 
@@ -56,9 +51,7 @@ class DioClient {
     _dio = Dio(options);
 
     if (kIsWeb) {
-      BrowserHttpClientAdapter adapter = BrowserHttpClientAdapter();
-      adapter.withCredentials = true;
-      _dio?.httpClientAdapter = adapter;
+      (_dio?.httpClientAdapter as dynamic).withCredentials = true;
     }
 
     return this;
