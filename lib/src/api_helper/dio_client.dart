@@ -4,6 +4,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:dio/browser.dart';
 import 'package:flutter/foundation.dart';
 
 // Package imports:
@@ -42,17 +43,23 @@ class DioClient {
     String baseUrl, {
     Map<String, dynamic>? headers,
   }) {
-    _dio = Dio(
-      BaseOptions(
-        connectTimeout: const Duration(
-          milliseconds: 30000,
-        ),
-        baseUrl: baseUrl,
-        responseType: ResponseType.json,
-        contentType: ContentType.json.toString(),
-        headers: headers,
+    BaseOptions options = BaseOptions(
+      connectTimeout: const Duration(
+        milliseconds: 30000,
       ),
+      baseUrl: baseUrl,
+      responseType: ResponseType.json,
+      contentType: ContentType.json.toString(),
+      headers: headers,
     );
+
+    _dio = Dio(options);
+
+    if (kIsWeb) {
+      BrowserHttpClientAdapter adapter = BrowserHttpClientAdapter();
+      adapter.withCredentials = true;
+      _dio?.httpClientAdapter = adapter;
+    }
 
     return this;
   }
