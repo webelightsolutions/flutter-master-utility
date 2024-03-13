@@ -17,3 +17,7 @@
 * Double-click redundant added.
 * Permission handler with custom type added.
 * Cookie in base response class added.
+
+## 0.0.4
+
+* dio package update

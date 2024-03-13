@@ -1,6 +1,4 @@
 // Dart imports:
-
-// Dart imports:
 import 'dart:io';
 
 // Flutter imports:
@@ -12,8 +10,6 @@ import 'package:dio_http_formatter/dio_http_formatter.dart';
 
 // Project imports:
 import 'package:master_utility/src/api_helper/interceptor/authorization.dart';
-
-// Flutter imports:
 
 DioClient dioClient = DioClient();
 
@@ -42,17 +38,21 @@ class DioClient {
     String baseUrl, {
     Map<String, dynamic>? headers,
   }) {
-    _dio = Dio(
-      BaseOptions(
-        connectTimeout: const Duration(
-          milliseconds: 30000,
-        ),
-        baseUrl: baseUrl,
-        responseType: ResponseType.json,
-        contentType: ContentType.json.toString(),
-        headers: headers,
+    BaseOptions options = BaseOptions(
+      connectTimeout: const Duration(
+        milliseconds: 30000,
       ),
+      baseUrl: baseUrl,
+      responseType: ResponseType.json,
+      contentType: ContentType.json.toString(),
+      headers: headers,
     );
+
+    _dio = Dio(options);
+
+    if (kIsWeb) {
+      (_dio?.httpClientAdapter as dynamic).withCredentials = true;
+    }
 
     return this;
   }
