@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:master_utility/master_utility.dart';
 import 'package:master_utility/src/permission_helper/dialog_button.dart';
@@ -9,8 +8,8 @@ class PermissionDialog {
     DialogHelper.showCustomAlertDialog(
       barrierDismissible: true,
       builder: (BuildContext context, widget) {
-        return WillPopScope(
-          onWillPop: () async => true,
+        return PopScope(
+          onPopInvoked: (didPop) => true,
           child: AlertDialog(
             contentPadding: const EdgeInsets.all(10.0),
             insetPadding: const EdgeInsets.all(30),

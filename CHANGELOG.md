@@ -1,12 +1,9 @@
+## 0.0.5
 
-## 0.0.1
+* all package updated with latest version
 
-* Initial release
-* A package that enables you to use a comprehensive set of utilities in a single package with customization. It includes features like Size Helper, Navigation Helper, Image Picker Helper, Date Time Helper, Auto Size Text Helper, Toast Helper, Email Dispose, Log Helper, Dialog Helper, Cache Network Image Helper, Validation Helper, Api Helper, and Shared Preference Helper.
-
-## 0.0.2
-
-* Implemented done keyboard view for Android and iOS
+## 0.0.4
+* dio package update
 
 ## 0.0.3
 
@@ -18,6 +15,11 @@
 * Permission handler with custom type added.
 * Cookie in base response class added.
 
-## 0.0.4
+## 0.0.2
 
-* dio package update
+* Implemented done keyboard view for Android and iOS
+
+## 0.0.1
+
+* Initial release
+* A package that enables you to use a comprehensive set of utilities in a single package with customization. It includes features like Size Helper, Navigation Helper, Image Picker Helper, Date Time Helper, Auto Size Text Helper, Toast Helper, Email Dispose, Log Helper, Dialog Helper, Cache Network Image Helper, Validation Helper, Api Helper, and Shared Preference Helper.
