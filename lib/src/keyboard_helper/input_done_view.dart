@@ -19,14 +19,19 @@ class InputDoneView extends StatelessWidget {
       child: Align(
         alignment: Alignment.topRight,
         child: Row(
-          mainAxisAlignment: isShowButton ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
+          mainAxisAlignment: isShowButton
+              ? MainAxisAlignment.spaceBetween
+              : MainAxisAlignment.end,
           children: [
             if (isShowButton)
               Row(
                 children: [
                   const SizedBox(width: 15.0),
                   GestureDetector(
-                    onTap: isPrevious ? () => FocusManager.instance.primaryFocus?.previousFocus() : null,
+                    onTap: isPrevious
+                        ? () =>
+                            FocusManager.instance.primaryFocus?.previousFocus()
+                        : null,
                     child: Icon(
                       Icons.keyboard_arrow_up,
                       color: isPrevious ? Colors.black : Colors.grey,
@@ -34,7 +39,9 @@ class InputDoneView extends StatelessWidget {
                   ),
                   const SizedBox(width: 15.0),
                   GestureDetector(
-                    onTap: isNext ? () => FocusManager.instance.primaryFocus?.nextFocus() : null,
+                    onTap: isNext
+                        ? () => FocusManager.instance.primaryFocus?.nextFocus()
+                        : null,
                     child: Icon(
                       Icons.keyboard_arrow_down,
                       color: isNext ? Colors.black : Colors.grey,

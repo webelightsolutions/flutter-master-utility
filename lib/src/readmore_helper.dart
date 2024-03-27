@@ -82,7 +82,7 @@ class ReadMoreTextHelper extends StatefulWidget {
   final TextAlign? textAlign;
   final TextDirection? textDirection;
   final Locale? locale;
-  final double? textScaleFactor;
+  final TextScaler? textScaleFactor;
   final String? semanticsLabel;
   final TextStyle? delimiterStyle;
 
@@ -116,7 +116,7 @@ class ReadMoreTextHelperState extends State<ReadMoreTextHelper> {
         widget.textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start;
     final textDirection = widget.textDirection ?? Directionality.of(context);
     final textScaleFactor =
-        widget.textScaleFactor ?? MediaQuery.textScaleFactorOf(context);
+        widget.textScaleFactor ?? MediaQuery.textScalerOf(context);
     final overflow = defaultTextStyle.overflow;
     final locale = widget.locale ?? Localizations.maybeLocaleOf(context);
 
@@ -175,14 +175,14 @@ class ReadMoreTextHelperState extends State<ReadMoreTextHelper> {
 
         // Layout and measure link
         TextPainter textPainter = TextPainter(
-            text: link,
-            textAlign: textAlign,
-            textDirection: textDirection,
-            textScaleFactor: textScaleFactor,
-            maxLines: widget.trimLines,
-            ellipsis:
-                overflow == TextOverflow.ellipsis ? widget.delimiter : null,
-            locale: locale,);
+          text: link,
+          textAlign: textAlign,
+          textDirection: textDirection,
+          textScaler: textScaleFactor,
+          maxLines: widget.trimLines,
+          ellipsis: overflow == TextOverflow.ellipsis ? widget.delimiter : null,
+          locale: locale,
+        );
         textPainter.layout(minWidth: 0, maxWidth: maxWidth);
         final linkSize = textPainter.size;
 
@@ -217,7 +217,7 @@ class ReadMoreTextHelperState extends State<ReadMoreTextHelper> {
           linkLongerThanLine = true;
         }
 
-        var textSpan;
+        final TextSpan textSpan;
         switch (widget.trimMode) {
           case TrimMode.Length:
             if (widget.trimLength < widget.data.length) {
@@ -291,7 +291,7 @@ class ReadMoreTextHelperState extends State<ReadMoreTextHelper> {
           textDirection: textDirection,
           softWrap: true,
           overflow: TextOverflow.clip,
-          textScaleFactor: textScaleFactor,
+          textScaler: textScaleFactor,
         );
       },
     );

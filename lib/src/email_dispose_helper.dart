@@ -5,9 +5,11 @@ class EmailDisposeHelper {
   static EmailDisposerResModel? _emailDisposerResModel;
 
   /// Email Disposer Checker
-  static Future<EmailDisposerResModel?> emailDisposerChecker({required String email}) async {
+  static Future<EmailDisposerResModel?> emailDisposerChecker(
+      {required String email}) async {
     try {
-      Response _response = await Dio().get("https://disposable.debounce.io/", queryParameters: {"email": email});
+      Response _response = await Dio().get("https://disposable.debounce.io/",
+          queryParameters: {"email": email});
 
       int _responseStatusCode = _response.statusCode ?? 500;
 

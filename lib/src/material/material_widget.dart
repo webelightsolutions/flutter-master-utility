@@ -425,7 +425,8 @@ class MasterUtilityMaterialApp extends StatefulWidget {
     this.onGenerateRoute,
     this.onGenerateInitialRoutes,
     this.onUnknownRoute,
-    List<NavigatorObserver> this.navigatorObservers = const <NavigatorObserver>[],
+    List<NavigatorObserver> this.navigatorObservers =
+        const <NavigatorObserver>[],
     this.title = '',
     this.onGenerateTitle,
     this.color,
@@ -454,7 +455,8 @@ class MasterUtilityMaterialApp extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<MasterUtilityMaterialApp> createState() => _MasterUtilityMaterialAppState();
+  State<MasterUtilityMaterialApp> createState() =>
+      _MasterUtilityMaterialAppState();
 }
 
 class _MasterUtilityMaterialAppState extends State<MasterUtilityMaterialApp> {
