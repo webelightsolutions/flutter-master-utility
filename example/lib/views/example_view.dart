@@ -102,17 +102,17 @@ class ExampleView extends StatelessWidget {
                             ),
                           ),
                           ElevatedButton(
-                            onPressed: () async {
-                              await PreferenceServiceHelper()
-                                  .setStringPrefValue(
-                                      key: "setString", value: "showData");
+                            onPressed: () {
+                              PreferenceServiceHelper()
+                              .setStringPrefValue(
+                                key: "setString", value: "showData");
                             },
                             child: const Text("Set Value in Shared Preference"),
                           ),
                           ElevatedButton(
                             onPressed: () async {
-                              String getValue = await PreferenceServiceHelper()
-                                  .getStringPrefValue(key: "setString");
+                              String getValue = PreferenceServiceHelper()
+                              .getStringPrefValue(key: "setString");
                               LogHelper.logInfo("getValue $getValue");
                             },
                             child: const Text("Get Value in Shared Preference"),

@@ -41,7 +41,8 @@ class APIResponse<T> {
         : null;
     try {
       if (response.headers[_setCookieKey] != null) {
-        cookie = response.headers[_setCookieKey]?.first ?? '';
+        refreshToken = response.headers[_setCookieKey]?.first ?? '';
+        cookies = response.headers[_setCookieKey] ?? [];
       }
     } catch (e) {
       LogHelper.logError(e, stackTrace: StackTrace.current);
@@ -56,5 +57,6 @@ class APIResponse<T> {
   String? message;
   int? statusCode;
   dynamic data;
-  String? cookie;
+  String? refreshToken;
+  List<String>? cookies;
 }
