@@ -14,13 +14,13 @@ class PreferenceServiceHelper {
     required String key,
     required bool value,
   }) async {
-    _prefs?.setBool(key, value);
+    await _prefs?.setBool(key, value);
   }
 
   /// Reads a value from persistent storage, throwing an exception if it's not a bool.
-  Future<bool?> getBoolPrefValue({
+  bool? getBoolPrefValue({
     required String key,
-  }) async {
+  }) {
     return _prefs?.getBool(key);
   }
 
@@ -29,13 +29,13 @@ class PreferenceServiceHelper {
     required String key,
     required String value,
   }) async {
-    _prefs?.setString(key, value);
+    await _prefs?.setString(key, value);
   }
 
   /// Reads a value from persistent storage, throwing an exception if it's not a String.
-  Future<String> getStringPrefValue({
+  String getStringPrefValue({
     required String key,
-  }) async {
+  }) {
     return _prefs?.getString(key) ?? "";
   }
 
@@ -44,14 +44,14 @@ class PreferenceServiceHelper {
     required String key,
     required List<String> value,
   }) async {
-    _prefs?.setStringList(key, value);
+    await _prefs?.setStringList(key, value);
   }
 
   /// Reads a set of string values from persistent storage, throwing an exception if it's not a string set.
-  Future<void> getStringListPrefValue({
+  List<String>? getStringListPrefValue({
     required String key,
-  }) async {
-    _prefs?.getStringList(key);
+  }) {
+    return _prefs?.getStringList(key);
   }
 
   /// Saves an integer [value] to persistent storage in the background.
@@ -59,13 +59,13 @@ class PreferenceServiceHelper {
     required String key,
     required int value,
   }) async {
-    _prefs?.setInt(key, value);
+    await _prefs?.setInt(key, value);
   }
 
   /// Reads a value from persistent storage, throwing an exception if it's not an int.
-  Future<int> getIntPrefValue({
+  int getIntPrefValue({
     required String key,
-  }) async {
+  }) {
     return _prefs?.getInt(key) ?? 0;
   }
 
@@ -76,13 +76,13 @@ class PreferenceServiceHelper {
     required String key,
     required double value,
   }) async {
-    _prefs?.setDouble(key, value);
+    await _prefs?.setDouble(key, value);
   }
 
   /// Reads a value from persistent storage, throwing an exception if it's not a double.
-  Future<double> getDoublePrefValue({
+  double getDoublePrefValue({
     required String key,
-  }) async {
+  }) {
     return _prefs?.getDouble(key) ?? 0.0;
   }
 

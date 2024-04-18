@@ -21,6 +21,8 @@ class AppNetworkImage extends StatelessWidget {
   final Widget Function(BuildContext, ImageProvider<Object>)? imageBuilder;
   final Widget Function(BuildContext, String)? placeholder;
   final BaseCacheManager? cacheManager;
+  final Color? color;
+  final BlendMode? colorBlendMode;
 
   const AppNetworkImage({
     Key? key,
@@ -33,6 +35,8 @@ class AppNetworkImage extends StatelessWidget {
     this.placeholder,
     this.cacheManager,
     required this.url,
+    this.color,
+    this.colorBlendMode,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -40,6 +44,8 @@ class AppNetworkImage extends StatelessWidget {
       imageUrl: url,
       height: height,
       width: width,
+      color: color,
+      colorBlendMode: colorBlendMode,
       imageBuilder: imageBuilder,
       placeholder: placeholder,
       cacheManager: cacheManager,
