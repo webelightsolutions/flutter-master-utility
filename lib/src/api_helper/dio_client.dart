@@ -16,7 +16,13 @@ DioClient dioClient = DioClient();
 class DioClient {
   Dio? _dio;
 
-  Dio getDioClient({bool isAuth = true}) {
+  Dio getDioClient({
+    bool isAuth = true,
+    void Function(
+      DioException dioException,
+      ErrorInterceptorHandler errorInterceptorHandler,
+    )? callback,
+  }) {
     _dio?.interceptors.clear();
 
     final interceptors = <Interceptor>[];
@@ -28,6 +34,10 @@ class DioClient {
     if (_isApiLogVisible) {
       interceptors.add(HttpFormatter());
     }
+
+    interceptors.add(
+      InterceptorsWrapper(onError: callback),
+    );
 
     _dio?.interceptors.addAll(interceptors);
 
