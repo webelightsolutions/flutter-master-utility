@@ -10,6 +10,7 @@ class APIRequest {
     this.queryParams,
     this.header,
     this.paramList,
+    this.onError,
   });
 
   File? file;
@@ -22,4 +23,9 @@ class APIRequest {
   List<dynamic>? paramList;
   Map<String, dynamic>? queryParams;
   Map<String, dynamic>? header;
+
+  void Function(
+    DioException dioException,
+    ErrorInterceptorHandler errorInterceptorHandler,
+  )? onError;
 }

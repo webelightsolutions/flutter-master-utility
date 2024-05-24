@@ -15,7 +15,10 @@ class APIService {
     required APIRequest request,
     FormData? formData,
   }) async {
-    Dio dio = dioClient.getDioClient(isAuth: request.isAuthorization);
+    Dio dio = dioClient.getDioClient(
+      isAuth: request.isAuthorization,
+      callback: request.onError,
+    );
     switch (request.methodType) {
       case MethodType.GET:
         return dio.get(
