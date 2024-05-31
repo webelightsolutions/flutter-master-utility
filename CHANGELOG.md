@@ -1,4 +1,4 @@
-## 0.0.7+1
+## 0.0.8
 
 * Shared preference updated with encryption and decryption.
 
