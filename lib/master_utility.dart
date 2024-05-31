@@ -32,7 +32,6 @@ export 'package:master_utility/src/preference_helper.dart';
 export 'package:master_utility/src/readmore_helper.dart';
 export 'package:master_utility/src/root_device_helper.dart';
 export 'package:master_utility/src/routes/navigator_helper.dart';
-export 'package:master_utility/src/secure_storage_helper.dart';
 export 'package:master_utility/src/size_helper.dart';
 export 'package:master_utility/src/toast_helper.dart';
 export 'package:master_utility/src/validation_helper.dart';
