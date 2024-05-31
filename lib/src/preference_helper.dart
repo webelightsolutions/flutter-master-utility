@@ -126,9 +126,11 @@ class PreferenceHelper {
   }
 
 //!==========HELPER METHODS==========
-  static Future<void> setEncryptedValue({required String key, required String value}) async {
+  static Future<void> setEncryptedValue(
+      {required String key, required String value}) async {
     if (value.isNotEmpty) {
-      await _prefs?.setString("v2" + key, EncryptionHelper.encrypt(value: value, key: _encryptionKey));
+      await _prefs?.setString("v2" + key,
+          EncryptionHelper.encrypt(value: value, key: _encryptionKey));
     }
   }
 

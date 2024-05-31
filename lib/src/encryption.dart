@@ -16,7 +16,8 @@ class EncryptionHelper {
     required String value,
     required String key,
   }) {
-    final decrypted = _getEncrypter(key).decrypt(Encrypted.from64(value), iv: _iv);
+    final decrypted =
+        _getEncrypter(key).decrypt(Encrypted.from64(value), iv: _iv);
     return decrypted;
   }
 
