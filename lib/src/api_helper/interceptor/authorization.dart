@@ -10,10 +10,8 @@ class AuthTokenInterceptor extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    final String accessToken = await PreferenceServiceHelper()
-        .getStringPrefValue(key: HttpHeaders.authorizationHeader);
-
-    //options.headers.addAll({"HttpHeaders.authorizationHeader": accessToken});
+    final String accessToken = PreferenceHelper.getStringPrefValue(
+        key: HttpHeaders.authorizationHeader);
 
     options.headers[HttpHeaders.authorizationHeader] = "Bearer $accessToken";
 
