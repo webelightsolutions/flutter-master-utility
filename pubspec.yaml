@@ -1,6 +1,6 @@
 name: master_utility
 description: All-in-one utility solution with Size, Navigation, Image Picker, Date Time, Auto Size Text, Toast, Email, Log, Dialog, Cache Image, Validation, API and Shared Preferences.
-version: 0.0.5
+version: 0.0.8
 homepage: https://github.com/webelightsolutions/flutter-master-utility.git
 
 environment:
@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   adaptive_dialog: ^2.1.0
   cached_network_image: ^3.3.1
+  encrypt: ^5.0.3
   intl: ^0.19.0
   image_picker: ^1.0.7
   file_picker: ^8.0.0+1

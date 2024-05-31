@@ -1,8 +1,21 @@
+## 0.0.8
+
+* Shared preference updated with encryption and decryption.
+
+## 0.0.7
+
+* Dio Exception interceptor added.
+
+## 0.0.6
+
+* API Helper now supports cookies and a refresh token.
+
 ## 0.0.5
 
 * all package updated with latest version
 
 ## 0.0.4
+
 * dio package update
 
 ## 0.0.3

@@ -1,6 +1,7 @@
 // Package imports:
 import 'package:shared_preferences/shared_preferences.dart';
 
+@Deprecated('Use PreferenceHelper instead')
 class PreferenceServiceHelper {
   static SharedPreferences? _prefs;
 
