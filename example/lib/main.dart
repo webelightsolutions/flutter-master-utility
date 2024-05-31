@@ -4,7 +4,7 @@ import 'package:master_utility/master_utility.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await PreferenceServiceHelper.init();
+  await PreferenceHelper.init(encryptionKey: "encryptionKey");
   runApp(const MyApp());
 }
 

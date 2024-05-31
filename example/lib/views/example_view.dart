@@ -103,24 +103,25 @@ class ExampleView extends StatelessWidget {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              PreferenceServiceHelper()
-                              .setStringPrefValue(
-                                key: "setString", value: "showData");
+                              PreferenceHelper.setStringPrefValue(
+                                  key: "setString", value: "showData");
                             },
                             child: const Text("Set Value in Shared Preference"),
                           ),
                           ElevatedButton(
                             onPressed: () async {
-                              String getValue = PreferenceServiceHelper()
-                              .getStringPrefValue(key: "setString");
+                              String getValue =
+                                  PreferenceHelper.getStringPrefValue(
+                                      key: "setString");
                               LogHelper.logInfo("getValue $getValue");
                             },
                             child: const Text("Get Value in Shared Preference"),
                           ),
                           ElevatedButton(
                             onPressed: () async {
-                              bool isRemoved = await PreferenceServiceHelper()
-                                  .removePrefValue(key: "setString");
+                              bool isRemoved =
+                                  await PreferenceHelper.removePrefValue(
+                                      key: "setString");
                               LogHelper.logInfo("isRemoved $isRemoved");
                             },
                             child:
@@ -213,8 +214,8 @@ class ExampleView extends StatelessWidget {
     return DialogHelper.showCustomAlertDialog(
       barrierDismissible: false,
       builder: (BuildContext context, widget) {
-        return WillPopScope(
-          onWillPop: () async => false,
+        return PopScope(
+          onPopInvoked: (didPop) => false,
           child: AlertDialog(
             title: const Text("Title"),
             content: const Text("content"),

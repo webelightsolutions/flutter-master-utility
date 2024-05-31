@@ -100,12 +100,15 @@ class PreferenceHelper {
     return value;
   }
 
-  static Future<void> setEncryptedValue({required String key, required String value}) async {
-    await _prefs?.setString(key, EncryptionHelper.encrypt(value: value, key: _encryptionKey));
+  static Future<void> setEncryptedValue(
+      {required String key, required String value}) async {
+    await _prefs?.setString(
+        key, EncryptionHelper.encrypt(value: value, key: _encryptionKey));
   }
 
   static String getDecryptedValue({required String key}) {
-    return EncryptionHelper.decrypt(value: _prefs?.getString(key) ?? '', key: _encryptionKey);
+    return EncryptionHelper.decrypt(
+        value: _prefs?.getString(key) ?? '', key: _encryptionKey);
   }
 }
 
