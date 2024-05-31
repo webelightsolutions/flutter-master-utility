@@ -14,58 +14,36 @@ class PreferenceHelper {
     _encryptionKey = encryptionKey;
   }
 
+  //!==========SET METHODS==========
+
+  //!Set Bool
   /// Saves a boolean [value] to persistent storage in the background.
   static Future<void> setBoolPrefValue({
     required String key,
     required bool value,
   }) async {
     await setEncryptedValue(key: key, value: value.toString());
-    // await _prefs?.setBool(key, value);
   }
 
-  /// Reads a value from persistent storage, throwing an exception if it's not a bool.
-  static bool? getBoolPrefValue({
-    required String key,
-  }) {
-    return getDecryptedValue(key: key).toBoolean();
-    // return _prefs?.getBool(key);
-  }
-
+  //! Set String
   /// Saves a string [value] to persistent storage in the background.
   static Future<void> setStringPrefValue({
     required String key,
     required String value,
   }) async {
     await setEncryptedValue(key: key, value: value);
-    // await _prefs?.setString(key, value);
   }
 
-  /// Reads a value from persistent storage, throwing an exception if it's not a String.
-  static String getStringPrefValue({
-    required String key,
-  }) {
-    return getDecryptedValue(key: key);
-    // return _prefs?.getString(key) ?? "";
-  }
-
+  //! Set Int
   /// Saves an integer [value] to persistent storage in the background.
   static Future<void> setIntPrefValue({
     required String key,
     required int value,
   }) async {
     await setEncryptedValue(key: key, value: value.toString());
-    // await _prefs?.setInt(key, value);
   }
 
-  /// Reads a value from persistent storage, throwing an exception if it's not an int.
-  static int? getIntPrefValue({
-    required String key,
-  }) {
-    final value = getDecryptedValue(key: key);
-    return value.isNotEmpty ? int.parse(value) : null;
-    // return _prefs?.getInt(key) ?? 0;
-  }
-
+//! Set Double
   /// Saves a double [value] to persistent storage in the background.
   ///
   /// Android doesn't support storing doubles, so it will be stored as a float.
@@ -77,20 +55,67 @@ class PreferenceHelper {
     // await _prefs?.setDouble(key, value);
   }
 
+  //!==========GET METHODS==========
+
+  //! Get Bool
+  /// Reads a value from persistent storage, throwing an exception if it's not a bool.
+  static bool? getBoolPrefValue({
+    required String key,
+  }) {
+    final String? value = getDecryptedValue(key: key);
+    if ((value?.isNotEmpty ?? false)) {
+      return value?.toBoolean();
+    } else {
+      return null;
+    }
+  }
+
+  //! Get String
+  /// Reads a value from persistent storage, throwing an exception if it's not a String.
+  static String getStringPrefValue({
+    required String key,
+  }) {
+    final String? value = getDecryptedValue(key: key);
+    if ((value?.isNotEmpty ?? false)) {
+      return value ?? '';
+    } else {
+      return '';
+    }
+  }
+
+  //! Get Int
+  /// Reads a value from persistent storage, throwing an exception if it's not an int.
+  static int? getIntPrefValue({
+    required String key,
+  }) {
+    final value = getDecryptedValue(key: key);
+    if (value?.isNotEmpty ?? false) {
+      return int.parse(value ?? '0');
+    } else {
+      return null;
+    }
+  }
+
+  //! Get Double
   /// Reads a value from persistent storage, throwing an exception if it's not a double.
   static double? getDoublePrefValue({
     required String key,
   }) {
     final value = getDecryptedValue(key: key);
-    return value.isNotEmpty ? double.parse(value) : null;
-    // return _prefs?.getDouble(key) ?? 0.0;
+
+    if (value?.isNotEmpty ?? false) {
+      return double.parse(value ?? "0.0");
+    } else {
+      return null;
+    }
   }
 
+  //!==========REMOVE METHODS==========
   /// Removes an entry from persistent storage.
   static Future<bool> removePrefValue({
     required String key,
   }) async {
-    final Future<bool> value = _prefs!.remove(key);
+    final Future<bool> value = _prefs!.remove("v2" + key);
     return value;
   }
 
@@ -100,15 +125,20 @@ class PreferenceHelper {
     return value;
   }
 
-  static Future<void> setEncryptedValue(
-      {required String key, required String value}) async {
-    await _prefs?.setString(
-        key, EncryptionHelper.encrypt(value: value, key: _encryptionKey));
+//!==========HELPER METHODS==========
+  static Future<void> setEncryptedValue({required String key, required String value}) async {
+    if (value.isNotEmpty) {
+      await _prefs?.setString("v2" + key, EncryptionHelper.encrypt(value: value, key: _encryptionKey));
+    }
   }
 
-  static String getDecryptedValue({required String key}) {
-    return EncryptionHelper.decrypt(
-        value: _prefs?.getString(key) ?? '', key: _encryptionKey);
+  static String? getDecryptedValue({required String key}) {
+    final value = _prefs?.getString("v2" + key);
+    if (value?.isNotEmpty ?? false) {
+      return EncryptionHelper.decrypt(value: value ?? '', key: _encryptionKey);
+    } else {
+      return null;
+    }
   }
 }
 

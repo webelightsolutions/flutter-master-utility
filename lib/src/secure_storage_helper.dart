@@ -1,4 +1,4 @@
-//! not in used commented out for now.
+//! Code is commented out as it is not used in the app
 // // Package imports:
 // import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 

@@ -2,7 +2,7 @@ import 'package:encrypt/encrypt.dart';
 
 ///This class provides helper methods for encrypting and decrypting data using the Advanced Encryption Standard (AES) algorithm.
 class EncryptionHelper {
-  static final _iv = IV.fromLength(16);
+  static final _iv = IV.allZerosOfLength(16);
 
   static String encrypt({
     required String value,
@@ -16,8 +16,7 @@ class EncryptionHelper {
     required String value,
     required String key,
   }) {
-    final decrypted =
-        _getEncrypter(key).decrypt(Encrypted.from64(value), iv: _iv);
+    final decrypted = _getEncrypter(key).decrypt(Encrypted.from64(value), iv: _iv);
     return decrypted;
   }
 
