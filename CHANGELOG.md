@@ -1,3 +1,7 @@
+## 0.0.9
+
+* Added `MapEncryption` extension to encrypt map data using RSA and AES encryption.
+
 ## 0.0.8
 
 * Shared preference updated with encryption and decryption.

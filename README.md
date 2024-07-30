@@ -31,7 +31,7 @@ A package that enables you to use a comprehensive set of utilities in a single p
 
     You need to add the below line into FocusNode, which you can manage with Custom Text Filed. You have the option to hide the done keyboard, and you can enable the previous and next buttons to focus on the next and previous fields.
 
-----
+---
 
     focusNode: showDoneKeyboard
       ? (focusNode..addListener(() {
@@ -49,7 +49,7 @@ A package that enables you to use a comprehensive set of utilities in a single p
               })
       ): focusNode,
 
-----
+---
 
     AppTextField(
         focusNode: focusNode,
@@ -91,35 +91,35 @@ A package that enables you to use a comprehensive set of utilities in a single p
 
 ## **Image picker helper**
 
-  > To use In [IOS] add this code in project_directory/ios/Runner/info.plist
+> To use In [IOS] add this code in project_directory/ios/Runner/info.plist
 
-        <key>NSCameraUsageDescription</key>
-        <string>Upload image from camera for screen background</string>
-        <key>NSMicrophoneUsageDescription</key>
-        <string>Post videos to profile</string>
-        <key>NSPhotoLibraryUsageDescription</key>
-        <string>Upload images for screen background</string>
+    `<key>`NSCameraUsageDescription `</key>`
+        `<string>`Upload image from camera for screen background `</string>`
+        `<key>`NSMicrophoneUsageDescription `</key>`
+        `<string>`Post videos to profile `</string>`
+        `<key>`NSPhotoLibraryUsageDescription `</key>`
+        `<string>`Upload images for screen background `</string>`
 
 - Multimedia picker
+
   - Take Photo
   - Photo from Gallery
   - Take a Video
   - Video from Gallery
   - Document
 
-        final result = await ImagePickerHelper.multiMediaPicker();
-
+    final result = await ImagePickerHelper.multiMediaPicker();
 - Custom media picker
 
-        final result =  await ImagePickerHelper.customMediaPicker(      
-            pickerActionType:PickerActionType.camera);
+  final result =  await ImagePickerHelper.customMediaPicker(
+  pickerActionType:PickerActionType.camera);
 
-        use below enum for custom media picker
-        PickerActionType.camera
-        PickerActionType.gallery,
-        PickerActionType.video,
-        PickerActionType.cameraVideo,
-        PickerActionType.document,
+  use below enum for custom media picker
+  PickerActionType.camera
+  PickerActionType.gallery,
+  PickerActionType.video,
+  PickerActionType.cameraVideo,
+  PickerActionType.document,
 
 ![](https://i.ibb.co/pdmbmZT/Screenshot-2023-12-21-18-26-18-22-082aea295e0e2b19157fadadca43d2cc.jpg)
 
@@ -140,7 +140,7 @@ A package that enables you to use a comprehensive set of utilities in a single p
         StrutStyle? strutStyle,
         double? minFontSize,
         double? maxFontSize,
-        List<double>? presetFontSizes,
+        List`<double>`? presetFontSizes,
         AutoSizeGroup? group,
         TextAlign? textAlign,
         TextDirection? textDirection,
@@ -160,11 +160,11 @@ A package that enables you to use a comprehensive set of utilities in a single p
 
     Method : 1
 
-        showToast({required String message})
+    showToast({required String message})
 
     Method : 2
 
-        void showCustomToast({
+    void showCustomToast({
             required String message,
             Color? backgroundColor,
             Color? textColor,
@@ -172,14 +172,14 @@ A package that enables you to use a comprehensive set of utilities in a single p
             ToastGravity? gravity,
         })
 
-![](https://i.ibb.co/fFhtT2b/Screenshot-2023-12-21-18-25-27-04-082aea295e0e2b19157fadadca43d2cc.jpg) 
+![](https://i.ibb.co/fFhtT2b/Screenshot-2023-12-21-18-25-27-04-082aea295e0e2b19157fadadca43d2cc.jpg)
 ![](https://i.ibb.co/ZBJWN4W/Screenshot-2023-12-21-18-25-32-36-082aea295e0e2b19157fadadca43d2cc.jpg)
 
 ## Email Dispose helper
 
     void getEmailDisposeHelper() async {
         final EmailDisposerResModel? result = await EmailDisposeHelper.emailDisposerChecker(email: “fredrik.eilesartsen@yopmail.com”);
-        LogHelper.logInfo(“Is Email Disposable? : ${result?.disposable}“);   
+        LogHelper.logInfo(“Is Email Disposable? : ${result?.disposable}“);
     }
 
 ## Log helper
@@ -198,7 +198,7 @@ A package that enables you to use a comprehensive set of utilities in a single p
 
 Show Action Sheet
 
-    final PickerActionType? actionType = await DialogHelper.showActionSheet<PickerActionType>(
+    final PickerActionType? actionType = await DialogHelper.showActionSheet`<PickerActionType>`(
         actions: const [
             SheetAction(key: PickerActionType.camera, label: AppStrings.camera),
             SheetAction(key: PickerActionType.gallery, label: AppStrings.gallery),
@@ -253,13 +253,13 @@ First of all, you want to add the below line to the main method.
 
 FOR GET API CALL
 
-    Future<void> getApiCall() async {
+    Future`<void>` getApiCall() async {
         final request = APIRequest(
             url: url,
-            methodType: MethodType.GET, 
+            methodType: MethodType.GET,
         );
 
-        final response =
+    final response =
             await APIService().GetApiResponse(request, apiResponse: (dynamic data) {
             return Data.fromJson(data);
         });
@@ -299,37 +299,45 @@ FOR DELETE API CALL
 
 First of all, you want to add the below line to the main method.
 
-    await PreferenceServiceHelper.init();
+**Parameters:**
+
+* `encryptionKey`: A required string parameter used as the key(32 character) for encrypting and decrypting stored data.
+
+  await PreferenceHelper.init(encryptionKey: 'your-encryption-key');
+
+This initialization method must be called before any other methods in the PreferenceHelper class to ensure that the shared preferences instance and encryption key are properly set.
 
 For String SET and GET
 
-    await PreferenceServiceHelper().setStringPrefValue(key: key, value: value);
+    await PreferenceHelper().setStringPrefValue(key: key, value: value);
 
-    String getValue = await PreferenceServiceHelper().getStringPrefValue(key: key);
+    String getValue = await PreferenceHelper().getStringPrefValue(key: key);
 
 For bool SET and GET
 
-    await PreferenceServiceHelper().setBoolPrefValue(key: key, value: value);
+    await PreferenceHelper().setBoolPrefValue(key: key, value: value);
 
-    bool getValue = await PreferenceServiceHelper().getBoolPrefValue(key: key);
+    bool getValue = await PreferenceHelper().getBoolPrefValue(key: key);
 
 For int SET and GET
 
-    await PreferenceServiceHelper().setIntPrefValue(key: key, value: value);
+    await PreferenceHelper().setIntPrefValue(key: key, value: value);
 
-    int getValue = await PreferenceServiceHelper().getIntPrefValue(key: key);
+    int getValue = await PreferenceHelper().getIntPrefValue(key: key);
 
 For double SET and GET
 
-    await PreferenceServiceHelper().setDoublePrefValue(key: key, value: value);
+    await PreferenceHelper().setDoublePrefValue(key: key, value: value);
 
-    double getValue = await PreferenceServiceHelper().getDoublePrefValue(key: key);
+    double getValue = await PreferenceHelper().getDoublePrefValue(key: key);
 
 For remove single value and clear all from Shared Preference
 
-    await PreferenceServiceHelper().removePrefValue(key: key);
+    await PreferenceHelper().removePrefValue(key: key);
 
-    String getValue = await PreferenceServiceHelper().clearAll();
+    String getValue = await PreferenceHelper().clearAll();
+
+**Note** : `Use PreferenceHelper instead of PreferenceServiceHelper`
 
 ## image cropper Helper
 
@@ -351,7 +359,6 @@ For remove single value and clear all from Shared Preference
         moreStyle: TextStyle(
         fontSize: 14, fontWeight: FontWeight.bold),
     ),
-   
 
 ![](https://i.ibb.co/d4MvSgm/Screenshot-2024-01-10-at-4-41-23-PM.png)
 
@@ -377,10 +384,10 @@ For remove single value and clear all from Shared Preference
 
 ## Permission Handler Helper
 
-     PermissionHandlerService.handlePermissions(
+    PermissionHandlerService.handlePermissions(
         type: PermissionType.PHOTO,
 
-        /// You can pass custom Dialog
+    /// You can pass custom Dialog
         permissionDeniedDialog: () {
            return showDialog(
                 context: context,
@@ -397,11 +404,35 @@ For remove single value and clear all from Shared Preference
                 if (fileResult != null) {
                     croppedImage.value =await ImageCropperHelper.cropImage(imagePath: fileResult.path);
 
-                LogHelper.logInfo("croppedImage result $croppedImage");
+    LogHelper.logInfo("croppedImage result $croppedImage");
                                   }
                 },
         )
 
 ![](https://i.ibb.co/XZ5qt3n/Screenshot-2024-01-10-14-53-01-30-082aea295e0e2b19157fadadca43d2cc.jpg)
 
-![](https://i.ibb.co/0MR0YG3/Record-2024-01-10-15-58-43-ezgif-com-video-to-gif-converter.gif)
+![img](https://i.ibb.co/0MR0YG3/Record-2024-01-10-15-58-43-ezgif-com-video-to-gif-converter.gif)
+
+
+## Using the Encryption Extension
+
+This extension provides tools to encrypt map data using RSA and AES encryption algorithms. Below is a quick guide on how to utilize this functionality in your project:
+
+1. **Load the Public Key:**
+   Ensure you load the public key before using the encryption methods. Call `EncryptionService.loadPublicKey()` to load the key from preferences.
+2. **Encrypt Data:**
+   Extend a `Map` object with the `MapEncryption` extension and call the `encrypted()` method to encrypt its contents. This method generates a random secret key and IV, encrypts the map data with AES, and then encrypts the secret key with RSA.
+3. **Access Encrypted Data:**
+   The `encrypted()` method returns a map containing:
+   * `encryptedData`: The AES-encrypted map data in base64 format.
+   * `encryptedKey`: The RSA-encrypted secret key in base64 format.
+   * `iv`: The IV used for AES encryption in base64 format.
+
+Example usage:
+
+> await EncryptionService.loadPublicKey();
+> Map<String, dynamic> myMap = {'key': 'value'};
+> Map<String, dynamic> encryptedMap = myMap.encrypted();
+> print(encryptedMap);
+
+By following these steps, you can securely encrypt your map data using the provided extension.
