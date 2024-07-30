@@ -35,3 +35,4 @@ export 'package:master_utility/src/routes/navigator_helper.dart';
 export 'package:master_utility/src/size_helper.dart';
 export 'package:master_utility/src/toast_helper.dart';
 export 'package:master_utility/src/validation_helper.dart';
+export 'package:master_utility/src/encryption_service.dart';
