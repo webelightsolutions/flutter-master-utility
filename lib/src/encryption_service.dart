@@ -19,9 +19,7 @@ class EncryptionService {
 
   /// Use same key for set and get value **'publicKey'**
   static Future<void> loadPublicKey() async {
-    final _key = PreferenceHelper.getStringPrefValue(key: 'publicKey');
-    assert(_key.isEmpty, 'Public key cannot be empty');
-    publicKey = _key;
+    publicKey = PreferenceHelper.getStringPrefValue(key: 'publicKey');
   }
 
   static String encryptSecretKeyToRSA(String secretKey) {
@@ -53,8 +51,7 @@ extension MapEncryption on Map<dynamic, dynamic> {
       enc.AES(secretKey, mode: enc.AESMode.cbc),
     );
 
-    final encryptedData =
-        encrypter.algo.encrypt(mapToUint8List(), iv: secretIv);
+    final encryptedData = encrypter.algo.encrypt(mapToUint8List(), iv: secretIv);
     final encryptedKey = EncryptionService.encryptSecretKeyToRSA(keyString);
 
     return {
@@ -72,8 +69,7 @@ extension MapEncryption on Map<dynamic, dynamic> {
 
   static String generateRandomStringForLogin(int len) {
     final r = Random();
-    const chars =
-        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
     return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
   }
 }
