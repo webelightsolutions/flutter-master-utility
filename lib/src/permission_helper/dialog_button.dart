@@ -19,11 +19,13 @@ class DialogButton extends StatelessWidget {
       height: 50,
       child: ElevatedButton(
         onPressed: onPressed,
-        style: ButtonStyle(
-            shadowColor: const MaterialStatePropertyAll(Colors.transparent),
-            backgroundColor: MaterialStatePropertyAll(bgColor),
-            shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0)))),
+        style: ElevatedButton.styleFrom(
+          shadowColor: Colors.transparent,
+          backgroundColor: bgColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+        ),
         child: Text(
           title,
           maxLines: 1,
