@@ -1,3 +1,7 @@
+## 0.0.10
+
+* custom formatter added for date.
+
 ## 0.0.9
 
 * Added `MapEncryption` extension to encrypt map data using RSA and AES encryption.
