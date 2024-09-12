@@ -27,6 +27,7 @@ class APIService {
             headers: request.header,
           ),
           queryParameters: request.queryParams,
+          cancelToken: request.cancelToken,
         );
 
       case MethodType.POST:
@@ -35,6 +36,7 @@ class APIService {
           options: Options(headers: request.header),
           data: formData ?? request.paramList ?? request.params,
           queryParameters: request.queryParams,
+          cancelToken: request.cancelToken,
         );
 
       case MethodType.PATCH:
@@ -43,6 +45,7 @@ class APIService {
           options: Options(headers: request.header),
           data: formData ?? request.params,
           queryParameters: request.queryParams,
+          cancelToken: request.cancelToken,
         );
 
       case MethodType.PUT:
@@ -51,6 +54,7 @@ class APIService {
           options: Options(headers: request.header),
           data: formData ?? request.params,
           queryParameters: request.queryParams,
+          cancelToken: request.cancelToken,
         );
 
       case MethodType.DELETE:
@@ -59,6 +63,7 @@ class APIService {
           options: Options(headers: request.header),
           data: formData ?? request.params ?? request.paramList,
           queryParameters: request.queryParams,
+          cancelToken: request.cancelToken,
         );
     }
   }

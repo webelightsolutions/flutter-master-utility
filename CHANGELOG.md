@@ -1,3 +1,7 @@
+## 0.0.11
+
+* Added cancel token functionality for all Dio request types.
+
 ## 0.0.10
 
 * custom formatter added for date.

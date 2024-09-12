@@ -11,6 +11,7 @@ class APIRequest {
     this.header,
     this.paramList,
     this.onError,
+    this.cancelToken,
   });
 
   File? file;
@@ -23,6 +24,7 @@ class APIRequest {
   List<dynamic>? paramList;
   Map<String, dynamic>? queryParams;
   Map<String, dynamic>? header;
+  CancelToken? cancelToken;
 
   void Function(
     DioException dioException,
