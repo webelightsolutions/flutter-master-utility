@@ -27,11 +27,19 @@ class ImageCropperHelper {
     required String imagePath,
     ImageCompressFormat? compressFormat,
     List<PlatformUiSettings>? uiSetting,
+    CropAspectRatio? aspectRatio,
+    int? compressQuality,
+    int? maxHeight,
+    int? maxWidth,
   }) async {
     final croppedFile = await ImageCropper().cropImage(
       sourcePath: imagePath,
       uiSettings: uiSetting,
       compressFormat: compressFormat ?? ImageCompressFormat.jpg,
+      compressQuality: compressQuality ?? 90,
+      aspectRatio: aspectRatio,
+      maxHeight: maxHeight,
+      maxWidth: maxWidth,
     );
 
     return croppedFile != null ? File(croppedFile.path) : null;

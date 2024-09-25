@@ -19,4 +19,14 @@ class JWTHelper {
 
     return isTokenExpired;
   }
+
+  static Map<String, dynamic>? decodeToken(String token) {
+    try {
+      final decodedToken = JwtDecoder.decode(token);
+      return decodedToken;
+    } catch (e) {
+      LogHelper.logError('Failed to decode token $e');
+    }
+    return null;
+  }
 }

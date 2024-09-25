@@ -164,7 +164,8 @@ extension DateTimeExtension on DateTime {
   }
 
   /// DATE TIME CUSTOM FORMATTER
-  String toCustomFormatter({DateTimeFormatter? formatter, String? customFormat}) {
+  String toCustomFormatter(
+      {DateTimeFormatter? formatter, String? customFormat}) {
     switch (formatter) {
       case DateTimeFormatter.DDMMYYYY:
         return DateFormat('dd-MM-yyyy').format(this);
@@ -275,7 +276,7 @@ extension DateTimeExtension on DateTime {
         return DateFormat(hourMinuteSecond).format(this);
 
       default:
-        return DateFormat(customFormat??'yyyy-MM-ddThh:mm:ss').format(this);
+        return DateFormat(customFormat ?? 'yyyy-MM-ddThh:mm:ss').format(this);
     }
   }
 
