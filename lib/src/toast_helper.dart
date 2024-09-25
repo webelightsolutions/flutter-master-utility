@@ -17,7 +17,7 @@ class ToastHelper {
         backgroundColor:
             Theme.of(NavigationService.navigatorKey.currentContext!)
                 .colorScheme
-                .background,
+                .surface,
         textColor: Colors.white,
         fontSize: 14.0,
       );

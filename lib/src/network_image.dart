@@ -111,12 +111,12 @@ class AppNetworkImage extends StatelessWidget {
 
   Widget _buildProgressIndicator(context) {
     return Center(
-      child: Platform.isAndroid
-          ? CircularProgressIndicator(
-              color: Theme.of(context).primaryColor,
-            )
-          : CupertinoActivityIndicator(
-              color: Theme.of(context).primaryColor,
+        child: Platform.isAndroid
+            ? CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              )
+            : CupertinoActivityIndicator(
+                color: Theme.of(context).primaryColor,
               ));
   }
 

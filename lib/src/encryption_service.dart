@@ -51,7 +51,8 @@ extension MapEncryption on Map<dynamic, dynamic> {
       enc.AES(secretKey, mode: enc.AESMode.cbc),
     );
 
-    final encryptedData = encrypter.algo.encrypt(mapToUint8List(), iv: secretIv);
+    final encryptedData =
+        encrypter.algo.encrypt(mapToUint8List(), iv: secretIv);
     final encryptedKey = EncryptionService.encryptSecretKeyToRSA(keyString);
 
     return {
@@ -69,7 +70,8 @@ extension MapEncryption on Map<dynamic, dynamic> {
 
   static String generateRandomStringForLogin(int len) {
     final r = Random();
-    const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    const chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
     return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
   }
 }
