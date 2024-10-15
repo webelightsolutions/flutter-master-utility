@@ -10,6 +10,7 @@ import 'package:dio_http_formatter/dio_http_formatter.dart';
 
 // Project imports:
 import 'package:master_utility/src/api_helper/interceptor/authorization.dart';
+import 'package:master_utility/src/api_helper/interceptor/curl_logger.dart';
 
 DioClient dioClient = DioClient();
 
@@ -33,6 +34,7 @@ class DioClient {
 
     if (_isApiLogVisible) {
       interceptors.add(HttpFormatter());
+      interceptors.add(CurlLoggerDioInterceptor());
     }
 
     interceptors.add(

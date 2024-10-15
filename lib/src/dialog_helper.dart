@@ -42,7 +42,7 @@ class DialogHelper {
       context: _context,
       title: title,
       message: message,
-      onPopInvoked: onWillPop,
+      // onPopInvoked: onWillPop,
       barrierDismissible: barrierDismissible,
       useActionSheetForIOS: useActionSheetForIOS,
       builder: builder,
