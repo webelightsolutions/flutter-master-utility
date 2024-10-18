@@ -1,3 +1,7 @@
+## 0.0.12
+
+* Implemented a feature that compares the device's system time with the current time. If the system time is incorrect, a customizable dialog is displayed to notify the user. The dialog includes a redirection to the time settings for easy adjustment.
+
 ## 0.0.11
 
 * Added cancel token functionality for all Dio request types.

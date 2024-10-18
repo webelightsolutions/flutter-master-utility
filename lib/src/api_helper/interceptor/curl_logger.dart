@@ -10,7 +10,7 @@ class CurlLoggerDioInterceptor extends Interceptor {
   CurlLoggerDioInterceptor({this.printOnSuccess, this.convertFormData = true});
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     _renderCurlRepresentation(err.requestOptions);
 
     return handler.next(err); //continue

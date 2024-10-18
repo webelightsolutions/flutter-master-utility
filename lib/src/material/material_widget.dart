@@ -6,7 +6,7 @@
 import 'package:flutter/material.dart';
 // Project imports:
 import 'package:master_utility/master_utility.dart';
-import 'package:master_utility/src/netwrok_time_helper/%20netwrok_time_helper.dart';
+import 'package:master_utility/src/netwrok_time_helper/netwrok_time_helper.dart';
 
 // ignore: must_be_immutable
 class MasterUtilityMaterialApp extends StatefulWidget {
@@ -474,6 +474,9 @@ class _MasterUtilityMaterialAppState extends State<MasterUtilityMaterialApp>
     LogHelper.logCyan("in material");
     NavigationHelper().setNavigationType(widget.navigationType);
     WidgetsBinding.instance.addObserver(this);
+    if (widget.isTimeSynced) {
+      TimeSyncHelper.listenForTimeChanges(isTimeChangeDialogOpened);
+    }
     super.initState();
   }
 
