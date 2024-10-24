@@ -6,7 +6,6 @@
 import 'package:flutter/material.dart';
 // Project imports:
 import 'package:master_utility/master_utility.dart';
-import 'package:master_utility/src/netwrok_time_helper/netwrok_time_helper.dart';
 
 // ignore: must_be_immutable
 class MasterUtilityMaterialApp extends StatefulWidget {
@@ -410,62 +409,56 @@ class MasterUtilityMaterialApp extends StatefulWidget {
 
   bool isLogVisible;
   bool isApiLogVisible;
-  bool isTimeSynced;
 
   Widget Function(BuildContext, Widget?)? builder;
   NavigationType? navigationType;
 
-  MasterUtilityMaterialApp(
-      {Key? key,
-      this.scaffoldMessengerKey,
-      this.builder,
-      this.navigationType,
-      this.isLogVisible = true,
-      this.home,
-      Map<String, WidgetBuilder> this.routes = const <String, WidgetBuilder>{},
-      this.initialRoute,
-      this.onGenerateRoute,
-      this.onGenerateInitialRoutes,
-      this.onUnknownRoute,
-      List<NavigatorObserver> this.navigatorObservers =
-          const <NavigatorObserver>[],
-      this.title = '',
-      this.onGenerateTitle,
-      this.color,
-      this.theme,
-      this.darkTheme,
-      this.highContrastTheme,
-      this.highContrastDarkTheme,
-      this.themeMode = ThemeMode.system,
-      this.locale,
-      this.localizationsDelegates,
-      this.localeListResolutionCallback,
-      this.localeResolutionCallback,
-      this.supportedLocales = const <Locale>[Locale('en', 'US')],
-      this.debugShowMaterialGrid = false,
-      this.showPerformanceOverlay = false,
-      this.checkerboardRasterCacheImages = false,
-      this.checkerboardOffscreenLayers = false,
-      this.showSemanticsDebugger = false,
-      this.debugShowCheckedModeBanner = false,
-      this.shortcuts,
-      this.actions,
-      this.restorationScopeId,
-      this.scrollBehavior,
-      this.useInheritedMediaQuery = false,
-      this.isApiLogVisible = true,
-      this.isTimeSynced = true})
-      : super(key: key);
+  MasterUtilityMaterialApp({
+    Key? key,
+    this.scaffoldMessengerKey,
+    this.builder,
+    this.navigationType,
+    this.isLogVisible = true,
+    this.home,
+    Map<String, WidgetBuilder> this.routes = const <String, WidgetBuilder>{},
+    this.initialRoute,
+    this.onGenerateRoute,
+    this.onGenerateInitialRoutes,
+    this.onUnknownRoute,
+    List<NavigatorObserver> this.navigatorObservers = const <NavigatorObserver>[],
+    this.title = '',
+    this.onGenerateTitle,
+    this.color,
+    this.theme,
+    this.darkTheme,
+    this.highContrastTheme,
+    this.highContrastDarkTheme,
+    this.themeMode = ThemeMode.system,
+    this.locale,
+    this.localizationsDelegates,
+    this.localeListResolutionCallback,
+    this.localeResolutionCallback,
+    this.supportedLocales = const <Locale>[Locale('en', 'US')],
+    this.debugShowMaterialGrid = false,
+    this.showPerformanceOverlay = false,
+    this.checkerboardRasterCacheImages = false,
+    this.checkerboardOffscreenLayers = false,
+    this.showSemanticsDebugger = false,
+    this.debugShowCheckedModeBanner = false,
+    this.shortcuts,
+    this.actions,
+    this.restorationScopeId,
+    this.scrollBehavior,
+    this.useInheritedMediaQuery = false,
+    this.isApiLogVisible = true,
+  }) : super(key: key);
 
   @override
-  State<MasterUtilityMaterialApp> createState() =>
-      _MasterUtilityMaterialAppState();
+  State<MasterUtilityMaterialApp> createState() => _MasterUtilityMaterialAppState();
 }
 
-class _MasterUtilityMaterialAppState extends State<MasterUtilityMaterialApp>
-    with WidgetsBindingObserver {
-  final ValueNotifier<bool> isTimeChangeDialogOpened =
-      ValueNotifier<bool>(false);
+class _MasterUtilityMaterialAppState extends State<MasterUtilityMaterialApp> {
+  final ValueNotifier<bool> isTimeChangeDialogOpened = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -473,32 +466,7 @@ class _MasterUtilityMaterialAppState extends State<MasterUtilityMaterialApp>
     DioClient.setIsApiLogVisible(isVisible: widget.isApiLogVisible);
     LogHelper.logCyan("in material");
     NavigationHelper().setNavigationType(widget.navigationType);
-    WidgetsBinding.instance.addObserver(this);
-    if (widget.isTimeSynced) {
-      TimeSyncHelper.listenForTimeChanges(isTimeChangeDialogOpened);
-    }
     super.initState();
-  }
-
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    if (widget.isTimeSynced) {
-      if (state == AppLifecycleState.resumed) {
-        TimeSyncHelper.listenForTimeChanges(isTimeChangeDialogOpened);
-      } else if (state == AppLifecycleState.paused) {
-        if (isTimeChangeDialogOpened.value) {
-          NavigationHelper.navigatePop();
-          isTimeChangeDialogOpened.value = false;
-        }
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    // Remove the observer when the widget is disposed
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
   }
 
   @override
