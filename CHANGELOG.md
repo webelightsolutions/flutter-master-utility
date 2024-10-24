@@ -1,3 +1,7 @@
+## 0.0.12
+
+* Added Curl logger interceptor
+
 ## 0.0.11
 
 * Added cancel token functionality for all Dio request types.
