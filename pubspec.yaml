@@ -18,8 +18,8 @@ dependencies:
   file_picker: ^8.1.2
   auto_size_text: ^3.0.0
   fluttertoast: ^8.2.4
-  dio: ^5.4.2
-  dio_http_formatter: ^3.2.1
+  dio: ^5.7.0
+  dio_http_formatter: ^3.3.0
   shared_preferences: ^2.3.2
   flutter_jailbreak_detection: ^1.10.0
   import_sorter: ^4.6.0
