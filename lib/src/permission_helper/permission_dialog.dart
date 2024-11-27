@@ -9,12 +9,11 @@ class PermissionDialog {
       barrierDismissible: true,
       builder: (BuildContext context, widget) {
         return PopScope(
-          onPopInvoked: (didPop) => true,
+          onPopInvokedWithResult: (didPop, result) => true,
           child: AlertDialog(
             contentPadding: const EdgeInsets.all(10.0),
             insetPadding: const EdgeInsets.all(30),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -24,8 +23,7 @@ class PermissionDialog {
                   decoration: BoxDecoration(
                     color: Colors.transparent,
                     border: BorderDirectional(
-                      bottom: BorderSide(
-                          width: 0.6, color: Colors.grey.withOpacity(0.25)),
+                      bottom: BorderSide(width: 0.6, color: Colors.grey.withOpacity(0.25)),
                     ),
                   ),
                   child: Center(
