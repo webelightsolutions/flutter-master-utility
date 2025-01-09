@@ -1,7 +1,7 @@
 // Package imports:
 
 // Package imports:
-import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
+import 'package:jailbreak_root_detection/jailbreak_root_detection.dart';
 
 // Project imports:
 import '../master_utility.dart';
@@ -12,7 +12,7 @@ class RootDeviceHelper {
     bool jailBroken = false;
 
     try {
-      jailBroken = await FlutterJailbreakDetection.jailbroken;
+      jailBroken = await JailbreakRootDetection.instance.isJailBroken;
     } catch (e) {
       jailBroken = true;
     }
