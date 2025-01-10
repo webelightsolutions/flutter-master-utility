@@ -9,7 +9,7 @@ class MixPanelService {
   static String? userId;
   static String? userName;
 
-  static Future<void> init({required String mixPanelToken}) async {
+  Future<void> init({required String mixPanelToken}) async {
     try {
       _mixPanelInstance = await Mixpanel.init(mixPanelToken, trackAutomaticEvents: true);
       _mixPanelInstance.setLoggingEnabled(true);
@@ -18,7 +18,7 @@ class MixPanelService {
     }
   }
 
-  static void setUserIdentity({required String userId, required String userName}) {
+  void setUserIdentity({required String userId, required String userName}) {
     try {
       userId = userId;
       userName = userName;
@@ -30,7 +30,7 @@ class MixPanelService {
     }
   }
 
-  static void trackEvent({required String eventName, Map<String, dynamic>? data}) {
+  void trackEvent({required String eventName, Map<String, dynamic>? data}) {
     try {
       _mixPanelInstance.track(
         eventName,
