@@ -12,6 +12,8 @@ class APIRequest {
     this.paramList,
     this.onError,
     this.cancelToken,
+    this.successMixPanelEventModel,
+    this.errorMixPanelEventModel,
   });
 
   File? file;
@@ -25,6 +27,8 @@ class APIRequest {
   Map<String, dynamic>? queryParams;
   Map<String, dynamic>? header;
   CancelToken? cancelToken;
+  MixPanelEventModel? successMixPanelEventModel;
+  MixPanelEventModel? errorMixPanelEventModel;
 
   void Function(
     DioException dioException,

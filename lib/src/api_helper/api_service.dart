@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:master_utility/master_utility.dart';
 import 'package:master_utility/src/api_helper/api_error_model.dart';
+import 'package:master_utility/src/api_helper/mix_panel_event_model.dart';
+import 'package:master_utility/src/mix_panel_service.dart';
 
 part 'api_error.dart';
 part 'api_helper.dart';
@@ -78,6 +80,14 @@ class APIService {
       );
 
       if (response != null) {
+        if (request.successMixPanelEventModel != null &&
+            MixPanelService.userId != null &&
+            MixPanelService.userName != null) {
+          MixPanelService.trackEvent(
+            eventName: request.successMixPanelEventModel?.eventName ?? request.url,
+            data: request.successMixPanelEventModel?.eventData,
+          );
+        }
         return APIResponse<dynamic>.fromJson(
           response,
           create: apiResponse,
@@ -87,12 +97,19 @@ class APIService {
         message: APIConstError.kSomethingWentWrong,
       );
     } on DioException catch (e) {
+      if (request.errorMixPanelEventModel != null &&
+          MixPanelService.userId != null &&
+          MixPanelService.userName != null) {
+        MixPanelService.trackEvent(
+          eventName: request.errorMixPanelEventModel?.eventName ?? request.url,
+          data: request.errorMixPanelEventModel?.eventData,
+        );
+      }
       if (e.response != null) {
         final APIResponse<dynamic> errorModel;
         if (e.response?.statusCode == 422) {
           if (e.response?.data['detail']?.isNotEmpty ?? false) {
-            ApiErrorModel errorResponse =
-                ApiErrorModel.fromJson(e.response?.data);
+            ApiErrorModel errorResponse = ApiErrorModel.fromJson(e.response?.data);
             String errorMessage = setErrordData(errorResponse.detail);
 
             debugPrint(errorMessage);
