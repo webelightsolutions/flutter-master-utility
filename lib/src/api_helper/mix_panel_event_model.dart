@@ -1,19 +1,24 @@
 class MixPanelEventModel {
   String? eventName;
-  Map<String, dynamic>? eventData;
+  Map<String, dynamic>? successData;
+  Map<String, dynamic>? errorData;
 
-  MixPanelEventModel({this.eventName, this.eventData});
+  MixPanelEventModel({this.eventName, this.successData, this.errorData});
 
   MixPanelEventModel.fromJson(Map<String, dynamic> json) {
     eventName = json['eventName'];
-    eventData = json['eventData'] != null ? Map<String, dynamic>.from(json['eventData']) : null;
+    successData = json['successData'] != null ? Map<String, dynamic>.from(json['successData']) : null;
+    errorData = json['errorData'] != null ? Map<String, dynamic>.from(json['errorData']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['eventName'] = eventName;
-    if (eventData != null) {
-      data['eventData'] = eventData;
+    if (successData != null) {
+      data['successData'] = successData;
+    }
+    if (errorData != null) {
+      data['errorData'] = errorData;
     }
     return data;
   }

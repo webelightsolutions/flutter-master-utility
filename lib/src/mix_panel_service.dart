@@ -19,21 +19,29 @@ class MixPanelService {
   }
 
   static void setUserIdentity({required String userId, required String userName}) {
-    userId = userId;
-    userName = userName;
-    _mixPanelInstance
-      ..identify(userId)
-      ..getPeople().set('name', userName);
+    try {
+      userId = userId;
+      userName = userName;
+      _mixPanelInstance
+        ..identify(userId)
+        ..getPeople().set('name', userName);
+    } catch (e) {
+      LogHelper.logError('Failed to identify: $userId', stackTrace: StackTrace.current);
+    }
   }
 
   static void trackEvent({required String eventName, Map<String, dynamic>? data}) {
-    _mixPanelInstance.track(
-      eventName,
-      properties: {
-        if (userId != null && userId!.isNotEmpty) 'userId': userId,
-        if (userName != null && userName!.isNotEmpty) 'userName': userName,
-        ...data ?? {},
-      },
-    );
+    try {
+      _mixPanelInstance.track(
+        eventName,
+        properties: {
+          if (userId != null && userId!.isNotEmpty) 'userId': userId,
+          if (userName != null && userName!.isNotEmpty) 'userName': userName,
+          ...data ?? {},
+        },
+      );
+    } catch (e) {
+      LogHelper.logError('Failed to track event: $eventName', stackTrace: StackTrace.current);
+    }
   }
 }

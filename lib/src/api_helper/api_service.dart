@@ -80,12 +80,10 @@ class APIService {
       );
 
       if (response != null) {
-        if (request.successMixPanelEventModel != null &&
-            MixPanelService.userId != null &&
-            MixPanelService.userName != null) {
+        if (request.mixPanelEventModel != null && MixPanelService.userId != null && MixPanelService.userName != null) {
           MixPanelService.trackEvent(
-            eventName: request.successMixPanelEventModel?.eventName ?? request.url,
-            data: request.successMixPanelEventModel?.eventData,
+            eventName: request.mixPanelEventModel?.eventName ?? _removeQueryParams(request.url),
+            data: request.mixPanelEventModel?.successData,
           );
         }
         return APIResponse<dynamic>.fromJson(
@@ -97,12 +95,10 @@ class APIService {
         message: APIConstError.kSomethingWentWrong,
       );
     } on DioException catch (e) {
-      if (request.errorMixPanelEventModel != null &&
-          MixPanelService.userId != null &&
-          MixPanelService.userName != null) {
+      if (request.mixPanelEventModel != null && MixPanelService.userId != null && MixPanelService.userName != null) {
         MixPanelService.trackEvent(
-          eventName: request.errorMixPanelEventModel?.eventName ?? request.url,
-          data: request.errorMixPanelEventModel?.eventData,
+          eventName: request.mixPanelEventModel?.eventName ?? _removeQueryParams(request.url),
+          data: request.mixPanelEventModel?.errorData,
         );
       }
       if (e.response != null) {
@@ -190,5 +186,14 @@ class APIService {
     result = result.trim().replaceAll(RegExp(r',\s*$'), '');
 
     return result;
+  }
+
+  String _removeQueryParams(String url) {
+    try {
+      final uri = Uri.parse(url);
+      return uri.path;
+    } catch (e) {
+      return url;
+    }
   }
 }
