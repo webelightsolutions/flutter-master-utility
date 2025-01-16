@@ -86,6 +86,12 @@ class APIService {
             data: request.mixPanelEventModel?.successData,
           );
         }
+        if (request.mixPanelEventModel == null && request.enableMixpanelTracking == true) {
+          MixPanelService.instance.trackEvent(
+            eventName: _removeQueryParams(request.url),
+            data: response.data,
+          );
+        }
         return APIResponse<dynamic>.fromJson(
           response,
           create: apiResponse,
@@ -99,6 +105,12 @@ class APIService {
         MixPanelService.instance.trackEvent(
           eventName: request.mixPanelEventModel?.eventName ?? _removeQueryParams(request.url),
           data: request.mixPanelEventModel?.errorData,
+        );
+      }
+      if (request.mixPanelEventModel == null && request.enableMixpanelTracking == true) {
+        MixPanelService.instance.trackEvent(
+          eventName: _removeQueryParams(request.url),
+          data: e.response?.data,
         );
       }
       if (e.response != null) {
@@ -168,6 +180,11 @@ class APIService {
           data: request.mixPanelEventModel?.errorData,
         );
       }
+      if (request.mixPanelEventModel == null && request.enableMixpanelTracking == true) {
+        MixPanelService.instance.trackEvent(
+          eventName: _removeQueryParams(request.url),
+        );
+      }
       return APIResponse<dynamic>.custom(
         message: APIConstError.kSomethingWentWrong,
       );
@@ -197,7 +214,7 @@ class APIService {
   String _removeQueryParams(String url) {
     try {
       final uri = Uri.parse(url);
-      return uri.path;
+      return uri.path.replaceFirst('/', '').replaceAll('/', '-');
     } catch (e) {
       return url;
     }
