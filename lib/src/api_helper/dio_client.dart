@@ -33,7 +33,8 @@ class DioClient {
     }
 
     if (_isApiLogVisible) {
-      interceptors.add(HttpFormatter(loggingFilter: (request, response, error) => true));
+      interceptors.add(
+          HttpFormatter(loggingFilter: (request, response, error) => true));
       interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
     }
 

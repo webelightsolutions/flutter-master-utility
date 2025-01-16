@@ -8,7 +8,8 @@ import 'package:master_utility/src/network_image.dart';
 
 class DialogHelper {
   DialogHelper._();
-  static final BuildContext _context = NavigationService.navigatorKey.currentContext!;
+  static final BuildContext _context =
+      NavigationService.navigatorKey.currentContext!;
 
   /// SHOW OK DIALOG
   static Future<dynamic> showOkDialog({
@@ -66,7 +67,8 @@ class DialogHelper {
   }
 
   /// IMAGE DIALOG VIEW
-  static Future openImageDialog({required String url, double? height, double? width}) async {
+  static Future openImageDialog(
+      {required String url, double? height, double? width}) async {
     return showDialog(
         context: NavigationService.navigatorKey.currentContext!,
         builder: (BuildContext context) {
