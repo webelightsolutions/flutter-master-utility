@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:master_utility/master_utility.dart';
 import 'package:master_utility/src/api_helper/api_error_model.dart';
-import 'package:master_utility/src/api_helper/mix_panel_event_model.dart';
-import 'package:master_utility/src/mix_panel_service.dart';
 
 part 'api_error.dart';
 part 'api_helper.dart';
