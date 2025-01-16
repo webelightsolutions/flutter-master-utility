@@ -1,6 +1,11 @@
+## 0.0.14
+
+* Replaced discontinued Flutter root detection package.
+* Integrated Mixpanel for API event tracking.
+
 ## 0.0.13
 
-* Added flutter v3.24.5 support 
+* Added flutter v3.24.5 support
 
 ## 0.0.12
 

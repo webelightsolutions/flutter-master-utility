@@ -11,7 +11,8 @@ class MixPanelService {
 
   Future<void> init({required String mixPanelToken}) async {
     try {
-      _mixPanelInstance = await Mixpanel.init(mixPanelToken, trackAutomaticEvents: true);
+      _mixPanelInstance =
+          await Mixpanel.init(mixPanelToken, trackAutomaticEvents: true);
       _mixPanelInstance.setLoggingEnabled(true);
     } catch (e) {
       LogHelper.logError(e, stackTrace: StackTrace.current);
@@ -26,7 +27,8 @@ class MixPanelService {
         ..identify(userId)
         ..getPeople().set('name', userName);
     } catch (e) {
-      LogHelper.logError('Failed to identify: $userId', stackTrace: StackTrace.current);
+      LogHelper.logError('Failed to identify: $userId',
+          stackTrace: StackTrace.current);
     }
   }
 
@@ -41,7 +43,8 @@ class MixPanelService {
         },
       );
     } catch (e) {
-      LogHelper.logError('Failed to track event: $eventName', stackTrace: StackTrace.current);
+      LogHelper.logError('Failed to track event: $eventName',
+          stackTrace: StackTrace.current);
     }
   }
 }

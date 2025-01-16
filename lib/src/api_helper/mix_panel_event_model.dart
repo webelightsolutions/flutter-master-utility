@@ -7,8 +7,12 @@ class MixPanelEventModel {
 
   MixPanelEventModel.fromJson(Map<String, dynamic> json) {
     eventName = json['eventName'];
-    successData = json['successData'] != null ? Map<String, dynamic>.from(json['successData']) : null;
-    errorData = json['errorData'] != null ? Map<String, dynamic>.from(json['errorData']) : null;
+    successData = json['successData'] != null
+        ? Map<String, dynamic>.from(json['successData'])
+        : null;
+    errorData = json['errorData'] != null
+        ? Map<String, dynamic>.from(json['errorData'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
