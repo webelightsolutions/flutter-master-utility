@@ -22,6 +22,9 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
 
+dependency_overrides:
+  macos_ui: 2.1.3
+
 # The following section is specific to Flutter packages.
 flutter:
 
