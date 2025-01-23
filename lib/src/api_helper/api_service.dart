@@ -78,6 +78,20 @@ class APIService {
       );
 
       if (response != null) {
+        if (request.mixPanelEventModel != null) {
+          MixPanelService.instance.trackEvent(
+            eventName: request.mixPanelEventModel?.eventName ??
+                _removeQueryParams(request.url),
+            data: request.mixPanelEventModel?.successData,
+          );
+        }
+        if (request.mixPanelEventModel == null &&
+            request.enableMixpanelTracking == true) {
+          MixPanelService.instance.trackEvent(
+            eventName: _removeQueryParams(request.url),
+            data: response.data,
+          );
+        }
         return APIResponse<dynamic>.fromJson(
           response,
           create: apiResponse,
@@ -87,6 +101,20 @@ class APIService {
         message: APIConstError.kSomethingWentWrong,
       );
     } on DioException catch (e) {
+      if (request.mixPanelEventModel != null) {
+        MixPanelService.instance.trackEvent(
+          eventName: request.mixPanelEventModel?.eventName ??
+              _removeQueryParams(request.url),
+          data: request.mixPanelEventModel?.errorData,
+        );
+      }
+      if (request.mixPanelEventModel == null &&
+          request.enableMixpanelTracking == true) {
+        MixPanelService.instance.trackEvent(
+          eventName: _removeQueryParams(request.url),
+          data: e.response?.data,
+        );
+      }
       if (e.response != null) {
         final APIResponse<dynamic> errorModel;
         if (e.response?.statusCode == 422) {
@@ -149,6 +177,19 @@ class APIService {
         message: ErrorHandler.instance.getDioError(e),
       );
     } catch (e) {
+      if (request.mixPanelEventModel != null) {
+        MixPanelService.instance.trackEvent(
+          eventName: request.mixPanelEventModel?.eventName ??
+              _removeQueryParams(request.url),
+          data: request.mixPanelEventModel?.errorData,
+        );
+      }
+      if (request.mixPanelEventModel == null &&
+          request.enableMixpanelTracking == true) {
+        MixPanelService.instance.trackEvent(
+          eventName: _removeQueryParams(request.url),
+        );
+      }
       return APIResponse<dynamic>.custom(
         message: APIConstError.kSomethingWentWrong,
       );
@@ -173,5 +214,14 @@ class APIService {
     result = result.trim().replaceAll(RegExp(r',\s*$'), '');
 
     return result;
+  }
+
+  String _removeQueryParams(String url) {
+    try {
+      final uri = Uri.parse(url);
+      return uri.path.replaceFirst('/', '').replaceAll('/', '-');
+    } catch (e) {
+      return url;
+    }
   }
 }
