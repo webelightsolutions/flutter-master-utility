@@ -12,7 +12,7 @@ class CurlLoggerDioInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    _renderCurlRepresentation(err.requestOptions, isError: true);
+    _renderCurlRepresentation(err.requestOptions);
 
     return handler.next(err); //continue
   }
@@ -29,7 +29,7 @@ class CurlLoggerDioInterceptor extends Interceptor {
     return handler.next(response); //continue
   }
 
-  void _renderCurlRepresentation(RequestOptions requestOptions, {bool isError = false}) {
+  void _renderCurlRepresentation(RequestOptions requestOptions) {
     try {
       final curlCommand = _generateCurlCommand(requestOptions);
       log(curlCommand);
