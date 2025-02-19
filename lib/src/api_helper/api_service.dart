@@ -1,15 +1,16 @@
 // Dart imports:
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:master_utility/master_utility.dart';
 import 'package:master_utility/src/api_helper/api_error_model.dart';
-import 'package:master_utility/src/api_helper/type_def/type_def.dart';
 
 part 'api_error.dart';
 part 'api_helper.dart';
 part 'api_request.dart';
 part 'api_response.dart';
+part 'api_exception.dart';
 
 class APIService {
   Future<Response<dynamic>> _getResponse({
@@ -221,7 +222,9 @@ class APIService {
 
   // MARK: - New Methods
   //*======================================== New Methods ========================================
-  Future<APIResponse<T>> getResponseWithMapper<T>(
+  // MARK: - New Methods
+  //*======================================== New Methods ========================================
+  Future<Either<ApiException, APIResponse<T>>> getResponseWithMapper<T>(
     APIRequest request, {
     FormData? formData,
 
@@ -252,30 +255,33 @@ class APIService {
         if (response.data is Map<String, dynamic> && jsonMapper != null) {
           final data = await compute(jsonMapper, response.data as Map<String, dynamic>);
 
-          return APIResponse<T>(
-            data: data,
-            statusCode: response.statusCode,
-            message: response.statusMessage,
-            hasError: false,
+          return right(
+            APIResponse<T>(
+              data: data,
+              statusCode: response.statusCode,
+              message: response.statusMessage,
+              hasError: false,
+            ),
           );
         } else if (response.data is List<dynamic> && listJsonMapper != null) {
           final data = await compute(listJsonMapper, response.data as List<dynamic>);
 
-          return APIResponse<T>(
+          return right(APIResponse<T>(
             data: data,
             statusCode: response.statusCode,
             message: response.statusMessage,
             hasError: false,
-          );
+          ));
         }
-        return APIResponse<T>(
+        return right(APIResponse<T>(
           data: response.data,
           statusCode: response.statusCode,
           message: response.statusMessage,
           hasError: false,
-        );
+        ));
       }
-      return APIResponse<T>.custom(message: APIConstError.kSomethingWentWrong);
+
+      return left(ApiException(message: APIConstError.kSomethingWentWrong));
     } on DioException catch (e) {
       if (request.mixPanelEventModel != null) {
         MixPanelService.instance.trackEvent(
@@ -289,8 +295,10 @@ class APIService {
           data: e.response?.data,
         );
       }
+
       if (e.response != null) {
         final APIResponse<T> errorModel;
+
         if (e.response?.statusCode == 422) {
           if (e.response?.data['detail']?.isNotEmpty ?? false) {
             ApiErrorModel errorResponse = ApiErrorModel.fromJson(e.response?.data);
@@ -332,10 +340,24 @@ class APIService {
           errorModel = APIResponse<T>.fromJson(e.response!);
         }
 
-        return errorModel;
+        return left(
+          ApiException(
+            message: errorModel.message ?? '',
+            exception: e,
+            statusCode: e.response?.statusCode,
+            stackTrace: e.stackTrace,
+          ),
+        );
       }
-      return APIResponse<T>.custom(message: ErrorHandler.instance.getDioError(e));
-    } catch (e) {
+      return left(
+        ApiException(
+          message: ErrorHandler.instance.getDioError(e),
+          exception: e,
+          statusCode: e.response?.statusCode,
+          stackTrace: e.stackTrace,
+        ),
+      );
+    } catch (e, stackTrace) {
       if (request.mixPanelEventModel != null) {
         MixPanelService.instance.trackEvent(
           eventName: request.mixPanelEventModel?.eventName ?? _removeQueryParams(request.url),
@@ -345,7 +367,13 @@ class APIService {
       if (request.mixPanelEventModel == null && request.enableMixpanelTracking == true) {
         MixPanelService.instance.trackEvent(eventName: _removeQueryParams(request.url));
       }
-      return APIResponse<T>.custom(message: APIConstError.kSomethingWentWrong);
+      return left(
+        ApiException(
+          message: APIConstError.kSomethingWentWrong,
+          exception: e,
+          stackTrace: stackTrace,
+        ),
+      );
     }
   }
 }

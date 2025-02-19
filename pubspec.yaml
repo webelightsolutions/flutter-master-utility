@@ -1,5 +1,7 @@
 name: master_utility
-description: All-in-one utility solution with Size, Navigation, Image Picker, Date Time, Auto Size Text, Toast, Email, Log, Dialog, Cache Image, Validation, API and Shared Preferences.
+description: All-in-one utility solution with Size, Navigation, Image Picker,
+  Date Time, Auto Size Text, Toast, Email, Log, Dialog, Cache Image, Validation,
+  API and Shared Preferences.
 version: 0.0.14
 homepage: https://github.com/webelightsolutions/flutter-master-utility.git
 
@@ -8,30 +10,31 @@ environment:
   flutter: ">=2.10.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
   adaptive_dialog: ^2.2.1
-  cached_network_image: ^3.4.1
-  encrypt: ^5.0.3
-  intl: ^0.19.0
-  image_picker: ^1.0.7
-  file_picker: ^8.1.2
   auto_size_text: ^3.0.0
-  fluttertoast: ^8.2.4
+  cached_network_image: ^3.4.1
+  dartz: ^0.10.1
+  device_info_plus: ^10.0.1
   dio: ^5.7.0
   dio_http_formatter: ^3.3.0
-  shared_preferences: ^2.3.2
-  import_sorter: ^4.6.0
+  encrypt: ^5.0.3
+  file_picker: ^8.1.2
+  flutter:
+    sdk: flutter
   flutter_cache_manager: ^3.3.1
-  image_picker_platform_interface: ^2.9.4
+  fluttertoast: ^8.2.4
   image_cropper: ^8.0.2
-  permission_handler: ^11.3.0
-  device_info_plus: ^10.0.1
-  pointycastle: ^3.9.1
+  image_picker: ^1.0.7
+  image_picker_platform_interface: ^2.9.4
+  import_sorter: ^4.6.0
+  intl: ^0.19.0
   jailbreak_root_detection: ^1.1.5
   mixpanel_flutter: ^2.3.3
+  permission_handler: ^11.3.0
+  pointycastle: ^3.9.1
+  shared_preferences: ^2.3.2
 
 dev_dependencies:
+  flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
