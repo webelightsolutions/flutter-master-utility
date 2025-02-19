@@ -12,6 +12,36 @@ class APIResponse<T> {
     this.data,
   });
 
+  APIResponse.fromJsonGeneric(Response<dynamic>? response) {
+    if (response!.statusCode! >= 200 && response.statusCode! <= 299) {
+      hasError = false;
+    } else {
+      hasError = true;
+    }
+    try {
+      if (response.data[_messageKey] != null) {
+        message = response.data?[_messageKey];
+      } else if (response.data[_errorKey] != null) {
+        message = response.data?[_errorKey];
+      } else {
+        message = response.statusMessage;
+      }
+    } catch (e) {
+      message = response.statusMessage;
+    }
+
+    statusCode = response.statusCode;
+    data = response.data;
+    try {
+      if (response.headers[_setCookieKey] != null) {
+        refreshToken = response.headers[_setCookieKey]?.first ?? '';
+        cookies = response.headers[_setCookieKey] ?? [];
+      }
+    } catch (e) {
+      LogHelper.logError(e, stackTrace: StackTrace.current);
+    }
+  }
+
   APIResponse.fromJson(
     Response<dynamic>? response, {
     Function(T)? create,
@@ -56,7 +86,7 @@ class APIResponse<T> {
   bool hasError = false;
   String? message;
   int? statusCode;
-  dynamic data;
+  T? data;
   String? refreshToken;
   List<String>? cookies;
 }
