@@ -222,8 +222,6 @@ class APIService {
 
   // MARK: - New Methods
   //*======================================== New Methods ========================================
-  // MARK: - New Methods
-  //*======================================== New Methods ========================================
   Future<Either<ApiException, APIResponse<T>>> getResponseWithMapper<T>(
     APIRequest request, {
     FormData? formData,
