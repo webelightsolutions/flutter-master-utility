@@ -1,3 +1,9 @@
+## 0.0.15
+
+* Added `getResponseWithMapper` method in APIService which take json mapper as param.
+* Improved curl logger code
+* Improved PreferenceHelper code
+
 ## 0.0.14
 
 * Replaced discontinued Flutter root detection package.
