@@ -28,7 +28,7 @@ dependencies:
   permission_handler: ^11.3.0
   device_info_plus: ^10.0.1
   pointycastle: ^3.9.1
-  jailbreak_root_detection: ^1.1.5
+  # jailbreak_root_detection: ^1.1.5
   mixpanel_flutter: ^2.3.3
 
 dev_dependencies:
