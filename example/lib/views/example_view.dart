@@ -36,8 +36,7 @@ class ExampleView extends StatelessWidget {
                           AppTextField(
                             focusNode: focusNode,
                             label: "TextField to View Done Keyboard",
-                            showDoneKeyboard:
-                                true, // by default done view is false
+                            showDoneKeyboard: true, // by default done view is false
                             showExtraHeight: isFocusNode,
                           ),
                           ElevatedButton(
@@ -77,68 +76,53 @@ class ExampleView extends StatelessWidget {
                           ),
                           ElevatedButton(
                             onPressed: () async {
-                              await DialogHelper.showActionSheet<
-                                  PickerActionType>(
+                              await DialogHelper.showActionSheet<PickerActionType>(
                                 actions: const [
-                                  SheetAction(
-                                      key: PickerActionType.camera,
-                                      label: "Camera"),
-                                  SheetAction(
-                                      key: PickerActionType.gallery,
-                                      label: "Galley"),
+                                  SheetAction(key: PickerActionType.camera, label: "Camera"),
+                                  SheetAction(key: PickerActionType.gallery, label: "Galley"),
                                 ],
                               );
                             },
                             child: const Text("Show Action Bottom Sheet"),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 40.0, vertical: 30.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 30.0),
                             child: AppNetworkImage(
                               url:
                                   "https://images.unsplash.com/photo-1500622944204-b135684e99fd?q=80&w=2061&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                              errorWidget: (p0, p1, p2) =>
-                                  const Icon(Icons.error),
+                              errorWidget: (p0, p1, p2) => const Icon(Icons.error),
                             ),
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              PreferenceHelper.setStringPrefValue(
-                                  key: "setString", value: "showData");
+                              PreferenceHelper.setStringPrefValue(key: "setString", value: "showData");
                             },
                             child: const Text("Set Value in Shared Preference"),
                           ),
                           ElevatedButton(
                             onPressed: () async {
-                              String getValue =
-                                  PreferenceHelper.getStringPrefValue(
-                                      key: "setString");
+                              String getValue = PreferenceHelper.getStringPrefValue(key: "setString");
                               LogHelper.logInfo("getValue $getValue");
                             },
                             child: const Text("Get Value in Shared Preference"),
                           ),
                           ElevatedButton(
                             onPressed: () async {
-                              bool isRemoved =
-                                  await PreferenceHelper.removePrefValue(
-                                      key: "setString");
+                              bool isRemoved = await PreferenceHelper.removePrefValue(key: "setString");
                               LogHelper.logInfo("isRemoved $isRemoved");
                             },
-                            child:
-                                const Text("remove Value in Shared Preference"),
+                            child: const Text("remove Value in Shared Preference"),
                           ),
                           ElevatedButton(
                             onPressed: () async {
-                              final fileResult =
-                                  await ImagePickerHelper.multiMediaPicker();
+                              final fileResult = await ImagePickerHelper.multiMediaPicker();
                               LogHelper.logInfo("result $fileResult");
                             },
                             child: const Text("Multimedia Picker"),
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              final time = DateTime.now().toCustomFormatter(
-                                  formatter: DateTimeFormatter.HOUR_MINUTE);
+                              final time = DateTime.now().toCustomFormatter(formatter: DateTimeFormatter.HOUR_MINUTE);
                               LogHelper.logInfo("DateTime $time");
                             },
                             child: const Text("DateTime Extesion"),
@@ -160,19 +144,17 @@ class ExampleView extends StatelessWidget {
                                   );
                                 },
                                 callBack: () async {
-                                  final fileResult =
-                                      await ImagePickerHelper.customMediaPicker(
+                                  final fileResult = await ImagePickerHelper.customMediaPicker(
                                     pickerActionType: PickerActionType.gallery,
                                   );
                                   LogHelper.logInfo("result $fileResult");
                                   if (fileResult != null) {
-                                    croppedImage.value =
-                                        await ImageCropperHelper.cropImage(
-                                      imagePath: fileResult.path,
-                                    );
+                                    // croppedImage.value =
+                                    //     await ImageCropperHelper.cropImage(
+                                    //   imagePath: fileResult.path,
+                                    // );
 
-                                    LogHelper.logInfo(
-                                        "croppedImage result $croppedImage");
+                                    LogHelper.logInfo("croppedImage result $croppedImage");
                                   }
                                 },
                               );
@@ -189,15 +171,13 @@ class ExampleView extends StatelessWidget {
                               trimMode: TrimMode.Line,
                               trimCollapsedText: 'Show more',
                               trimExpandedText: 'Show less',
-                              moreStyle: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
+                              moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                             ),
                           ),
                           const SizedBox(height: 20.0),
                           if (croppedImage.value?.path.isNotEmpty ?? false)
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 40.0, vertical: 30.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 30.0),
                               child: Image.file(croppedImage.value ?? File('')),
                             ),
                           if (isFocusNode.value) const SizedBox(height: 60),

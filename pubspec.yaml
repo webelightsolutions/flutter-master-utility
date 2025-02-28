@@ -24,7 +24,7 @@ dependencies:
   import_sorter: ^4.6.0
   flutter_cache_manager: ^3.3.1
   image_picker_platform_interface: ^2.9.4
-  image_cropper: ^8.0.2
+  # image_cropper: ^8.0.2
   permission_handler: ^11.3.0
   device_info_plus: ^10.0.1
   pointycastle: ^3.9.1
