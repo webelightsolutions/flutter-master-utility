@@ -1,13 +1,11 @@
 // Dart imports:
 import 'dart:io';
 
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-
 // Package imports:
 import 'package:dio/dio.dart';
 import 'package:dio_http_formatter/dio_http_formatter.dart';
-
+// Flutter imports:
+import 'package:flutter/foundation.dart';
 // Project imports:
 import 'package:master_utility/src/api_helper/interceptor/authorization.dart';
 import 'package:master_utility/src/api_helper/interceptor/curl_logger.dart';
@@ -17,6 +15,7 @@ DioClient dioClient = DioClient();
 class DioClient {
   Dio? _dio;
 
+  void Function(DioException, ErrorInterceptorHandler)? globalOnErrorHandler;
   Dio getDioClient({
     bool isAuth = true,
     void Function(
@@ -33,24 +32,25 @@ class DioClient {
     }
 
     if (_isApiLogVisible) {
-      interceptors.add(
-          HttpFormatter(loggingFilter: (request, response, error) => true));
+      interceptors.add(HttpFormatter(loggingFilter: (request, response, error) => true));
       interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
     }
 
-    interceptors.add(
+    interceptors.addAll([
       InterceptorsWrapper(onError: callback),
-    );
+      if (globalOnErrorHandler != null) ...[InterceptorsWrapper(onError: globalOnErrorHandler)],
+    ]);
 
     _dio?.interceptors.addAll(interceptors);
 
     return _dio!;
   }
 
-  DioClient setConfiguration(
-    String baseUrl, {
-    Map<String, dynamic>? headers,
-  }) {
+  DioClient setConfiguration(String baseUrl,
+      {Map<String, dynamic>? headers, void Function(DioException, ErrorInterceptorHandler)? globalOnErrorHandler}) {
+    if (globalOnErrorHandler != null) {
+      this.globalOnErrorHandler = globalOnErrorHandler;
+    }
     BaseOptions options = BaseOptions(
       connectTimeout: const Duration(
         milliseconds: 30000,
