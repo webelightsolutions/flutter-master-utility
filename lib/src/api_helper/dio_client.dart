@@ -8,7 +8,6 @@ import 'package:master_utility/master_utility.dart';
 // Project imports:
 import 'package:master_utility/src/api_helper/interceptor/authorization.dart';
 import 'package:master_utility/src/api_helper/interceptor/curl_logger.dart';
-import 'package:master_utility/src/secure_token_storage_helper.dart';
 
 DioClient dioClient = DioClient();
 
@@ -27,7 +26,8 @@ class DioClient {
 
     final interceptors = <Interceptor>[];
 
-    if (isAuth) {
+    /// This will load access token from [PreferenceHelper]
+    if (_refreshTokenConfiguration == null && isAuth) {
       interceptors.add(AuthTokenInterceptor());
     }
 
@@ -43,7 +43,7 @@ class DioClient {
     if (_refreshTokenConfiguration != null) {
       _dio?.interceptors.add(
         JwtHeroInterceptor(
-          tokenStorage: SecureTokenStorageHelper.getInstance(),
+          tokenStorage: _refreshTokenConfiguration!.tokenStorage,
           baseClient: _dio ?? Dio(),
           onRefresh: (refreshClient, refreshToken) async {
             refreshClient.interceptors.add(HttpFormatter(loggingFilter: (request, response, error) => true));
@@ -58,8 +58,6 @@ class DioClient {
               accessToken: transformedData[_refreshTokenConfiguration!.accessTokenResponseKey],
               refreshToken: transformedData[_refreshTokenConfiguration!.refreshTokenResponseKey],
             );
-
-            await SecureTokenStorageHelper.getInstance().saveToken(token);
             return token;
           },
           sessionManager: _refreshTokenConfiguration!.sessionManager,
@@ -76,10 +74,6 @@ class DioClient {
     required RefreshTokenConfiguration refreshTokenConfiguration,
   }) {
     _refreshTokenConfiguration = refreshTokenConfiguration;
-    SecureTokenStorageHelper.initialize(
-      accessTokenKey: refreshTokenConfiguration.accessTokenStorageKey,
-      refreshTokenKey: refreshTokenConfiguration.refreshTokenStorageKey,
-    );
 
     if (_isApiLogVisible) {
       _dio?.interceptors.add(HttpFormatter(loggingFilter: (request, response, error) => true));
@@ -88,7 +82,7 @@ class DioClient {
 
     _dio?.interceptors.add(
       JwtHeroInterceptor(
-        tokenStorage: SecureTokenStorageHelper.getInstance(),
+        tokenStorage: refreshTokenConfiguration.tokenStorage,
         baseClient: _dio ?? Dio(),
         onRefresh: (refreshClient, refreshToken) async {
           refreshClient.options = refreshClient.options.copyWith(
@@ -100,8 +94,6 @@ class DioClient {
             accessToken: transformedData[refreshTokenConfiguration.accessTokenResponseKey],
             refreshToken: transformedData[refreshTokenConfiguration.refreshTokenResponseKey],
           );
-
-          await SecureTokenStorageHelper.getInstance().saveToken(token);
           return token;
         },
         sessionManager: refreshTokenConfiguration.sessionManager,

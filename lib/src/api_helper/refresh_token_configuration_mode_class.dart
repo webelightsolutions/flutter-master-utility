@@ -1,4 +1,4 @@
-import 'package:jwt_hero/jwt_hero.dart';
+import 'package:master_utility/master_utility.dart';
 
 typedef ResponseMapper = Map<String, dynamic> Function(dynamic responseData);
 
@@ -9,7 +9,7 @@ class RefreshTokenConfiguration {
   final String refreshTokenStorageKey;
   final String accessTokenResponseKey;
   final String refreshTokenResponseKey;
-  final SecureTokenStorage? tokenStorage;
+  final TokenStorage tokenStorage;
   final SessionManager sessionManager;
   final ResponseMapper responseMapper;
 
@@ -17,7 +17,7 @@ class RefreshTokenConfiguration {
     required this.refreshTokenEndPoint,
     required this.sessionManager,
     required this.responseMapper,
-    this.tokenStorage,
+    required this.tokenStorage,
     this.refreshTokenHeaderKey = 'refresh-Token',
     this.accessTokenStorageKey = 'authorization',
     this.refreshTokenStorageKey = 'refreshToken',

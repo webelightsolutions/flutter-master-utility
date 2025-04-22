@@ -4,7 +4,7 @@ version: 0.0.14
 homepage: https://github.com/webelightsolutions/flutter-master-utility.git
 
 environment:
-  sdk: ">=2.17.0 <4.0.0"
+  sdk: ">=3.0.0 <4.0.0"
   flutter: ">=2.10.0"
 
 dependencies:
@@ -29,7 +29,8 @@ dependencies:
   pointycastle: ^3.9.1
   jailbreak_root_detection: ^1.1.5
   mixpanel_flutter: ^2.4.0
-  jwt_hero: ^0.3.4
+  dart_jsonwebtoken: ^2.17.0
+
 
 dev_dependencies:
   flutter_test:
