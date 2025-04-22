@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:master_utility/master_utility.dart';
 
@@ -14,10 +13,7 @@ class ToastHelper {
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        backgroundColor:
-            Theme.of(NavigationService.navigatorKey.currentContext!)
-                .colorScheme
-                .surface,
+        backgroundColor: Theme.of(NavigationService.navigatorKey.currentContext!).colorScheme.surface,
         textColor: Colors.white,
         fontSize: 14.0,
       );
@@ -89,7 +85,7 @@ class ToastHelper {
         msg: message,
         toastLength: toastLength ?? Toast.LENGTH_SHORT,
         gravity: gravity ?? ToastGravity.BOTTOM,
-        backgroundColor: backgroundColor ?? Colors.black.withOpacity(0.7),
+        backgroundColor: backgroundColor ?? Colors.black.withValues(alpha: 0.7),
         textColor: textColor ?? Colors.white,
         fontSize: fontSize ?? 14.0,
       );
