@@ -6,7 +6,7 @@ import 'jwt_token.dart';
 /// This interface is used by the JwtHeroInterceptor
 /// to store and retrieve the Auth token pair.
 /// {@endtemplate}
-abstract interface class TokenStorage {
+abstract class TokenStorage {
   /// Load the Auth token pair.
   Future<JwtToken?> loadToken();
 
