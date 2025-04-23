@@ -112,20 +112,15 @@ class ReadMoreTextHelperState extends State<ReadMoreTextHelper> {
       effectiveTextStyle = defaultTextStyle.style.merge(widget.style);
     }
 
-    final textAlign =
-        widget.textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start;
+    final textAlign = widget.textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start;
     final textDirection = widget.textDirection ?? Directionality.of(context);
-    final textScaleFactor =
-        widget.textScaleFactor ?? MediaQuery.textScalerOf(context);
+    final textScaleFactor = widget.textScaleFactor ?? MediaQuery.textScalerOf(context);
     final overflow = defaultTextStyle.overflow;
     final locale = widget.locale ?? Localizations.maybeLocaleOf(context);
 
-    final colorClickableText =
-        widget.colorClickableText ?? Theme.of(context).colorScheme.secondary;
-    final _defaultLessStyle = widget.lessStyle ??
-        effectiveTextStyle?.copyWith(color: colorClickableText);
-    final _defaultMoreStyle = widget.moreStyle ??
-        effectiveTextStyle?.copyWith(color: colorClickableText);
+    final colorClickableText = widget.colorClickableText ?? Theme.of(context).colorScheme.secondary;
+    final _defaultLessStyle = widget.lessStyle ?? effectiveTextStyle?.copyWith(color: colorClickableText);
+    final _defaultMoreStyle = widget.moreStyle ?? effectiveTextStyle?.copyWith(color: colorClickableText);
     final _defaultDelimiterStyle = widget.delimiterStyle ?? effectiveTextStyle;
 
     TextSpan link = TextSpan(
@@ -203,9 +198,7 @@ class ReadMoreTextHelperState extends State<ReadMoreTextHelper> {
         if (linkSize.width < maxWidth) {
           final readMoreSize = linkSize.width + delimiterSize.width;
           final pos = textPainter.getPositionForOffset(Offset(
-            textDirection == TextDirection.rtl
-                ? readMoreSize
-                : textSize.width - readMoreSize,
+            textDirection == TextDirection.rtl ? readMoreSize : textSize.width - readMoreSize,
             textSize.height,
           ));
           endIndex = textPainter.getOffsetBefore(pos.offset) ?? 0;
@@ -222,9 +215,7 @@ class ReadMoreTextHelperState extends State<ReadMoreTextHelper> {
           case TrimMode.Length:
             if (widget.trimLength < widget.data.length) {
               textSpan = _buildData(
-                data: _readMore
-                    ? widget.data.substring(0, widget.trimLength)
-                    : widget.data,
+                data: _readMore ? widget.data.substring(0, widget.trimLength) : widget.data,
                 textStyle: effectiveTextStyle,
                 linkTextStyle: effectiveTextStyle?.copyWith(
                   decoration: TextDecoration.underline,
@@ -250,8 +241,7 @@ class ReadMoreTextHelperState extends State<ReadMoreTextHelper> {
             if (textPainter.didExceedMaxLines) {
               textSpan = _buildData(
                 data: _readMore
-                    ? widget.data.substring(0, endIndex) +
-                        (linkLongerThanLine ? _kLineSeparator : '')
+                    ? widget.data.substring(0, endIndex) + (linkLongerThanLine ? _kLineSeparator : '')
                     : widget.data,
                 textStyle: effectiveTextStyle,
                 linkTextStyle: effectiveTextStyle?.copyWith(
@@ -274,9 +264,6 @@ class ReadMoreTextHelperState extends State<ReadMoreTextHelper> {
               );
             }
             break;
-          default:
-            throw Exception(
-                'TrimMode type: ${widget.trimMode} is not supported');
         }
 
         return Text.rich(
