@@ -1,3 +1,10 @@
+#
+
+## 0.0.15
+
+* Removed Image Cropper
+* Added JWT Refresh Token Interceptor
+
 ## 0.0.14
 
 * Replaced discontinued Flutter root detection package.
