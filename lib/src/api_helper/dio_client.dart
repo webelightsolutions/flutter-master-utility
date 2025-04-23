@@ -41,28 +41,7 @@ class DioClient {
     );
 
     if (_refreshTokenConfiguration != null) {
-      _dio?.interceptors.add(
-        JwtHeroInterceptor(
-          tokenStorage: _refreshTokenConfiguration!.tokenStorage,
-          baseClient: _dio ?? Dio(),
-          onRefresh: (refreshClient, refreshToken) async {
-            refreshClient.interceptors.add(HttpFormatter(loggingFilter: (request, response, error) => true));
-            refreshClient.interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
-            refreshClient.options = refreshClient.options.copyWith(
-              headers: {_refreshTokenConfiguration!.refreshTokenHeaderKey: 'Bearer $refreshToken'},
-            );
-            final response = await refreshClient.post(_refreshTokenConfiguration!.refreshTokenEndPoint);
-            LogHelper.logInfo('Response : ${response.data}');
-            final transformedData = _refreshTokenConfiguration!.mapResponse(response.data);
-            final token = JwtToken(
-              accessToken: transformedData[_refreshTokenConfiguration!.accessTokenResponseKey],
-              refreshToken: transformedData[_refreshTokenConfiguration!.refreshTokenResponseKey],
-            );
-            return token;
-          },
-          sessionManager: _refreshTokenConfiguration!.sessionManager,
-        ),
-      );
+      _addJWTInterceptor(_refreshTokenConfiguration!);
     }
 
     _dio?.interceptors.addAll(interceptors);
@@ -74,33 +53,24 @@ class DioClient {
     required RefreshTokenConfiguration refreshTokenConfiguration,
   }) {
     _refreshTokenConfiguration = refreshTokenConfiguration;
+    _addJWTInterceptor(refreshTokenConfiguration);
+    return this;
+  }
 
-    if (_isApiLogVisible) {
-      _dio?.interceptors.add(HttpFormatter(loggingFilter: (request, response, error) => true));
-      _dio?.interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
-    }
-
+  void _addJWTInterceptor(RefreshTokenConfiguration config) {
     _dio?.interceptors.add(
       JwtHeroInterceptor(
-        tokenStorage: refreshTokenConfiguration.tokenStorage,
+        tokenStorage: config.tokenStorage,
         baseClient: _dio ?? Dio(),
         onRefresh: (refreshClient, refreshToken) async {
-          refreshClient.options = refreshClient.options.copyWith(
-            headers: {refreshTokenConfiguration.refreshTokenHeaderKey: refreshToken},
-          );
-          final response = await refreshClient.post(refreshTokenConfiguration.refreshTokenEndPoint);
-          final transformedData = refreshTokenConfiguration.mapResponse(response.data);
-          final token = JwtToken(
-            accessToken: transformedData[refreshTokenConfiguration.accessTokenResponseKey],
-            refreshToken: transformedData[refreshTokenConfiguration.refreshTokenResponseKey],
-          );
+          refreshClient.options = refreshClient.options.copyWith(headers: {config.refreshTokenHeaderKey: refreshToken});
+          final response = await refreshClient.post(config.refreshTokenEndPoint);
+          final token = config.responseMapper(response.data);
           return token;
         },
-        sessionManager: refreshTokenConfiguration.sessionManager,
+        sessionManager: config.sessionManager,
       ),
     );
-
-    return this;
   }
 
   DioClient setConfiguration(

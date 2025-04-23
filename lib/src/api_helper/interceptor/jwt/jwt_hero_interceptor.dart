@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 import 'jwt_refresher_mixin.dart';
@@ -163,7 +165,7 @@ class JwtHeroInterceptor extends QueuedInterceptor with JwtRefresherMixin, Reque
   Future<Map<String, String>> _buildHeaders() async {
     final jwtToken = await tokenStorage.loadToken();
 
-    return {'Authorization': 'Bearer ${jwtToken!.accessToken}'};
+    return {HttpHeaders.authorizationHeader: 'Bearer ${jwtToken!.accessToken}'};
   }
 
   /// Checks if the response should be refreshed.
