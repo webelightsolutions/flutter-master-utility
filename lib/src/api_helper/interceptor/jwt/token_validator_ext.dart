@@ -10,7 +10,8 @@ extension TokenValidatorExt on JwtToken {
     final decodedJwt = JWT.decode(accessToken);
 
     /// Get the expiration time from the decoded JWT.
-    final expirationTimeEpoch = (decodedJwt.payload as Map<String, dynamic>)['exp'];
+    final expirationTimeEpoch =
+        (decodedJwt.payload as Map<String, dynamic>)['exp'];
 
     /// Convert the expiration time to a [DateTime] object.
     final expirationDateTime = DateTime.fromMillisecondsSinceEpoch(

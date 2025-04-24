@@ -19,7 +19,8 @@ enum SessionStatus {
 /// {@endtemplate}
 class SessionManager {
   /// The stream controller to manage the session status.
-  final _sessionController = StreamController<SessionStatus>.broadcast()..add(SessionStatus.active);
+  final _sessionController = StreamController<SessionStatus>.broadcast()
+    ..add(SessionStatus.active);
 
   /// The stream to listen to the session status.
   Stream<SessionStatus> get sessionStatus => _sessionController.stream;
