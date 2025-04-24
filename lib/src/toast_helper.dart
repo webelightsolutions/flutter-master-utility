@@ -13,7 +13,10 @@ class ToastHelper {
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        backgroundColor: Theme.of(NavigationService.navigatorKey.currentContext!).colorScheme.surface,
+        backgroundColor:
+            Theme.of(NavigationService.navigatorKey.currentContext!)
+                .colorScheme
+                .surface,
         textColor: Colors.white,
         fontSize: 14.0,
       );
