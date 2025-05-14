@@ -436,3 +436,83 @@ Example usage:
 > print(encryptedMap);
 
 By following these steps, you can securely encrypt your map data using the provided extension.
+
+# API Service Documentation
+
+## Overview
+This document provides details on the `getResponseWithMapper` function, which is responsible for handling API requests and responses efficiently using the `Dio` package in Flutter. It also includes examples of how to fetch user data using this API service.
+
+## `getResponseWithMapper<T>`
+
+### Description
+The `getResponseWithMapper` function handles API requests and responses while supporting JSON mapping for both objects and lists.
+
+### Function Signature
+```dart
+Future<Either<ApiException, APIResponse<T>>> getResponseWithMapper<T>(
+    APIRequest request, {
+    FormData? formData,
+    final JsonMapper<T>? jsonMapper,
+    final ListJsonMapper<T>? listJsonMapper,
+  })
+```
+
+### Parameters
+- `request`: The API request containing the endpoint URL, method type, and other configurations.
+- `formData` (optional): Form data for requests requiring file uploads.
+- `jsonMapper` (optional): A function that maps a JSON object to a model class.
+- `listJsonMapper` (optional): A function that maps a JSON array to a list of model objects.
+
+### Behavior
+- Ensures that only one of `jsonMapper` or `listJsonMapper` is provided.
+- Maps response data to the corresponding model if a mapper function is provided.
+- Handles Dio errors (`DioException`) and general exceptions.
+
+### Error Handling
+- If an API error occurs (e.g., 422, 500), an `APIResponse` object is created from the error response.
+- If a `DioException` is thrown, a detailed `ApiException` is returned.
+- If an unknown error occurs, a generic error message is returned.
+
+### Example Usage
+#### Fetching a List of Users
+```dart
+Future<void> getUsers() async {
+  final request = APIRequest(
+    url: '/users',
+    methodType: MethodType.GET,
+  );
+  final response = await APIService().getResponseWithMapper<List<UserModel>>(
+    request,
+    listJsonMapper: UserModel.fromList,
+  );
+  response.fold(
+    (l) => //Exception
+    (r) => //List<UserModel>
+  );
+}
+```
+
+#### Fetching a Single User
+```dart
+Future<void> getUser1() async {
+  final request = APIRequest(
+    url: '/users/1',
+    methodType: MethodType.GET,
+  );
+  final response = await APIService().getResponseWithMapper<UserModel>(
+    request,
+    jsonMapper: UserModel.fromJson,
+  );
+  response.fold(
+    (l) => //Exception,
+    (r) => //UserModel,
+  );
+}
+```
+
+## Notes
+- Always ensure that either `jsonMapper` or `listJsonMapper` is passed, but not both.
+- The function is designed to handle different API response types efficiently.
+- Proper error handling is included for a seamless user experience.
+
+This function provides a robust and scalable approach to handling API calls in a Flutter application.
