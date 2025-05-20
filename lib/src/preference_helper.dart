@@ -5,12 +5,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 ///This class provides helper methods to access and store data in the device's shared preferences storage. The data is encrypted before storing it in the shared preferences
 class PreferenceHelper {
   PreferenceHelper._();
-  static SharedPreferences? _prefs;
+  static SharedPreferences? _preferenceInstance;
   static String _encryptionKey = '';
+
+  static SharedPreferences get _preference {
+    assert(_preferenceInstance != null, "PreferenceHelper.init() must be call before accessing PreferenceHelper.");
+    return _preferenceInstance!;
+  }
 
   /// Loads and parses the [SharedPreferences] for this app from disk.
   static Future<void> init({required String encryptionKey}) async {
-    _prefs = await SharedPreferences.getInstance();
+    _preferenceInstance = await SharedPreferences.getInstance();
     _encryptionKey = encryptionKey;
   }
 
@@ -115,27 +120,25 @@ class PreferenceHelper {
   static Future<bool> removePrefValue({
     required String key,
   }) async {
-    final Future<bool> value = _prefs!.remove("v2" + key);
+    final Future<bool> value = _preference.remove("v2" + key);
     return value;
   }
 
   /// Completes with true once the user preferences for the app has been cleared.
   static Future<bool> clearAll() async {
-    final Future<bool> value = _prefs!.clear();
+    final Future<bool> value = _preference.clear();
     return value;
   }
 
 //!==========HELPER METHODS==========
-  static Future<void> setEncryptedValue(
-      {required String key, required String value}) async {
+  static Future<void> setEncryptedValue({required String key, required String value}) async {
     if (value.isNotEmpty) {
-      await _prefs?.setString("v2" + key,
-          EncryptionHelper.encrypt(value: value, key: _encryptionKey));
+      await _preference.setString("v2" + key, EncryptionHelper.encrypt(value: value, key: _encryptionKey));
     }
   }
 
   static String? getDecryptedValue({required String key}) {
-    final value = _prefs?.getString("v2" + key);
+    final value = _preference.getString("v2" + key);
     if (value?.isNotEmpty ?? false) {
       return EncryptionHelper.decrypt(value: value ?? '', key: _encryptionKey);
     } else {
