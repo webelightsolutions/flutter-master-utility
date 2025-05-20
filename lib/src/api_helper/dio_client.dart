@@ -32,8 +32,7 @@ class DioClient {
     }
 
     if (_isApiLogVisible) {
-      interceptors.add(
-          HttpFormatter(loggingFilter: (request, response, error) => true));
+      interceptors.add(HttpFormatter(loggingFilter: (request, response, error) => true));
       interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
     }
 
@@ -64,10 +63,9 @@ class DioClient {
         tokenStorage: config.tokenStorage,
         baseClient: _dio ?? Dio(),
         onRefresh: (refreshClient, refreshToken) async {
-          refreshClient.options = refreshClient.options
-              .copyWith(headers: {config.refreshTokenHeaderKey: refreshToken});
-          final response =
-              await refreshClient.post(config.refreshTokenEndPoint);
+          refreshClient.options =
+              refreshClient.options.copyWith(headers: {config.refreshTokenHeaderKey: 'Bearer $refreshToken'});
+          final response = await refreshClient.post(config.refreshTokenEndPoint);
           final token = config.responseMapper(response.data);
           return token;
         },
