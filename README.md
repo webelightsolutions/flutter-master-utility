@@ -469,7 +469,6 @@ Future<Either<ApiException, APIResponse<T>>> getResponseWithMapper<T>(
 - Handles Dio errors (`DioException`) and general exceptions.
 
 ### Error Handling
-- If an API error occurs (e.g., 422, 500), an `APIResponse` object is created from the error response.
 - If a `DioException` is thrown, a detailed `ApiException` is returned.
 - If an unknown error occurs, a generic error message is returned.
 
