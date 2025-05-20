@@ -32,7 +32,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_cache_manager: ^3.3.1
-  fluttertoast: ^8.2.4
+  fluttertoast: ^8.2.12
   image_picker: ^1.0.7
   image_picker_platform_interface: ^2.9.4
   import_sorter: ^4.6.0
