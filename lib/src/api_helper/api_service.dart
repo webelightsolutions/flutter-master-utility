@@ -11,7 +11,6 @@ part 'api_helper.dart';
 part 'api_request.dart';
 part 'api_response.dart';
 part 'api_exception.dart';
-part 'base_response.dart';
 
 class APIService {
   Future<Response<dynamic>> _getResponse({
@@ -170,9 +169,7 @@ class APIService {
 
         return errorModel;
       }
-      return APIResponse<dynamic>.custom(
-        message: ErrorHandler.instance.getDioError(e),
-      );
+      return APIResponse<dynamic>.custom(message: ErrorHandler.instance.getDioError(e));
     } catch (e) {
       if (request.mixPanelEventModel != null) {
         MixPanelService.instance.trackEvent(
@@ -220,7 +217,7 @@ class APIService {
     }
   }
 
-  Future<Either<ApiException, BaseResponse<T>>> getResponseWithMapper<T>(
+  Future<Either<ApiException, T>> getResponseWithMapper<T>(
     APIRequest request, {
     FormData? formData,
 
@@ -250,30 +247,13 @@ class APIService {
 
         if (response.data is Map<String, dynamic> && jsonMapper != null) {
           final data = await compute(jsonMapper, response.data as Map<String, dynamic>);
-          return right(
-            BaseResponse<T>(
-              data: data,
-              statusCode: response.statusCode,
-              message: response.statusMessage,
-              hasError: response.statusCode! >= 200 && response.statusCode! <= 299,
-            ),
-          );
+          return right(data);
         } else if (response.data is List<dynamic> && listJsonMapper != null) {
           final data = await compute(listJsonMapper, response.data as List<dynamic>);
 
-          return right(BaseResponse<T>(
-            data: data,
-            statusCode: response.statusCode,
-            message: response.statusMessage,
-            hasError: response.statusCode! >= 200 && response.statusCode! <= 299,
-          ));
+          return right(data);
         }
-        return right(BaseResponse<T>(
-          data: response.data,
-          statusCode: response.statusCode,
-          message: response.statusMessage,
-          hasError: response.statusCode! >= 200 && response.statusCode! <= 299,
-        ));
+        return right(response.data);
       }
 
       return left(ApiException(message: APIConstError.kSomethingWentWrong));
