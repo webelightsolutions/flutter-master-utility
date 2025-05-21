@@ -40,7 +40,7 @@ class DioClient {
       InterceptorsWrapper(onError: callback),
     );
 
-    if (_refreshTokenConfiguration != null) {
+    if (_refreshTokenConfiguration != null && isAuth) {
       _addJWTInterceptor(_refreshTokenConfiguration!);
     }
 
