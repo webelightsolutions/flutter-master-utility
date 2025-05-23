@@ -19,7 +19,8 @@ class LogsFile {
 
     final now = DateTime.now();
     final formattedTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
-    final divider = '\n============================================================\n';
+    final divider =
+        '\n============================================================\n';
     final startupMessage = '$divider[$formattedTime] 🚀 APP STARTED$divider\n';
 
     try {
@@ -31,20 +32,27 @@ class LogsFile {
     }
   }
 
-  Future<void> logInfo(String message, [StackTrace? stackTrace]) => _writeLog('INFO', 'ℹ️', message, stackTrace);
+  Future<void> logInfo(String message, [StackTrace? stackTrace]) =>
+      _writeLog('INFO', 'ℹ️', message, stackTrace);
 
-  Future<void> logSuccess(String message, [StackTrace? stackTrace]) => _writeLog('SUCCESS', '✅', message, stackTrace);
+  Future<void> logSuccess(String message, [StackTrace? stackTrace]) =>
+      _writeLog('SUCCESS', '✅', message, stackTrace);
 
-  Future<void> logWarning(String message, [StackTrace? stackTrace]) => _writeLog('WARNING', '⚠️', message, stackTrace);
+  Future<void> logWarning(String message, [StackTrace? stackTrace]) =>
+      _writeLog('WARNING', '⚠️', message, stackTrace);
 
-  Future<void> logError(String message, [StackTrace? stackTrace]) => _writeLog('ERROR', '❌', message, stackTrace);
+  Future<void> logError(String message, [StackTrace? stackTrace]) =>
+      _writeLog('ERROR', '❌', message, stackTrace);
 
-  Future<void> _writeLog(String level, String emoji, String message, StackTrace? stackTrace) async {
+  Future<void> _writeLog(String level, String emoji, String message,
+      StackTrace? stackTrace) async {
     final now = DateTime.now();
     final formattedTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
     final logMessage = '[$formattedTime] [$emoji $level] $message';
 
-    final content = stackTrace != null ? '$logMessage\n📍 StackTrace:\n$stackTrace\n\n' : '$logMessage\n\n';
+    final content = stackTrace != null
+        ? '$logMessage\n📍 StackTrace:\n$stackTrace\n\n'
+        : '$logMessage\n\n';
 
     try {
       await _logFile.writeAsString(content, mode: FileMode.append);

@@ -18,7 +18,8 @@ class NavigationHelper {
     }
   }
 
-  static final BuildContext _context = NavigationService.navigatorKey.currentContext!;
+  static final BuildContext _context =
+      NavigationService.navigatorKey.currentContext!;
 
   static Future navigatePush({
     required Widget route,
@@ -29,7 +30,8 @@ class NavigationHelper {
   }) {
     _instance.setNavigationType(type);
 
-    LogHelper.logSuccess("navigationType:${_type.name} : $route", stackTrace: StackTrace.current);
+    LogHelper.logSuccess("navigationType:${_type.name} : $route",
+        stackTrace: StackTrace.current);
 
     if (_type == NavigationType.MATERIAL) {
       return Navigator.push(
@@ -57,13 +59,16 @@ class NavigationHelper {
     }
   }
 
-  static Future navigatePushReplacement({required Widget route, NavigationType? type}) {
+  static Future navigatePushReplacement(
+      {required Widget route, NavigationType? type}) {
     _instance.setNavigationType(type);
 
-    LogHelper.logSuccess("navigationType:${_type.name} : $route", stackTrace: StackTrace.current);
+    LogHelper.logSuccess("navigationType:${_type.name} : $route",
+        stackTrace: StackTrace.current);
 
     if (_type == NavigationType.MATERIAL) {
-      return Navigator.pushReplacement(_context, MaterialPageRoute(builder: (context) => route));
+      return Navigator.pushReplacement(
+          _context, MaterialPageRoute(builder: (context) => route));
     } else {
       return Navigator.pushReplacement(
         _context,
@@ -82,10 +87,12 @@ class NavigationHelper {
   }) {
     _instance.setNavigationType(type);
 
-    LogHelper.logSuccess("navigationType:${_type.name} : $route", stackTrace: StackTrace.current);
+    LogHelper.logSuccess("navigationType:${_type.name} : $route",
+        stackTrace: StackTrace.current);
 
     if (_type == NavigationType.MATERIAL) {
-      return Navigator.pushAndRemoveUntil(_context, MaterialPageRoute(builder: (context) => route), (route) => false);
+      return Navigator.pushAndRemoveUntil(_context,
+          MaterialPageRoute(builder: (context) => route), (route) => false);
     } else {
       final isTrue = predicate == null;
 

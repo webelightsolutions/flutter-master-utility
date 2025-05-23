@@ -34,7 +34,9 @@ class APIResponse<T> {
     }
 
     statusCode = response.statusCode;
-    data = (response.data != null && create != null) ? create(response.data) : null;
+    data = (response.data != null && create != null)
+        ? create(response.data)
+        : null;
     try {
       if (response.headers[_setCookieKey] != null) {
         refreshToken = response.headers[_setCookieKey]?.first ?? '';
