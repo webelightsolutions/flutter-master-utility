@@ -14,6 +14,7 @@ DioClient dioClient = DioClient();
 class DioClient {
   Dio? _dio;
   RefreshTokenConfiguration? _refreshTokenConfiguration;
+  Logarte? _logarteClient;
 
   Dio getDioClient({
     bool isAuth = true,
@@ -35,6 +36,8 @@ class DioClient {
       interceptors.add(HttpFormatter(loggingFilter: (request, response, error) => true));
       interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
     }
+
+    if (_logarteClient != null) _dio?.interceptors.add(LogarteDioInterceptor(_logarteClient!));
 
     interceptors.add(
       InterceptorsWrapper(onError: callback),
@@ -77,6 +80,7 @@ class DioClient {
   DioClient setConfiguration(
     String baseUrl, {
     Map<String, dynamic>? headers,
+    Logarte? logarteClient,
   }) {
     BaseOptions options = BaseOptions(
       connectTimeout: const Duration(
@@ -89,6 +93,8 @@ class DioClient {
     );
 
     _dio = Dio(options);
+
+    _logarteClient = logarteClient;
 
     if (kIsWeb) {
       (_dio?.httpClientAdapter as dynamic).withCredentials = true;
