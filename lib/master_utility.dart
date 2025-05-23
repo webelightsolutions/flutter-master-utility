@@ -40,3 +40,4 @@ export 'package:master_utility/src/size_helper.dart';
 export 'package:master_utility/src/toast_helper.dart';
 export 'package:master_utility/src/validation_helper.dart';
 export 'package:master_utility/src/api_helper/type_def/type_def.dart';
+export 'package:logarte/logarte.dart';

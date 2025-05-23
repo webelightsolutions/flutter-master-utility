@@ -3,6 +3,10 @@
 * Added `getResponseWithMapper` method in APIService which take json mapper as param.
 * Improved curl logger code
 * Improved PreferenceHelper code
+* Added Lograte (In App Console)
+* Added File Logger
+* Added properties parameter in setUserIdentity (MixPanel)
+
 
 ## 0.0.15
 

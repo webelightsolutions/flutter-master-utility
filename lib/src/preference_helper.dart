@@ -9,7 +9,8 @@ class PreferenceHelper {
   static String _encryptionKey = '';
 
   static SharedPreferences get _preference {
-    assert(_preferenceInstance != null, "PreferenceHelper.init() must be call before accessing PreferenceHelper.");
+    assert(_preferenceInstance != null,
+        "PreferenceHelper.init() must be call before accessing PreferenceHelper.");
     return _preferenceInstance!;
   }
 
@@ -131,9 +132,11 @@ class PreferenceHelper {
   }
 
 //!==========HELPER METHODS==========
-  static Future<void> setEncryptedValue({required String key, required String value}) async {
+  static Future<void> setEncryptedValue(
+      {required String key, required String value}) async {
     if (value.isNotEmpty) {
-      await _preference.setString("v2" + key, EncryptionHelper.encrypt(value: value, key: _encryptionKey));
+      await _preference.setString("v2" + key,
+          EncryptionHelper.encrypt(value: value, key: _encryptionKey));
     }
   }
 

@@ -1,8 +1,11 @@
 // Dart imports:
 import 'dart:developer';
+import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
+import 'package:logarte/logarte.dart';
+import 'package:master_utility/src/log/log_file.dart';
 // Project imports:
 import 'package:master_utility/src/log/stack_trace.dart';
 
@@ -19,8 +22,36 @@ class LogHelper {
 
   static bool get _isDebugMode => kDebugMode;
 
+  static Logarte? _logarteClient;
+  static bool _enableFileLogger = false;
+
+  /// [setConfigurations] set configurations for logarte and logs file
+  /// [logarteClient] is the logarte client
+  /// [enableFileLogger] is the flag to add logs in file
+  static Future<void> setConfigurations({
+    Logarte? logarteClient,
+    bool enableFileLogger = false,
+  }) async {
+    _logarteClient = logarteClient;
+    _enableFileLogger = enableFileLogger;
+    if (_enableFileLogger) await LogsFile.instance.init();
+  }
+
+  static Future<File?> getLogsFile() async {
+    try {
+      return await LogsFile.instance.getLogsFile();
+    } catch (e) {
+      logError('Failed to share log file: $e');
+      return null;
+    }
+  }
+
   /// SHOW LOG INFO
   static void logInfo(dynamic msg, {StackTrace? stackTrace}) {
+    if (_logarteClient != null)
+      _logarteClient?.log(msg, stackTrace: stackTrace);
+    if (_enableFileLogger) LogsFile.instance.logInfo(msg, stackTrace);
+
     if (_isDebugMode) {
       if (stackTrace != null) {
         if (_isLogVisible) {
@@ -37,6 +68,10 @@ class LogHelper {
 
   /// [logSuccess] print Green Color
   static void logSuccess(dynamic msg, {StackTrace? stackTrace}) {
+    if (_logarteClient != null)
+      _logarteClient?.log(msg, stackTrace: stackTrace);
+    if (_enableFileLogger) LogsFile.instance.logSuccess(msg, stackTrace);
+
     if (_isDebugMode) {
       if (stackTrace != null) {
         if (_isLogVisible) {
@@ -53,6 +88,10 @@ class LogHelper {
 
   /// [logWarning] print Yellow Color
   static void logWarning(dynamic msg, {StackTrace? stackTrace}) {
+    if (_logarteClient != null)
+      _logarteClient?.log(msg, stackTrace: stackTrace);
+    if (_enableFileLogger) LogsFile.instance.logWarning(msg, stackTrace);
+
     if (_isDebugMode) {
       if (stackTrace != null) {
         if (_isLogVisible) {
@@ -69,6 +108,10 @@ class LogHelper {
 
   /// [logError] print Red Color
   static void logError(dynamic msg, {StackTrace? stackTrace}) {
+    if (_logarteClient != null)
+      _logarteClient?.log(msg, stackTrace: stackTrace);
+    if (_enableFileLogger) LogsFile.instance.logError(msg, stackTrace);
+
     if (_isDebugMode) {
       if (stackTrace != null) {
         if (_isLogVisible) {
@@ -85,6 +128,10 @@ class LogHelper {
 
   /// [logCyan] print Cyan Color
   static void logCyan(dynamic msg, {StackTrace? stackTrace}) {
+    if (_logarteClient != null)
+      _logarteClient?.log(msg, stackTrace: stackTrace);
+    if (_enableFileLogger) LogsFile.instance.logInfo(msg, stackTrace);
+
     if (_isDebugMode) {
       if (stackTrace != null) {
         if (_isLogVisible) {

@@ -515,3 +515,27 @@ Future<void> getUser1() async {
 - Proper error handling is included for a seamless user experience.
 
 This function provides a robust and scalable approach to handling API calls in a Flutter application.
+
+
+
+# LOGARTE
+
+## Overview
+`Logarte` is a powerful in-app console for Flutter that lets you monitor `app logs`, inspect `network calls`, and easily share debug info. Boost your development workflow with real-time insights, exportable logs, and seamless team collaboration.
+
+Please check [Logarte](https://pub.dev/packages/logarte) for more details  
+
+## Configurations
+```
+dioClient.setConfiguration(AppEnv.baseUrl, logarteClient: logarte);
+
+
+// enableFileLogger is mandatory to store logs in file
+
+await LogHelper.setConfigurations(logarteClient: logarte, enableFileLogger: true);
+
+
+// It will return logs file
+
+final file = await LogHelper.getLogsFile();
+```

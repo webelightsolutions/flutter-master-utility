@@ -14,6 +14,7 @@ DioClient dioClient = DioClient();
 class DioClient {
   Dio? _dio;
   RefreshTokenConfiguration? _refreshTokenConfiguration;
+  Logarte? _logarteClient;
 
   Dio getDioClient({
     bool isAuth = true,
@@ -32,9 +33,13 @@ class DioClient {
     }
 
     if (_isApiLogVisible) {
-      interceptors.add(HttpFormatter(loggingFilter: (request, response, error) => true));
+      interceptors.add(
+          HttpFormatter(loggingFilter: (request, response, error) => true));
       interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
     }
+
+    if (_logarteClient != null)
+      _dio?.interceptors.add(LogarteDioInterceptor(_logarteClient!));
 
     interceptors.add(
       InterceptorsWrapper(onError: callback),
@@ -63,9 +68,10 @@ class DioClient {
         tokenStorage: config.tokenStorage,
         baseClient: _dio ?? Dio(),
         onRefresh: (refreshClient, refreshToken) async {
-          refreshClient.options =
-              refreshClient.options.copyWith(headers: {config.refreshTokenHeaderKey: 'Bearer $refreshToken'});
-          final response = await refreshClient.post(config.refreshTokenEndPoint);
+          refreshClient.options = refreshClient.options.copyWith(
+              headers: {config.refreshTokenHeaderKey: 'Bearer $refreshToken'});
+          final response =
+              await refreshClient.post(config.refreshTokenEndPoint);
           final token = config.responseMapper(response.data);
           return token;
         },
@@ -77,6 +83,7 @@ class DioClient {
   DioClient setConfiguration(
     String baseUrl, {
     Map<String, dynamic>? headers,
+    Logarte? logarteClient,
   }) {
     BaseOptions options = BaseOptions(
       connectTimeout: const Duration(
@@ -89,6 +96,8 @@ class DioClient {
     );
 
     _dio = Dio(options);
+
+    _logarteClient = logarteClient;
 
     if (kIsWeb) {
       (_dio?.httpClientAdapter as dynamic).withCredentials = true;
