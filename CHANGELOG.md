@@ -1,3 +1,7 @@
+## 0.0.17
+
+* Added onReceiveProgress, onSendProgress in APIRequest.
+
 ## 0.0.16
 
 * Added `getResponseWithMapper` method in APIService which take json mapper as param.
@@ -6,7 +10,6 @@
 * Added Lograte (In App Console)
 * Added File Logger
 * Added properties parameter in setUserIdentity (MixPanel)
-
 
 ## 0.0.15
 
