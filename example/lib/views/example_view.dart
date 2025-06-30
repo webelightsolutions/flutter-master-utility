@@ -70,8 +70,11 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
   }
 
   Widget _buildHeader() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
+
     return Container(
-      padding: const EdgeInsets.all(_Constants.padding),
+      padding: EdgeInsets.all(isSmallScreen ? 16 : _Constants.padding),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
@@ -93,8 +96,8 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
       child: Row(
         children: [
           Container(
-            width: _Constants.headerHeight,
-            height: _Constants.headerHeight,
+            width: isSmallScreen ? 44 : _Constants.headerHeight,
+            height: isSmallScreen ? 44 : _Constants.headerHeight,
             decoration: BoxDecoration(
               color: Colors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(16),
@@ -103,31 +106,33 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
                 width: 1,
               ),
             ),
-            child: const Center(
-              child: Text('🧩', style: TextStyle(fontSize: 28)),
+            child: Center(
+              child: Text('🧩', style: TextStyle(fontSize: isSmallScreen ? 24 : 28)),
             ),
           ),
-          const SizedBox(width: 16),
-          const Expanded(
+          SizedBox(width: isSmallScreen ? 12 : 16),
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Master Utility',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: isSmallScreen ? 20 : 24,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: isSmallScreen ? 2 : 4),
                 Text(
                   'Essential tools for developers',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: isSmallScreen ? 12 : 14,
                     color: Colors.white,
                     fontWeight: FontWeight.w400,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
@@ -138,8 +143,11 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
   }
 
   Widget _buildContent() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
+
     return Padding(
-      padding: const EdgeInsets.all(_Constants.padding),
+      padding: EdgeInsets.all(isSmallScreen ? 16 : _Constants.padding),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -155,7 +163,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
                 showExtraHeight: _isFocusNode,
               ),
             ),
-            const SizedBox(height: _Constants.spacing),
+            SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
             _buildSectionCard(
               title: 'Toast Helpers',
               description:
@@ -163,7 +171,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               icon: _buildGradientIcon(_Constants.toastHelpersGradient, Icons.notifications_rounded),
               content: _buildToastButtons(),
             ),
-            const SizedBox(height: _Constants.spacing),
+            SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
             _buildSectionCard(
               title: 'Multimedia Picker',
               description:
@@ -171,7 +179,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               icon: _buildGradientIcon(_Constants.multimediaPickerGradient, Icons.perm_media_rounded),
               content: _buildGradientButton('📸 Pick Media', _pickMedia),
             ),
-            const SizedBox(height: _Constants.spacing),
+            SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
             _buildSectionCard(
               title: 'DateTime Extension',
               description:
@@ -179,7 +187,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               icon: _buildGradientIcon(_Constants.dateTimeGradient, Icons.access_time_rounded),
               content: _buildSecondaryButton('🕐 Show Time', _showTime),
             ),
-            const SizedBox(height: _Constants.spacing),
+            SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
             _buildSectionCard(
               title: 'Read More Text',
               description:
@@ -187,7 +195,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               icon: _buildGradientIcon(_Constants.readMoreGradient, Icons.subject_rounded),
               content: _buildReadMoreContent(),
             ),
-            const SizedBox(height: _Constants.spacing),
+            SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
             _buildSectionCard(
               title: 'Dialogs & Sheets',
               description:
@@ -195,7 +203,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               icon: _buildGradientIcon(_Constants.dialogsGradient, Icons.chat_bubble_outline_rounded),
               content: _buildDialogButtons(),
             ),
-            const SizedBox(height: _Constants.spacing),
+            SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
             _buildSectionCard(
               title: 'Network Image with Caching',
               description:
@@ -215,8 +223,11 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
     required Widget icon,
     required Widget content,
   }) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
+
     return Container(
-      padding: const EdgeInsets.all(_Constants.padding),
+      padding: EdgeInsets.all(isSmallScreen ? 16 : _Constants.padding),
       decoration: BoxDecoration(
         color: _Constants.cardBackground,
         borderRadius: BorderRadius.circular(_Constants.borderRadius),
@@ -236,10 +247,11 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: _Constants.iconSize,
-                height: _Constants.iconSize,
+                width: isSmallScreen ? 40 : _Constants.iconSize,
+                height: isSmallScreen ? 40 : _Constants.iconSize,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(_Constants.smallBorderRadius),
                   boxShadow: [
@@ -252,35 +264,37 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
                 ),
                 child: icon,
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: isSmallScreen ? 12 : 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
-                        fontSize: 20,
+                      style: TextStyle(
+                        fontSize: isSmallScreen ? 18 : 20,
                         fontWeight: FontWeight.w700,
                         color: _Constants.textPrimary,
                       ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: isSmallScreen ? 12 : 16),
           Text(
             description,
-            style: const TextStyle(
-              fontSize: 14,
+            style: TextStyle(
+              fontSize: isSmallScreen ? 13 : 14,
               color: _Constants.textSecondary,
               fontWeight: FontWeight.w400,
               height: 1.5,
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: isSmallScreen ? 16 : 20),
           content,
         ],
       ),
@@ -288,9 +302,12 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
   }
 
   Widget _buildGradientIcon(List<Color> colors, IconData icon) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
+
     return Container(
-      width: _Constants.iconSize,
-      height: _Constants.iconSize,
+      width: isSmallScreen ? 40 : _Constants.iconSize,
+      height: isSmallScreen ? 40 : _Constants.iconSize,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -300,42 +317,50 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
         borderRadius: BorderRadius.circular(_Constants.smallBorderRadius),
       ),
       child: Center(
-        child: Icon(icon, color: Colors.white, size: 24),
+        child: Icon(icon, color: Colors.white, size: isSmallScreen ? 20 : 24),
       ),
     );
   }
 
   Widget _buildToastButtons() {
-    return Wrap(
-      spacing: 12,
-      runSpacing: 12,
-      children: [
-        _buildToastButton(
-          '🔔',
-          'Default',
-          () => ToastHelper.showToast(message: "Default toast message"),
-          isDefault: true,
-        ),
-        _buildToastButton(
-          '⚠️',
-          'Error',
-          () => ToastHelper.errorToast(message: "Error toast message"),
-          isError: true,
-        ),
-        _buildToastButton(
-          '⭐',
-          'Custom',
-          () => ToastHelper.showCustomToast(
-            message: "Custom Toast",
-            backgroundColor: Colors.amberAccent,
-            fontSize: 20,
-            gravity: ToastGravity.BOTTOM,
-            textColor: Colors.black,
-            toastLength: Toast.LENGTH_LONG,
-          ),
-          isCustom: true,
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final screenWidth = MediaQuery.of(context).size.width;
+        final isSmallScreen = screenWidth < 360;
+
+        // Use Wrap for responsive layout
+        return Wrap(
+          spacing: isSmallScreen ? 8 : 12,
+          runSpacing: isSmallScreen ? 8 : 12,
+          children: [
+            _buildToastButton(
+              '🔔',
+              'Default',
+              () => ToastHelper.showToast(message: "Default toast message"),
+              isDefault: true,
+            ),
+            _buildToastButton(
+              '⚠️',
+              'Error',
+              () => ToastHelper.errorToast(message: "Error toast message"),
+              isError: true,
+            ),
+            _buildToastButton(
+              '⭐',
+              'Custom',
+              () => ToastHelper.showCustomToast(
+                message: "Custom Toast",
+                backgroundColor: Colors.amberAccent,
+                fontSize: 20,
+                gravity: ToastGravity.BOTTOM,
+                textColor: Colors.black,
+                toastLength: Toast.LENGTH_LONG,
+              ),
+              isCustom: true,
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -347,6 +372,9 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
     bool isError = false,
     bool isCustom = false,
   }) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
+
     Color backgroundColor;
     Color textColor;
     Border? border;
@@ -366,7 +394,8 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        constraints: BoxConstraints(minWidth: isSmallScreen ? 70 : 80),
+        padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 12 : 16, vertical: isSmallScreen ? 10 : 12),
         decoration: BoxDecoration(
           color: backgroundColor,
           gradient: isCustom
@@ -382,14 +411,17 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(emoji, style: const TextStyle(fontSize: 14)),
-            const SizedBox(width: 8),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: textColor,
+            Text(emoji, style: TextStyle(fontSize: isSmallScreen ? 12 : 14)),
+            SizedBox(width: isSmallScreen ? 4 : 6),
+            Flexible(
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: isSmallScreen ? 12 : 14,
+                  fontWeight: FontWeight.w600,
+                  color: textColor,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
@@ -399,10 +431,14 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
   }
 
   Widget _buildGradientButton(String text, VoidCallback onTap) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 20 : 24, vertical: isSmallScreen ? 14 : 16),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
@@ -421,11 +457,13 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
         child: Center(
           child: Text(
             text,
-            style: const TextStyle(
-              fontSize: 16,
+            style: TextStyle(
+              fontSize: isSmallScreen ? 14 : 16,
               fontWeight: FontWeight.w600,
               color: Colors.white,
             ),
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ),
@@ -433,10 +471,14 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
   }
 
   Widget _buildSecondaryButton(String text, VoidCallback onTap) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 16 : 20, vertical: isSmallScreen ? 12 : 14),
         decoration: BoxDecoration(
           color: const Color(0xFFF8FAFC),
           border: Border.all(color: const Color(0xFFE2E8F0), width: 2),
@@ -445,11 +487,13 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
         child: Center(
           child: Text(
             text,
-            style: const TextStyle(
-              fontSize: 14,
+            style: TextStyle(
+              fontSize: isSmallScreen ? 12 : 14,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF475569),
+              color: const Color(0xFF475569),
             ),
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ),
@@ -478,16 +522,35 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
   }
 
   Widget _buildDialogButtons() {
-    return Row(
-      children: [
-        Expanded(
-          child: _buildToastButton('⚠️', 'Alert Dialog', _showAlertDialog, isError: true),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _buildSecondaryButton('↗️ Action Sheet', _showActionSheet),
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final screenWidth = MediaQuery.of(context).size.width;
+        final isSmallScreen = screenWidth < 360;
+
+        // For very small screens, stack buttons vertically
+        if (constraints.maxWidth < 300 || isSmallScreen) {
+          return Column(
+            children: [
+              _buildToastButton('⚠️', 'Alert Dialog', _showAlertDialog, isError: true),
+              SizedBox(height: isSmallScreen ? 8 : 12),
+              _buildSecondaryButton('↗️ Action Sheet', _showActionSheet),
+            ],
+          );
+        }
+
+        // For larger screens, use horizontal layout
+        return Row(
+          children: [
+            Expanded(
+              child: _buildToastButton('⚠️', 'Alert Dialog', _showAlertDialog, isError: true),
+            ),
+            SizedBox(width: isSmallScreen ? 8 : 12),
+            Expanded(
+              child: _buildSecondaryButton('↗️ Action Sheet', _showActionSheet),
+            ),
+          ],
+        );
+      },
     );
   }
 
