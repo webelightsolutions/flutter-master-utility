@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MasterUtilityMaterialApp(
       title: 'Example App',
-      home: const ExampleView(),
+      home: const MasterUtilityScreen(),
     );
   }
 }
