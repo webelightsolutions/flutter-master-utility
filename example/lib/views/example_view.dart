@@ -28,6 +28,7 @@ class _Constants {
   static const List<Color> dialogsGradient = [Color(0xFF06B6D4), Color(0xFF0891B2)];
   static const List<Color> networkImageGradient = [Color(0xFFFDE68A), Color(0xFFF59E42)];
   static const List<Color> preferenceHelperGradient = [Color(0xFF10B981), Color(0xFF059669)];
+  static const List<Color> permissionHelperGradient = [Color(0xFFF97316), Color(0xFFDC2626)];
 }
 
 class MasterUtilityScreen extends StatefulWidget {
@@ -217,8 +218,16 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               title: 'Shared Preferences Helper',
               description:
                   'Store and retrieve encrypted data from device storage with type safety. All data is automatically encrypted/decrypted for security.',
-              icon: _buildGradientIcon(_Constants.preferenceHelperGradient, Icons.security_rounded),
+              icon: _buildGradientIcon(_Constants.preferenceHelperGradient, Icons.note_add_rounded),
               content: _buildPreferenceHelperContent(),
+            ),
+            SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
+            _buildSectionCard(
+              title: 'Permission Helper',
+              description:
+                  'Manage permissions and request user authorization for accessing device features and resources.',
+              icon: _buildGradientIcon(_Constants.permissionHelperGradient, Icons.security_rounded),
+              content: _buildPermissionHelperContent(),
             ),
           ],
         ),
@@ -536,7 +545,6 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
         final screenWidth = MediaQuery.of(context).size.width;
         final isSmallScreen = screenWidth < 360;
 
-        // For very small screens, stack buttons vertically
         if (constraints.maxWidth < 300 || isSmallScreen) {
           return Column(
             children: [
@@ -547,7 +555,6 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
           );
         }
 
-        // For larger screens, use horizontal layout
         return Row(
           children: [
             Expanded(
@@ -614,7 +621,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
 
   Future<void> _pickMedia() async {
     final fileResult = await ImagePickerHelper.multiMediaPicker();
-    LogHelper.logInfo("result $fileResult");
+
     _multimediaOutput.value = "Selected: $fileResult";
     ToastHelper.showCustomToast(
       message: "🖼️ Selected: $fileResult",
@@ -628,7 +635,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
 
   void _showTime() {
     final time = DateTime.now().toCustomFormatter(formatter: DateTimeFormatter.HOUR_MINUTE);
-    LogHelper.logInfo("DateTime $time");
+
     _dateTimeOutput.value = "Current time: $time";
     ToastHelper.showCustomToast(
       message: "🕐 Current time: $time",
@@ -710,7 +717,6 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Features Section
         _buildInfoSection(
           '🔐 Key Features:',
           [
@@ -724,8 +730,6 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
           isSmallScreen,
         ),
         SizedBox(height: isSmallScreen ? 16 : 20),
-
-        // Available Methods Section
         _buildInfoSection(
           '📝 Available Methods:',
           [
@@ -740,8 +744,6 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
           isSmallScreen,
         ),
         SizedBox(height: isSmallScreen ? 16 : 20),
-
-        // Initialization Section
         _buildInfoSection(
           '🚀 Initialization:',
           [
@@ -755,8 +757,6 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
           isSmallScreen,
         ),
         SizedBox(height: isSmallScreen ? 16 : 20),
-
-        // Usage Example Section
         _buildInfoSection(
           '💡 Quick Usage:',
           [
@@ -853,6 +853,126 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               .toList(),
         ],
       ),
+    );
+  }
+
+  Widget _buildPermissionHelperContent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildPermissionButtons(),
+      ],
+    );
+  }
+
+  Widget _buildPermissionButtons() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth < 300 || isSmallScreen) {
+          return Column(
+            children: [
+              _buildPermissionButton('📍', 'Location Permission', _requestLocationPermission),
+              SizedBox(height: isSmallScreen ? 8 : 12),
+              _buildPermissionButton('📷', 'Camera Permission', _requestCameraPermission),
+            ],
+          );
+        }
+
+        return Row(
+          children: [
+            Expanded(
+              child: _buildPermissionButton('📍', 'Location Permission', _requestLocationPermission),
+            ),
+            SizedBox(width: isSmallScreen ? 8 : 12),
+            Expanded(
+              child: _buildPermissionButton('📷', 'Camera Permission', _requestCameraPermission),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildPermissionButton(String emoji, String label, VoidCallback onTap) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 16 : 20, vertical: isSmallScreen ? 12 : 14),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color.fromARGB(255, 22, 173, 249), Color.fromARGB(255, 38, 102, 220)],
+          ),
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: const Color.fromARGB(255, 22, 128, 249).withValues(alpha: 0.3),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(emoji, style: TextStyle(fontSize: isSmallScreen ? 14 : 16)),
+            SizedBox(width: isSmallScreen ? 6 : 8),
+            Flexible(
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: isSmallScreen ? 12 : 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _requestLocationPermission() async {
+    PermissionHandlerService.handlePermissions(
+      type: PermissionType.LOCATION,
+      callBack: () {
+        ToastHelper.showCustomToast(
+          message: "📍 Location permission granted!",
+          backgroundColor: const Color(0xFF10B981),
+          fontSize: 14,
+          gravity: ToastGravity.BOTTOM,
+          textColor: Colors.white,
+          toastLength: Toast.LENGTH_LONG,
+        );
+      },
+      permissionDeniedDialog: () {},
+    );
+  }
+
+  void _requestCameraPermission() async {
+    PermissionHandlerService.handlePermissions(
+      type: PermissionType.CAMERA,
+      callBack: () {
+        ToastHelper.showCustomToast(
+          message: "📷 Camera permission granted!",
+          backgroundColor: const Color(0xFF3B82F6),
+          fontSize: 14,
+          gravity: ToastGravity.BOTTOM,
+          textColor: Colors.white,
+          toastLength: Toast.LENGTH_LONG,
+        );
+      },
+      permissionDeniedDialog: () {},
     );
   }
 }
