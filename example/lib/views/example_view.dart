@@ -28,6 +28,7 @@ class _Constants {
   static const List<Color> dialogsGradient = [Color(0xFF06B6D4), Color(0xFF0891B2)];
   static const List<Color> networkImageGradient = [Color(0xFFFDE68A), Color(0xFFF59E42)];
   static const List<Color> preferenceHelperGradient = [Color(0xFF10B981), Color(0xFF059669)];
+  static const List<Color> apiHelperGradient = [Color(0xFF8B5CF6), Color(0xFF3B82F6)];
   static const List<Color> permissionHelperGradient = [Color(0xFFF97316), Color(0xFFDC2626)];
 }
 
@@ -220,6 +221,14 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
                   'Store and retrieve encrypted data from device storage with type safety. All data is automatically encrypted/decrypted for security.',
               icon: _buildGradientIcon(_Constants.preferenceHelperGradient, Icons.note_add_rounded),
               content: _buildPreferenceHelperContent(),
+            ),
+            SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
+            _buildSectionCard(
+              title: 'API Helper',
+              description:
+                  'Comprehensive HTTP client with automatic error handling, authentication, interceptors, and analytics tracking. Built on Dio with advanced features.',
+              icon: _buildGradientIcon(_Constants.apiHelperGradient, Icons.api_rounded),
+              content: _buildApiHelperContent(),
             ),
             SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
             _buildSectionCard(
@@ -764,6 +773,75 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
             'Retrieve: String name = PreferenceHelper.getStringPrefValue(key: "name")',
             'Remove: await PreferenceHelper.removePrefValue(key: "name")',
             'Clear All: await PreferenceHelper.clearAll()',
+          ],
+          const Color(0xFFF59E0B),
+          isSmallScreen,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildApiHelperContent() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildInfoSection(
+          '🚀 Key Features:',
+          [
+            'Built on Dio HTTP client with advanced interceptors',
+            'Automatic JWT token refresh and authentication',
+            'Comprehensive error handling with custom error models',
+            'MixPanel analytics integration for API tracking',
+            'Support for file uploads and form data',
+            'Progress tracking for uploads and downloads',
+            'Request cancellation with CancelToken',
+            'Automatic logging and debugging tools',
+          ],
+          const Color(0xFF8B5CF6),
+          isSmallScreen,
+        ),
+        SizedBox(height: isSmallScreen ? 16 : 20),
+        _buildInfoSection(
+          '📡 Available Methods:',
+          [
+            'getApiResponse() - Standard API response handling',
+            'getResponseWithMapper() - Type-safe response mapping',
+            'MethodType.GET, POST, PATCH, PUT, DELETE support',
+            'FormData support for file uploads',
+            'Query parameters and custom headers',
+            'Progress callbacks for upload/download',
+            'MixPanel event tracking integration',
+          ],
+          const Color(0xFF3B82F6),
+          isSmallScreen,
+        ),
+        SizedBox(height: isSmallScreen ? 16 : 20),
+        _buildInfoSection(
+          '🔧 Configuration:',
+          [
+            'dioClient.setConfiguration() - Set base URL and headers',
+            'setRefreshTokenConfiguration() - JWT refresh setup',
+            'setIsApiLogVisible() - Enable/disable API logging',
+            'Automatic authorization header injection',
+            'Custom interceptors for authentication',
+            'Curl logger for debugging requests',
+            'HTTP formatter for request/response logging',
+          ],
+          const Color(0xFFEC4899),
+          isSmallScreen,
+        ),
+        SizedBox(height: isSmallScreen ? 16 : 20),
+        _buildInfoSection(
+          '💡 Quick Usage:',
+          [
+            'Setup: dioClient.setConfiguration("https://api.example.com")',
+            'GET: APIService().getApiResponse(APIRequest(url: "/users", methodType: MethodType.GET))',
+            'POST: APIService().getApiResponse(APIRequest(url: "/users", methodType: MethodType.POST, params: {"name": "John"}))',
+            'With Mapper: APIService().getResponseWithMapper<User>(request, jsonMapper: User.fromJson)',
+            'File Upload: APIService().getApiResponse(request, formData: FormData.fromMap({"file": file}))',
           ],
           const Color(0xFFF59E0B),
           isSmallScreen,
