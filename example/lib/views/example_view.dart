@@ -27,6 +27,7 @@ class _Constants {
   static const List<Color> readMoreGradient = [Color(0xFF8B5CF6), Color(0xFFEC4899)];
   static const List<Color> dialogsGradient = [Color(0xFF06B6D4), Color(0xFF0891B2)];
   static const List<Color> networkImageGradient = [Color(0xFFFDE68A), Color(0xFFF59E42)];
+  static const List<Color> preferenceHelperGradient = [Color(0xFF10B981), Color(0xFF059669)];
 }
 
 class MasterUtilityScreen extends StatefulWidget {
@@ -210,6 +211,14 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
                   'Display images from the internet with caching support. Handles loading, errors, and improves performance for repeated views.',
               icon: _buildGradientIcon(_Constants.networkImageGradient, Icons.image_rounded),
               content: _buildNetworkImage(),
+            ),
+            SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
+            _buildSectionCard(
+              title: 'Shared Preferences Helper',
+              description:
+                  'Store and retrieve encrypted data from device storage with type safety. All data is automatically encrypted/decrypted for security.',
+              icon: _buildGradientIcon(_Constants.preferenceHelperGradient, Icons.security_rounded),
+              content: _buildPreferenceHelperContent(),
             ),
           ],
         ),
@@ -690,6 +699,159 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildPreferenceHelperContent() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Features Section
+        _buildInfoSection(
+          '🔐 Key Features:',
+          [
+            'Automatic encryption/decryption of all data',
+            'Type-safe methods (String, Int, Double, Bool)',
+            'Key versioning with "v2" prefix',
+            'Null-safe operations with fallbacks',
+            'Cross-platform compatibility',
+          ],
+          const Color(0xFF10B981),
+          isSmallScreen,
+        ),
+        SizedBox(height: isSmallScreen ? 16 : 20),
+
+        // Available Methods Section
+        _buildInfoSection(
+          '📝 Available Methods:',
+          [
+            'setStringPrefValue() / getStringPrefValue()',
+            'setIntPrefValue() / getIntPrefValue()',
+            'setDoublePrefValue() / getDoublePrefValue()',
+            'setBoolPrefValue() / getBoolPrefValue()',
+            'removePrefValue() - Remove specific key',
+            'clearAll() - Clear all data',
+          ],
+          const Color(0xFF3B82F6),
+          isSmallScreen,
+        ),
+        SizedBox(height: isSmallScreen ? 16 : 20),
+
+        // Initialization Section
+        _buildInfoSection(
+          '🚀 Initialization:',
+          [
+            'Must call before any other methods',
+            'Requires WidgetsFlutterBinding.ensureInitialized()',
+            'Provide secure encryption key (16+ chars recommended)',
+            'Call in main(): await PreferenceHelper.init(encryptionKey: "key")',
+            'Throws error if accessed before initialization',
+          ],
+          const Color(0xFFEC4899),
+          isSmallScreen,
+        ),
+        SizedBox(height: isSmallScreen ? 16 : 20),
+
+        // Usage Example Section
+        _buildInfoSection(
+          '💡 Quick Usage:',
+          [
+            'Store: await PreferenceHelper.setStringPrefValue(key: "name", value: "John")',
+            'Retrieve: String name = PreferenceHelper.getStringPrefValue(key: "name")',
+            'Remove: await PreferenceHelper.removePrefValue(key: "name")',
+            'Clear All: await PreferenceHelper.clearAll()',
+          ],
+          const Color(0xFFF59E0B),
+          isSmallScreen,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildInfoSection(String title, List<String> points, Color color, bool isSmallScreen) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(isSmallScreen ? 12 : 16),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.05),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: color.withValues(alpha: 0.2)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: isSmallScreen ? 20 : 24,
+                height: isSmallScreen ? 20 : 24,
+                decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Center(
+                  child: Text(
+                    title[0],
+                    style: TextStyle(
+                      fontSize: isSmallScreen ? 10 : 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: isSmallScreen ? 8 : 12),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: isSmallScreen ? 14 : 16,
+                    fontWeight: FontWeight.w600,
+                    color: color,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: isSmallScreen ? 8 : 12),
+          ...points
+              .map((point) => Padding(
+                    padding: EdgeInsets.only(
+                      left: isSmallScreen ? 16 : 20,
+                      bottom: isSmallScreen ? 4 : 6,
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 4,
+                          height: 4,
+                          margin: EdgeInsets.only(top: isSmallScreen ? 6 : 8),
+                          decoration: BoxDecoration(
+                            color: color,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        SizedBox(width: isSmallScreen ? 8 : 12),
+                        Expanded(
+                          child: Text(
+                            point,
+                            style: TextStyle(
+                              fontSize: isSmallScreen ? 12 : 14,
+                              color: _Constants.textPrimary,
+                              height: 1.4,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ))
+              .toList(),
+        ],
       ),
     );
   }
