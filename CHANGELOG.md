@@ -1,6 +1,10 @@
 ## 0.0.17
 
 * Added onReceiveProgress, onSendProgress in APIRequest.
+* Shared preferences helper service for saving, retrieving, and removing data.
+* API helper service for easier API calls (GET, POST, PUT, DELETE).
+* Interactive buttons for handling permissions.
+* Complete UI layout redesign for better user experience.
 
 ## 0.0.16
 
