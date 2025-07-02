@@ -48,7 +48,9 @@ class LogHelper {
 
   /// SHOW LOG INFO
   static void logInfo(dynamic msg, {StackTrace? stackTrace}) {
-    if (_logarteClient != null) _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
+    if (_logarteClient != null) {
+      _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
+    }
     if (_enableFileLogger) LogsFile.instance.logInfo(msg, stackTrace);
 
     if (_isDebugMode) {
@@ -67,7 +69,9 @@ class LogHelper {
 
   /// [logSuccess] print Green Color
   static void logSuccess(dynamic msg, {StackTrace? stackTrace}) {
-    if (_logarteClient != null) _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
+    if (_logarteClient != null) {
+      _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
+    }
     if (_enableFileLogger) LogsFile.instance.logSuccess(msg, stackTrace);
 
     if (_isDebugMode) {
@@ -86,7 +90,9 @@ class LogHelper {
 
   /// [logWarning] print Yellow Color
   static void logWarning(dynamic msg, {StackTrace? stackTrace}) {
-    if (_logarteClient != null) _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
+    if (_logarteClient != null) {
+      _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
+    }
     if (_enableFileLogger) LogsFile.instance.logWarning(msg, stackTrace);
 
     if (_isDebugMode) {
@@ -105,7 +111,9 @@ class LogHelper {
 
   /// [logError] print Red Color
   static void logError(dynamic msg, {StackTrace? stackTrace}) {
-    if (_logarteClient != null) _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
+    if (_logarteClient != null) {
+      _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
+    }
     if (_enableFileLogger) LogsFile.instance.logError(msg, stackTrace);
 
     if (_isDebugMode) {
@@ -124,7 +132,9 @@ class LogHelper {
 
   /// [logCyan] print Cyan Color
   static void logCyan(dynamic msg, {StackTrace? stackTrace}) {
-    if (_logarteClient != null) _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
+    if (_logarteClient != null) {
+      _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
+    }
     if (_enableFileLogger) LogsFile.instance.logInfo(msg, stackTrace);
 
     if (_isDebugMode) {

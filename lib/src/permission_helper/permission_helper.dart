@@ -219,11 +219,13 @@ class PermissionHandlerService {
         PermissionStatus permissionStatus = await permission.request();
         if (permissionStatus == PermissionStatus.granted) {
           callBack();
-        } else if (Platform.isIOS && permissionStatus == PermissionStatus.limited) {
+        } else if (Platform.isIOS &&
+            permissionStatus == PermissionStatus.limited) {
           callBack();
         } else if (permissionStatus == PermissionStatus.permanentlyDenied) {
           // If iOS shows permanently denied after request, show settings dialog
-          permissionDeniedDialog?.call() ?? PermissionDialog.openDialog(type: type);
+          permissionDeniedDialog?.call() ??
+              PermissionDialog.openDialog(type: type);
         }
         break;
       case PermissionStatus.permanentlyDenied:
@@ -235,14 +237,17 @@ class PermissionHandlerService {
             } else if (permissionStatus == PermissionStatus.limited) {
               callBack();
             } else {
-              permissionDeniedDialog?.call() ?? PermissionDialog.openDialog(type: type);
+              permissionDeniedDialog?.call() ??
+                  PermissionDialog.openDialog(type: type);
             }
           } catch (e) {
-            permissionDeniedDialog?.call() ?? PermissionDialog.openDialog(type: type);
+            permissionDeniedDialog?.call() ??
+                PermissionDialog.openDialog(type: type);
           }
         } else {
           // Android: show settings dialog for permanently denied
-          permissionDeniedDialog?.call() ?? PermissionDialog.openDialog(type: type);
+          permissionDeniedDialog?.call() ??
+              PermissionDialog.openDialog(type: type);
         }
         break;
       default:
@@ -251,7 +256,8 @@ class PermissionHandlerService {
           PermissionStatus permissionStatus = await permission.request();
           if (permissionStatus == PermissionStatus.granted) {
             callBack();
-          } else if (Platform.isIOS && permissionStatus == PermissionStatus.limited) {
+          } else if (Platform.isIOS &&
+              permissionStatus == PermissionStatus.limited) {
             callBack();
           }
         } catch (e) {
