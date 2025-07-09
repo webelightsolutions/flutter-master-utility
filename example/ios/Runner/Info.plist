@@ -45,5 +45,17 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	
+	<!-- Permission usage descriptions for iOS -->
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs camera access to take photos for demonstration purposes.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs location access to show your current location for demonstration purposes.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs location access to show your current location for demonstration purposes.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs photo library access to select images for demonstration purposes.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs microphone access for audio recording demonstration purposes.</string>
 </dict>
 </plist>

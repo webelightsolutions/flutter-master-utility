@@ -19,13 +19,20 @@ class MixPanelService {
     }
   }
 
-  void setUserIdentity({required String userId, required String userName}) {
+  void setUserIdentity({
+    required String userId,
+    required String userName,
+    Map<String, dynamic>? properties,
+  }) {
     try {
-      userId = userId;
-      userName = userName;
-      _mixPanelInstance
-        ..identify(userId)
-        ..getPeople().set('name', userName);
+      _mixPanelInstance.identify(userId);
+      final people = _mixPanelInstance.getPeople();
+
+      people.set('name', userName);
+
+      properties?.forEach((key, value) {
+        people.set(key, value);
+      });
     } catch (e) {
       LogHelper.logError('Failed to identify: $userId',
           stackTrace: StackTrace.current);

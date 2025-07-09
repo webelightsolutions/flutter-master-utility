@@ -1,20 +1,21 @@
 part of 'api_service.dart';
 
 class APIRequest {
-  APIRequest({
-    this.file,
-    this.isAuthorization = true,
-    required this.url,
-    required this.methodType,
-    this.params,
-    this.queryParams,
-    this.header,
-    this.paramList,
-    this.onError,
-    this.cancelToken,
-    this.enableMixpanelTracking,
-    this.mixPanelEventModel,
-  });
+  APIRequest(
+      {this.file,
+      this.isAuthorization = true,
+      required this.url,
+      required this.methodType,
+      this.params,
+      this.queryParams,
+      this.header,
+      this.paramList,
+      this.onError,
+      this.cancelToken,
+      this.enableMixpanelTracking,
+      this.mixPanelEventModel,
+      this.onReceiveProgress,
+      this.onSendProgress});
 
   File? file;
   String url;
@@ -29,6 +30,8 @@ class APIRequest {
   CancelToken? cancelToken;
   bool? enableMixpanelTracking;
   MixPanelEventModel? mixPanelEventModel;
+  void Function(int, int)? onReceiveProgress;
+  void Function(int, int)? onSendProgress;
 
   void Function(
     DioException dioException,

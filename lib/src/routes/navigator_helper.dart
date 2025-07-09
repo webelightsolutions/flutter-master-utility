@@ -53,7 +53,10 @@ class NavigationHelper {
 
   static void navigatePop<T extends Object?>([T? result]) {
     LogHelper.logSuccess('', stackTrace: StackTrace.current);
-    return Navigator.pop(_context, result);
+    final canPop = Navigator.canPop(_context);
+    if (canPop) {
+      return Navigator.pop(_context, result);
+    }
   }
 
   static Future navigatePushReplacement(

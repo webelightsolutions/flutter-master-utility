@@ -35,9 +35,7 @@ class APIResponse<T> {
 
     statusCode = response.statusCode;
     data = (response.data != null && create != null)
-        ? create(
-            response.data,
-          )
+        ? create(response.data)
         : null;
     try {
       if (response.headers[_setCookieKey] != null) {
@@ -56,7 +54,7 @@ class APIResponse<T> {
   bool hasError = false;
   String? message;
   int? statusCode;
-  dynamic data;
+  T? data;
   String? refreshToken;
   List<String>? cookies;
 }

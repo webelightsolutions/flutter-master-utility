@@ -1,4 +1,19 @@
-#
+## 0.0.17
+
+* Added onReceiveProgress, onSendProgress in APIRequest.
+* Shared preferences helper service for saving, retrieving, and removing data.
+* API helper service for easier API calls (GET, POST, PUT, DELETE).
+* Interactive buttons for handling permissions.
+* Complete UI layout redesign for better user experience.
+
+## 0.0.16
+
+* Added `getResponseWithMapper` method in APIService which take json mapper as param.
+* Improved curl logger code
+* Improved PreferenceHelper code
+* Added Lograte (In App Console)
+* Added File Logger
+* Added properties parameter in setUserIdentity (MixPanel)
 
 ## 0.0.15
 
