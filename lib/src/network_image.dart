@@ -15,7 +15,8 @@ class AppNetworkImage extends StatelessWidget {
   final BoxFit? fit;
   final double? height;
   final double? width;
-  final Widget Function(BuildContext, String, DownloadProgress)? progressIndicatorBuilder;
+  final Widget Function(BuildContext, String, DownloadProgress)?
+      progressIndicatorBuilder;
   final Widget Function(BuildContext, String, dynamic)? errorWidget;
   final Widget Function(BuildContext, ImageProvider<Object>)? imageBuilder;
   final Widget Function(BuildContext, String)? placeholder;
@@ -82,8 +83,10 @@ class AppNetworkImage extends StatelessWidget {
       imageBuilder: imageBuilder,
       placeholder: placeholder,
       cacheManager: cacheManager,
-      progressIndicatorBuilder:
-          progressIndicatorBuilder ?? (placeholder == null ? (_, __, ___) => _buildProgressIndicator(context) : null),
+      progressIndicatorBuilder: progressIndicatorBuilder ??
+          (placeholder == null
+              ? (_, __, ___) => _buildProgressIndicator(context)
+              : null),
       fit: fit ?? BoxFit.cover,
       errorWidget: errorWidget ?? (context, url, error) => _onError(),
       httpHeaders: httpHeaders,
