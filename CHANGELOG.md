@@ -1,3 +1,7 @@
+## 0.0.18
+
+* Updated README file with latest information/documentation.
+
 ## 0.0.17
 
 * Added onReceiveProgress, onSendProgress in APIRequest.
