@@ -47,7 +47,8 @@ class LogHelper {
   }
 
   /// SHOW LOG INFO
-  static void logInfo(dynamic msg, {StackTrace? stackTrace, bool logarteLog = false}) {
+  static void logInfo(dynamic msg,
+      {StackTrace? stackTrace, bool logarteLog = false}) {
     if (_logarteClient != null && logarteLog) {
       _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
     }
@@ -68,7 +69,8 @@ class LogHelper {
   }
 
   /// [logSuccess] print Green Color
-  static void logSuccess(dynamic msg, {StackTrace? stackTrace, bool logarteLog = false}) {
+  static void logSuccess(dynamic msg,
+      {StackTrace? stackTrace, bool logarteLog = false}) {
     if (_logarteClient != null && logarteLog) {
       _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
     }
@@ -89,7 +91,8 @@ class LogHelper {
   }
 
   /// [logWarning] print Yellow Color
-  static void logWarning(dynamic msg, {StackTrace? stackTrace, bool logarteLog = false}) {
+  static void logWarning(dynamic msg,
+      {StackTrace? stackTrace, bool logarteLog = false}) {
     if (_logarteClient != null && logarteLog) {
       _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
     }
@@ -110,7 +113,8 @@ class LogHelper {
   }
 
   /// [logError] print Red Color
-  static void logError(dynamic msg, {StackTrace? stackTrace, bool logarteLog = false}) {
+  static void logError(dynamic msg,
+      {StackTrace? stackTrace, bool logarteLog = false}) {
     if (_logarteClient != null && logarteLog) {
       _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
     }
@@ -131,7 +135,8 @@ class LogHelper {
   }
 
   /// [logCyan] print Cyan Color
-  static void logCyan(dynamic msg, {StackTrace? stackTrace, bool logarteLog = false}) {
+  static void logCyan(dynamic msg,
+      {StackTrace? stackTrace, bool logarteLog = false}) {
     if (_logarteClient != null && logarteLog) {
       _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
     }

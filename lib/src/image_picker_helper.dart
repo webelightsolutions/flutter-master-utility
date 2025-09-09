@@ -37,7 +37,8 @@ class ImagePickerHelper {
   /// MULTIMEDIA PICKER ( PHOTO, VIDEO, DOCUMENT )
   static Future<File?> multiMediaPicker() async {
     String? pickedFilePath;
-    final PickerActionType? actionType = await DialogHelper.showActionSheet<PickerActionType>(
+    final PickerActionType? actionType =
+        await DialogHelper.showActionSheet<PickerActionType>(
       actions: const [
         SheetAction(
           key: PickerActionType.camera,
@@ -67,7 +68,10 @@ class ImagePickerHelper {
     return pickedFilePath != null ? File(pickedFilePath) : null;
   }
 
-  static Future<List<XFile>> pickMultiImage({int? imageQuality, double? maxImageHeight, double? maxImageWidth}) async {
+  static Future<List<XFile>> pickMultiImage(
+      {int? imageQuality,
+      double? maxImageHeight,
+      double? maxImageWidth}) async {
     final ImagePicker picker = ImagePicker();
     Future<List<XFile>> imageList = picker.pickMultiImage(
       imageQuality: imageQuality,
@@ -149,12 +153,14 @@ class ImagePickerHelper {
 
       case PickerActionType.video:
         final ImagePicker picker = ImagePicker();
-        final XFile? video = await picker.pickVideo(source: ImageSource.gallery, maxDuration: maxVideoDuration);
+        final XFile? video = await picker.pickVideo(
+            source: ImageSource.gallery, maxDuration: maxVideoDuration);
         return video?.path;
 
       case PickerActionType.cameraVideo:
         final ImagePicker picker = ImagePicker();
-        final XFile? video = await picker.pickVideo(source: ImageSource.camera, maxDuration: maxVideoDuration);
+        final XFile? video = await picker.pickVideo(
+            source: ImageSource.camera, maxDuration: maxVideoDuration);
         return video?.path;
 
       case PickerActionType.document:
