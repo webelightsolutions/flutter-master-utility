@@ -109,7 +109,7 @@ class AppNetworkImage extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressIndicator(context) {
+  Widget _buildProgressIndicator(BuildContext context) {
     return Center(
         child: Platform.isAndroid
             ? CircularProgressIndicator(

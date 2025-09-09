@@ -121,7 +121,7 @@ class ImagePickerHelper {
   }
 
   static Future<String?>? _imagePickerSwitch(
-      {actionType,
+      {PickerActionType? actionType,
       int? imageQuality,
       Duration? maxVideoDuration,
       double? maxImageHeight,

@@ -21,7 +21,7 @@ class EncryptionHelper {
     return decrypted;
   }
 
-  static Encrypter _getEncrypter(key) {
+  static Encrypter _getEncrypter(String key) {
     return Encrypter(AES(Key.fromUtf8(key)));
   }
 }
