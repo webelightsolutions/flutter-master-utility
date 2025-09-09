@@ -1,89 +1,94 @@
+## 0.0.19
+
+- Removed jailbreak dependency
+- Added 16KB Android support
+
 ## 0.0.18
 
-* Updated README file with latest information/documentation.
+- Updated README file with latest information/documentation.
 
 ## 0.0.17
 
-* Added onReceiveProgress, onSendProgress in APIRequest.
-* Shared preferences helper service for saving, retrieving, and removing data.
-* API helper service for easier API calls (GET, POST, PUT, DELETE).
-* Interactive buttons for handling permissions.
-* Complete UI layout redesign for better user experience.
+- Added onReceiveProgress, onSendProgress in APIRequest.
+- Shared preferences helper service for saving, retrieving, and removing data.
+- API helper service for easier API calls (GET, POST, PUT, DELETE).
+- Interactive buttons for handling permissions.
+- Complete UI layout redesign for better user experience.
 
 ## 0.0.16
 
-* Added `getResponseWithMapper` method in APIService which take json mapper as param.
-* Improved curl logger code
-* Improved PreferenceHelper code
-* Added Lograte (In App Console)
-* Added File Logger
-* Added properties parameter in setUserIdentity (MixPanel)
+- Added `getResponseWithMapper` method in APIService which take json mapper as param.
+- Improved curl logger code
+- Improved PreferenceHelper code
+- Added Lograte (In App Console)
+- Added File Logger
+- Added properties parameter in setUserIdentity (MixPanel)
 
 ## 0.0.15
 
-* Removed Image Cropper
-* Added JWT Refresh Token Interceptor
+- Removed Image Cropper
+- Added JWT Refresh Token Interceptor
 
 ## 0.0.14
 
-* Replaced discontinued Flutter root detection package.
-* Integrated Mixpanel for API event tracking.
+- Replaced discontinued Flutter root detection package.
+- Integrated Mixpanel for API event tracking.
 
 ## 0.0.13
 
-* Added flutter v3.24.5 support
+- Added flutter v3.24.5 support
 
 ## 0.0.12
 
-* Added Curl logger interceptor
+- Added Curl logger interceptor
 
 ## 0.0.11
 
-* Added cancel token functionality for all Dio request types.
+- Added cancel token functionality for all Dio request types.
 
 ## 0.0.10
 
-* custom formatter added for date.
+- custom formatter added for date.
 
 ## 0.0.9
 
-* Added `MapEncryption` extension to encrypt map data using RSA and AES encryption.
+- Added `MapEncryption` extension to encrypt map data using RSA and AES encryption.
 
 ## 0.0.8
 
-* Shared preference updated with encryption and decryption.
+- Shared preference updated with encryption and decryption.
 
 ## 0.0.7
 
-* Dio Exception interceptor added.
+- Dio Exception interceptor added.
 
 ## 0.0.6
 
-* API Helper now supports cookies and a refresh token.
+- API Helper now supports cookies and a refresh token.
 
 ## 0.0.5
 
-* all package updated with latest version
+- all package updated with latest version
 
 ## 0.0.4
 
-* dio package update
+- dio package update
 
 ## 0.0.3
 
-* Image cropper feature added.
-* Generics Enums for the API status code added.
-* Debounce Timer with milliseconds option added.
-* Read more for long text added.
-* Double-click redundant added.
-* Permission handler with custom type added.
-* Cookie in base response class added.
+- Image cropper feature added.
+- Generics Enums for the API status code added.
+- Debounce Timer with milliseconds option added.
+- Read more for long text added.
+- Double-click redundant added.
+- Permission handler with custom type added.
+- Cookie in base response class added.
 
 ## 0.0.2
 
-* Implemented done keyboard view for Android and iOS
+- Implemented done keyboard view for Android and iOS
 
 ## 0.0.1
 
-* Initial release
-* A package that enables you to use a comprehensive set of utilities in a single package with customization. It includes features like Size Helper, Navigation Helper, Image Picker Helper, Date Time Helper, Auto Size Text Helper, Toast Helper, Email Dispose, Log Helper, Dialog Helper, Cache Network Image Helper, Validation Helper, Api Helper, and Shared Preference Helper.
+- Initial release
+- A package that enables you to use a comprehensive set of utilities in a single package with customization. It includes features like Size Helper, Navigation Helper, Image Picker Helper, Date Time Helper, Auto Size Text Helper, Toast Helper, Email Dispose, Log Helper, Dialog Helper, Cache Network Image Helper, Validation Helper, Api Helper, and Shared Preference Helper.

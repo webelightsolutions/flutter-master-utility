@@ -47,8 +47,8 @@ class LogHelper {
   }
 
   /// SHOW LOG INFO
-  static void logInfo(dynamic msg, {StackTrace? stackTrace}) {
-    if (_logarteClient != null) {
+  static void logInfo(dynamic msg, {StackTrace? stackTrace, bool logarteLog = false}) {
+    if (_logarteClient != null && logarteLog) {
       _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
     }
     if (_enableFileLogger) LogsFile.instance.logInfo(msg, stackTrace);
@@ -68,8 +68,8 @@ class LogHelper {
   }
 
   /// [logSuccess] print Green Color
-  static void logSuccess(dynamic msg, {StackTrace? stackTrace}) {
-    if (_logarteClient != null) {
+  static void logSuccess(dynamic msg, {StackTrace? stackTrace, bool logarteLog = false}) {
+    if (_logarteClient != null && logarteLog) {
       _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
     }
     if (_enableFileLogger) LogsFile.instance.logSuccess(msg, stackTrace);
@@ -89,8 +89,8 @@ class LogHelper {
   }
 
   /// [logWarning] print Yellow Color
-  static void logWarning(dynamic msg, {StackTrace? stackTrace}) {
-    if (_logarteClient != null) {
+  static void logWarning(dynamic msg, {StackTrace? stackTrace, bool logarteLog = false}) {
+    if (_logarteClient != null && logarteLog) {
       _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
     }
     if (_enableFileLogger) LogsFile.instance.logWarning(msg, stackTrace);
@@ -110,8 +110,8 @@ class LogHelper {
   }
 
   /// [logError] print Red Color
-  static void logError(dynamic msg, {StackTrace? stackTrace}) {
-    if (_logarteClient != null) {
+  static void logError(dynamic msg, {StackTrace? stackTrace, bool logarteLog = false}) {
+    if (_logarteClient != null && logarteLog) {
       _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
     }
     if (_enableFileLogger) LogsFile.instance.logError(msg, stackTrace);
@@ -131,8 +131,8 @@ class LogHelper {
   }
 
   /// [logCyan] print Cyan Color
-  static void logCyan(dynamic msg, {StackTrace? stackTrace}) {
-    if (_logarteClient != null) {
+  static void logCyan(dynamic msg, {StackTrace? stackTrace, bool logarteLog = false}) {
+    if (_logarteClient != null && logarteLog) {
       _logarteClient?.log(msg.toString(), stackTrace: stackTrace);
     }
     if (_enableFileLogger) LogsFile.instance.logInfo(msg, stackTrace);
