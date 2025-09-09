@@ -16,12 +16,11 @@ class EncryptionHelper {
     required String value,
     required String key,
   }) {
-    final decrypted =
-        _getEncrypter(key).decrypt(Encrypted.from64(value), iv: _iv);
+    final decrypted = _getEncrypter(key).decrypt(Encrypted.from64(value), iv: _iv);
     return decrypted;
   }
 
-  static Encrypter _getEncrypter(key) {
+  static Encrypter _getEncrypter(String key) {
     return Encrypter(AES(Key.fromUtf8(key)));
   }
 }
