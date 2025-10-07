@@ -128,9 +128,14 @@ class APIService {
         final APIResponse<dynamic> errorModel;
         if (e.response?.statusCode == 422) {
           if (e.response?.data['detail']?.isNotEmpty ?? false) {
-            ApiErrorModel errorResponse =
-                ApiErrorModel.fromJson(e.response?.data);
-            String errorMessage = setErrorData(errorResponse.detail);
+            ApiErrorModel errorResponse = ApiErrorModel.fromJson(e.response?.data);
+            String errorMessage = '';
+
+            if (e.response?.data['detail'] is List<String>) {
+              errorMessage = e.response?.data['detail'].join(', ');
+            } else {
+              errorMessage = setErrorData(errorResponse.detail);
+            }
 
             debugPrint(errorMessage);
 
