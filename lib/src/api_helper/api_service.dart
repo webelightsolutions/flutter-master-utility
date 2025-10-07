@@ -125,11 +125,13 @@ class APIService {
           if (e.response?.data['detail']?.isNotEmpty ?? false) {
             String errorMessage = '';
 
-            if (e.response?.data['detail'] is List<String>) {
-              errorMessage = e.response?.data['detail'].join(', ');
-            } else {
-              ApiErrorModel errorResponse = ApiErrorModel.fromJson(e.response?.data);
-              errorMessage = setErrorData(errorResponse.detail);
+            if (e.response?.data['detail'] is List<dynamic>) {
+              try {
+                ApiErrorModel errorResponse = ApiErrorModel.fromJson(e.response?.data);
+                errorMessage = setErrorData(errorResponse.detail);
+              } catch (_) {
+                errorMessage = (e.response?.data['detail'] as List<dynamic>).join(', ');
+              }
             }
 
             debugPrint(errorMessage);
