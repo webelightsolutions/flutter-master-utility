@@ -122,17 +122,35 @@ class APIService {
       if (e.response != null) {
         final APIResponse<dynamic> errorModel;
         if (e.response?.statusCode == 422) {
-          if (e.response?.data['detail']?.isNotEmpty ?? false) {
+          if (e.response?.data['message'] != null) {
             String errorMessage = '';
-
-            if (e.response?.data['detail'] is List<dynamic>) {
-              try {
-                ApiErrorModel errorResponse = ApiErrorModel.fromJson(e.response?.data);
-                errorMessage = setErrorData(errorResponse.detail);
-              } catch (_) {
-                errorMessage = (e.response?.data['detail'] as List<dynamic>).join(', ');
-              }
+            final message = e.response?.data['message'];
+            if (message is String) {
+              errorMessage = message;
+            } else if (message is List<dynamic>) {
+              errorMessage = message.join('\n');
+            } else {
+              errorMessage = message.toString();
             }
+            Response<dynamic> responseData = Response(
+              requestOptions: RequestOptions(path: ""),
+              data: {
+                "hasError": true,
+                "message": errorMessage,
+                "statusCode": e.response?.statusCode,
+                "data": e.response?.data,
+              },
+              statusCode: e.response?.statusCode,
+              statusMessage: errorMessage,
+            );
+
+            errorModel = APIResponse<dynamic>.fromJson(
+              responseData,
+              create: apiResponse,
+            );
+          } else if (e.response?.data['detail']?.isNotEmpty ?? false) {
+            ApiErrorModel errorResponse = ApiErrorModel.fromJson(e.response?.data);
+            final errorMessage = setErrorData(errorResponse.detail);
 
             debugPrint(errorMessage);
 
