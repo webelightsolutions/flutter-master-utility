@@ -7,13 +7,10 @@ class ApiException {
 
   StackTrace? stackTrace;
 
-  Response<dynamic>? response;
-
   ApiException({
     required this.message,
     this.exception,
     this.statusCode = 0,
     this.stackTrace,
-    this.response,
   });
 }

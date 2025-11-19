@@ -45,8 +45,9 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
   final ValueNotifier<bool> _isFocusNode = ValueNotifier<bool>(false);
   final ValueNotifier<String?> _multimediaOutput = ValueNotifier<String?>(null);
   final ValueNotifier<String?> _dateTimeOutput = ValueNotifier<String?>(null);
-  // final baseUrl = "https://safarr-api-dev.webelight.co.in/";
+
   final baseUrl = "https://insurance-bar-api-dev.webelight.co.in/api/v1/";
+  // final baseUrl = "https://svgsilh.com/svg/";
   @override
   void initState() {
     super.initState();
@@ -154,39 +155,60 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
 
   void postCall() async {
     final request = APIRequest(
-      url: "customers/signupss",
+      url: "customers/signup",
       methodType: MethodType.POST,
       params: {
         "fullName": "John Doe",
         "gender": "male",
         "dateOfBirth": "1990-01-01",
         "email": "john@example.com",
-        "mobileNumber": "",
+        "mobileNumber": "+916352371493",
         "address": "123 Main St",
-        "referralCode": "HFUIRE32"
+        "referralCode": ""
       },
     );
-    final response = await APIService().getApiResponse(
+    final response = await APIService().getResponseWithMapperError(
       request,
-      // jsonMapper: SuccessResponseModel.fromJson,
+      jsonMapper: (json) => SuccessResponseModel.fromJson(json),
+      errorMapper: (response) => ErrorResponseModel.fromJson(response),
     );
 
-    // response.fold(
-    //   (l) {
-    //     LogHelper.logError("Error: ${l.response?.data}");
-    //     final data = l.response?.data;
-    //   },
-    //   (r) {
-    //     LogHelper.logSuccess("Response: ${r.data?.message}");
-    //   },
-    // );
+    response.fold((l) {
+      LogHelper.logError("Error: ${l.message?.join(", ")}");
+    }, (r) {
+      LogHelper.logSuccess("Response: ${r.data?.message}");
+    });
+  }
 
-    LogHelper.logSuccess("hasError: ${response.hasError}");
-    LogHelper.logSuccess("message: ${response.message}");
-    LogHelper.logSuccess("statusCode: ${response.statusCode}");
-    LogHelper.logSuccess("data: ${response.data}");
-    LogHelper.logSuccess("refreshToken: ${response.refreshToken}");
-    LogHelper.logSuccess("cookies: ${response.cookies}");
+  void getCall() async {
+    final request = APIRequest(
+      url: "2056977.svg",
+      methodType: MethodType.GET,
+      // params: {
+      //   "fullName": "John Doe",
+      //   "gender": "male",
+      //   "dateOfBirth": "1990-01-01",
+      //   "email": "john@example.com",
+      //   "mobileNumber": "+916352371493",
+      //   "address": "123 Main St",
+      //   "referralCode": ""
+      // },
+    );
+    final response = await APIService().getResponseWithMapperError(
+      request,
+      jsonMapper: (json) => getSvgUrl(json),
+      errorMapper: (response) => ErrorResponseModel.fromJson(response),
+    );
+
+    response.fold((l) {
+      LogHelper.logError("Error: ${l.message?.join(", ")}");
+    }, (r) {
+      LogHelper.logSuccess("Response: $r");
+    });
+  }
+
+  String getSvgUrl(String svgName) {
+    return svgName;
   }
 
   Widget _buildContent() {
@@ -199,6 +221,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
         child: Column(
           children: [
             OutlinedButton(onPressed: postCall, child: const Text("POST API call")),
+            OutlinedButton(onPressed: getCall, child: const Text("GET API call")),
             _buildSectionCard(
               title: 'Done Keyboard',
               description:
@@ -1110,13 +1133,15 @@ class ErrorResponseModel {
 
   ErrorResponseModel({this.statusCode, this.timestamp, this.path, this.method, this.message, this.detail});
 
-  ErrorResponseModel.fromJson(Map<String, dynamic> json) {
+  ErrorResponseModel.fromJson(Response<dynamic>? response) {
+    final json = response?.data as Map<String, dynamic>;
+
     statusCode = json['statusCode'];
     timestamp = json['timestamp'];
     path = json['path'];
     method = json['method'];
-    message = json['message']?.cast<String>();
-    detail = json['detail']?.cast<String>();
+    message = (json['message'] as List<dynamic>?)?.cast<String>();
+    detail = (json['detail'] as List<dynamic>?)?.cast<String>();
   }
 
   Map<String, dynamic> toJson() {

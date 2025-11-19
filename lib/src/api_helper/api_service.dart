@@ -263,7 +263,7 @@ class APIService {
         return right(response.data);
       }
 
-      return left(ApiException(message: APIConstError.kSomethingWentWrong, response: response));
+      return left(ApiException(message: APIConstError.kSomethingWentWrong));
     } on DioException catch (e) {
       if (request.mixPanelEventModel != null) {
         MixPanelService.instance.trackEvent(
@@ -328,7 +328,6 @@ class APIService {
             exception: e,
             statusCode: e.response?.statusCode,
             stackTrace: e.stackTrace,
-            response: e.response,
           ),
         );
       }
@@ -338,7 +337,6 @@ class APIService {
           exception: e,
           statusCode: e.response?.statusCode,
           stackTrace: e.stackTrace,
-          response: e.response,
         ),
       );
     } catch (e, stackTrace) {
@@ -358,6 +356,69 @@ class APIService {
           stackTrace: stackTrace,
         ),
       );
+    }
+  }
+
+  Future<Either<L, R>> getResponseWithMapperError<L, R>(
+    APIRequest request, {
+    FormData? formData,
+
+    /// Use this for if response is JsonObject
+    final JsonMapperDynamic<R>? jsonMapper,
+
+    /// Use this for if response is JsonArray
+    final ListJsonMapper<R>? listJsonMapper,
+
+    /// Use this for if response is Error
+    required ErrorMapper<L> errorMapper,
+  }) async {
+    assert(jsonMapper == null || listJsonMapper == null, 'Can not provide both json mapper!');
+    try {
+      final response = await _getResponse(request: request, formData: formData);
+
+      final isSuccess = response.statusCode == StatusCode.OK.value || response.statusCode == StatusCode.CREATED.value;
+
+      if (isSuccess) {
+        if (request.mixPanelEventModel != null) {
+          MixPanelService.instance.trackEvent(
+            eventName: request.mixPanelEventModel?.eventName ?? _removeQueryParams(request.url),
+            data: request.mixPanelEventModel?.successData,
+          );
+        }
+        if (request.mixPanelEventModel == null && request.enableMixpanelTracking == true) {
+          MixPanelService.instance.trackEvent(
+            eventName: _removeQueryParams(request.url),
+            data: response.data,
+          );
+        }
+
+        if (response.data is Map<String, dynamic> && jsonMapper != null) {
+          final mapData = response.data as Map<String, dynamic>;
+          final data = await compute(jsonMapper, mapData);
+          return right(data);
+        } else if (response.data is List<dynamic> && listJsonMapper != null) {
+          final data = await compute(listJsonMapper, response.data as List<dynamic>);
+          return right(data);
+        }
+        return right(response.data);
+      }
+
+      return left(errorMapper(response));
+    } on DioException catch (e) {
+      if (request.mixPanelEventModel != null) {
+        MixPanelService.instance.trackEvent(
+          eventName: request.mixPanelEventModel?.eventName ?? _removeQueryParams(request.url),
+          data: request.mixPanelEventModel?.errorData,
+        );
+      }
+      if (request.mixPanelEventModel == null && request.enableMixpanelTracking == true) {
+        MixPanelService.instance.trackEvent(
+          eventName: _removeQueryParams(request.url),
+          data: e.response?.data,
+        );
+      }
+
+      return left(errorMapper(e.response));
     }
   }
 }
