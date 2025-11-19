@@ -20,46 +20,16 @@ class _Constants {
   static const Color borderColor = Color(0xFFE2E8F0);
 
   // Gradients for section headers
-  static const List<Color> doneKeyboardGradient = [
-    Color(0xFF6366F1),
-    Color(0xFF8B5CF6)
-  ];
-  static const List<Color> toastHelpersGradient = [
-    Color(0xFFFFA726),
-    Color(0xFFEF4444)
-  ];
-  static const List<Color> multimediaPickerGradient = [
-    Color(0xFF34D399),
-    Color(0xFF06B6D4)
-  ];
-  static const List<Color> dateTimeGradient = [
-    Color(0xFF3B82F6),
-    Color(0xFF6366F1)
-  ];
-  static const List<Color> readMoreGradient = [
-    Color(0xFF8B5CF6),
-    Color(0xFFEC4899)
-  ];
-  static const List<Color> dialogsGradient = [
-    Color(0xFF06B6D4),
-    Color(0xFF0891B2)
-  ];
-  static const List<Color> networkImageGradient = [
-    Color(0xFFFDE68A),
-    Color(0xFFF59E42)
-  ];
-  static const List<Color> preferenceHelperGradient = [
-    Color(0xFF10B981),
-    Color(0xFF059669)
-  ];
-  static const List<Color> apiHelperGradient = [
-    Color(0xFF8B5CF6),
-    Color(0xFF3B82F6)
-  ];
-  static const List<Color> permissionHelperGradient = [
-    Color(0xFFF97316),
-    Color(0xFFDC2626)
-  ];
+  static const List<Color> doneKeyboardGradient = [Color(0xFF6366F1), Color(0xFF8B5CF6)];
+  static const List<Color> toastHelpersGradient = [Color(0xFFFFA726), Color(0xFFEF4444)];
+  static const List<Color> multimediaPickerGradient = [Color(0xFF34D399), Color(0xFF06B6D4)];
+  static const List<Color> dateTimeGradient = [Color(0xFF3B82F6), Color(0xFF6366F1)];
+  static const List<Color> readMoreGradient = [Color(0xFF8B5CF6), Color(0xFFEC4899)];
+  static const List<Color> dialogsGradient = [Color(0xFF06B6D4), Color(0xFF0891B2)];
+  static const List<Color> networkImageGradient = [Color(0xFFFDE68A), Color(0xFFF59E42)];
+  static const List<Color> preferenceHelperGradient = [Color(0xFF10B981), Color(0xFF059669)];
+  static const List<Color> apiHelperGradient = [Color(0xFF8B5CF6), Color(0xFF3B82F6)];
+  static const List<Color> permissionHelperGradient = [Color(0xFFF97316), Color(0xFFDC2626)];
 }
 
 class MasterUtilityScreen extends StatefulWidget {
@@ -75,6 +45,13 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
   final ValueNotifier<bool> _isFocusNode = ValueNotifier<bool>(false);
   final ValueNotifier<String?> _multimediaOutput = ValueNotifier<String?>(null);
   final ValueNotifier<String?> _dateTimeOutput = ValueNotifier<String?>(null);
+  // final baseUrl = "https://safarr-api-dev.webelight.co.in/";
+  final baseUrl = "https://insurance-bar-api-dev.webelight.co.in/api/v1/";
+  @override
+  void initState() {
+    super.initState();
+    dioClient.setConfiguration(baseUrl);
+  }
 
   @override
   void dispose() {
@@ -112,10 +89,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            _Constants.primaryGradientStart,
-            _Constants.primaryGradientEnd
-          ],
+          colors: [_Constants.primaryGradientStart, _Constants.primaryGradientEnd],
         ),
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(32),
@@ -123,8 +97,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
         ),
         boxShadow: [
           BoxShadow(
-            color:
-                const Color.fromARGB(255, 102, 118, 234).withValues(alpha: 0.2),
+            color: const Color.fromARGB(255, 102, 118, 234).withValues(alpha: 0.2),
             blurRadius: 32,
             offset: const Offset(0, 8),
           ),
@@ -144,8 +117,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               ),
             ),
             child: Center(
-              child: Text('🧩',
-                  style: TextStyle(fontSize: isSmallScreen ? 24 : 28)),
+              child: Text('🧩', style: TextStyle(fontSize: isSmallScreen ? 24 : 28)),
             ),
           ),
           SizedBox(width: isSmallScreen ? 12 : 16),
@@ -180,6 +152,43 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
     );
   }
 
+  void postCall() async {
+    final request = APIRequest(
+      url: "customers/signupss",
+      methodType: MethodType.POST,
+      params: {
+        "fullName": "John Doe",
+        "gender": "male",
+        "dateOfBirth": "1990-01-01",
+        "email": "john@example.com",
+        "mobileNumber": "",
+        "address": "123 Main St",
+        "referralCode": "HFUIRE32"
+      },
+    );
+    final response = await APIService().getApiResponse(
+      request,
+      // jsonMapper: SuccessResponseModel.fromJson,
+    );
+
+    // response.fold(
+    //   (l) {
+    //     LogHelper.logError("Error: ${l.response?.data}");
+    //     final data = l.response?.data;
+    //   },
+    //   (r) {
+    //     LogHelper.logSuccess("Response: ${r.data?.message}");
+    //   },
+    // );
+
+    LogHelper.logSuccess("hasError: ${response.hasError}");
+    LogHelper.logSuccess("message: ${response.message}");
+    LogHelper.logSuccess("statusCode: ${response.statusCode}");
+    LogHelper.logSuccess("data: ${response.data}");
+    LogHelper.logSuccess("refreshToken: ${response.refreshToken}");
+    LogHelper.logSuccess("cookies: ${response.cookies}");
+  }
+
   Widget _buildContent() {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmallScreen = screenWidth < 360;
@@ -189,12 +198,12 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            OutlinedButton(onPressed: postCall, child: const Text("POST API call")),
             _buildSectionCard(
               title: 'Done Keyboard',
               description:
                   'Use this field to show a keyboard with a \'Done\' button for better user experience and input completion.',
-              icon: _buildGradientIcon(
-                  _Constants.doneKeyboardGradient, Icons.keyboard_rounded),
+              icon: _buildGradientIcon(_Constants.doneKeyboardGradient, Icons.keyboard_rounded),
               content: AppTextField(
                 focusNode: _focusNode,
                 label: "Enter your text here...",
@@ -207,8 +216,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               title: 'Toast Helpers',
               description:
                   'Show quick toast notifications for user feedback, errors, or custom messages. Supports different styles and durations.',
-              icon: _buildGradientIcon(
-                  _Constants.toastHelpersGradient, Icons.notifications_rounded),
+              icon: _buildGradientIcon(_Constants.toastHelpersGradient, Icons.notifications_rounded),
               content: _buildToastButtons(),
             ),
             SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
@@ -216,8 +224,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               title: 'Multimedia Picker',
               description:
                   'Pick images or videos from the device gallery or camera. Useful for uploading and sharing multimedia content easily.',
-              icon: _buildGradientIcon(_Constants.multimediaPickerGradient,
-                  Icons.perm_media_rounded),
+              icon: _buildGradientIcon(_Constants.multimediaPickerGradient, Icons.perm_media_rounded),
               content: _buildGradientButton('📸 Pick Media', _pickMedia),
             ),
             SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
@@ -225,8 +232,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               title: 'DateTime Extension',
               description:
                   'Format and display date and time in various styles using helpful extensions for better readability and presentation.',
-              icon: _buildGradientIcon(
-                  _Constants.dateTimeGradient, Icons.access_time_rounded),
+              icon: _buildGradientIcon(_Constants.dateTimeGradient, Icons.access_time_rounded),
               content: _buildSecondaryButton('🕐 Show Time', _showTime),
             ),
             SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
@@ -234,8 +240,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               title: 'Read More Text',
               description:
                   'Display long text with a \'Read More\' option. Expand or collapse content for a cleaner and more concise UI.',
-              icon: _buildGradientIcon(
-                  _Constants.readMoreGradient, Icons.subject_rounded),
+              icon: _buildGradientIcon(_Constants.readMoreGradient, Icons.subject_rounded),
               content: _buildReadMoreContent(),
             ),
             SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
@@ -243,8 +248,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               title: 'Dialogs & Sheets',
               description:
                   'Show dialogs and action sheets for user confirmations, alerts, or choices. Enhance interaction and user guidance.',
-              icon: _buildGradientIcon(_Constants.dialogsGradient,
-                  Icons.chat_bubble_outline_rounded),
+              icon: _buildGradientIcon(_Constants.dialogsGradient, Icons.chat_bubble_outline_rounded),
               content: _buildDialogButtons(),
             ),
             SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
@@ -252,8 +256,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               title: 'Network Image with Caching',
               description:
                   'Display images from the internet with caching support. Handles loading, errors, and improves performance for repeated views.',
-              icon: _buildGradientIcon(
-                  _Constants.networkImageGradient, Icons.image_rounded),
+              icon: _buildGradientIcon(_Constants.networkImageGradient, Icons.image_rounded),
               content: _buildNetworkImage(),
             ),
             SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
@@ -261,8 +264,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               title: 'Shared Preferences Helper',
               description:
                   'Store and retrieve encrypted data from device storage with type safety. All data is automatically encrypted/decrypted for security.',
-              icon: _buildGradientIcon(
-                  _Constants.preferenceHelperGradient, Icons.note_add_rounded),
+              icon: _buildGradientIcon(_Constants.preferenceHelperGradient, Icons.note_add_rounded),
               content: _buildPreferenceHelperContent(),
             ),
             SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
@@ -270,8 +272,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               title: 'API Helper',
               description:
                   'Comprehensive HTTP client with automatic error handling, authentication, interceptors, and analytics tracking. Built on Dio with advanced features.',
-              icon: _buildGradientIcon(
-                  _Constants.apiHelperGradient, Icons.api_rounded),
+              icon: _buildGradientIcon(_Constants.apiHelperGradient, Icons.api_rounded),
               content: _buildApiHelperContent(),
             ),
             SizedBox(height: isSmallScreen ? 16 : _Constants.spacing),
@@ -279,8 +280,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
               title: 'Permission Helper',
               description:
                   'Manage permissions and request user authorization for accessing device features and resources.',
-              icon: _buildGradientIcon(
-                  _Constants.permissionHelperGradient, Icons.security_rounded),
+              icon: _buildGradientIcon(_Constants.permissionHelperGradient, Icons.security_rounded),
               content: _buildPermissionHelperContent(),
             ),
           ],
@@ -325,8 +325,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
                 width: isSmallScreen ? 40 : _Constants.iconSize,
                 height: isSmallScreen ? 40 : _Constants.iconSize,
                 decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.circular(_Constants.smallBorderRadius),
+                  borderRadius: BorderRadius.circular(_Constants.smallBorderRadius),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.1),
@@ -468,9 +467,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
       onTap: onTap,
       child: Container(
         constraints: BoxConstraints(minWidth: isSmallScreen ? 70 : 80),
-        padding: EdgeInsets.symmetric(
-            horizontal: isSmallScreen ? 12 : 16,
-            vertical: isSmallScreen ? 10 : 12),
+        padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 12 : 16, vertical: isSmallScreen ? 10 : 12),
         decoration: BoxDecoration(
           color: backgroundColor,
           gradient: isCustom
@@ -513,9 +510,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(
-            horizontal: isSmallScreen ? 20 : 24,
-            vertical: isSmallScreen ? 14 : 16),
+        padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 20 : 24, vertical: isSmallScreen ? 14 : 16),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
@@ -555,9 +550,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(
-            horizontal: isSmallScreen ? 16 : 20,
-            vertical: isSmallScreen ? 12 : 14),
+        padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 16 : 20, vertical: isSmallScreen ? 12 : 14),
         decoration: BoxDecoration(
           color: const Color(0xFFF8FAFC),
           border: Border.all(color: const Color(0xFFE2E8F0), width: 2),
@@ -609,8 +602,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
         if (constraints.maxWidth < 300 || isSmallScreen) {
           return Column(
             children: [
-              _buildToastButton('⚠️', 'Alert Dialog', _showAlertDialog,
-                  isError: true),
+              _buildToastButton('⚠️', 'Alert Dialog', _showAlertDialog, isError: true),
               SizedBox(height: isSmallScreen ? 8 : 12),
               _buildSecondaryButton('↗️ Action Sheet', _showActionSheet),
             ],
@@ -620,8 +612,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
         return Row(
           children: [
             Expanded(
-              child: _buildToastButton('⚠️', 'Alert Dialog', _showAlertDialog,
-                  isError: true),
+              child: _buildToastButton('⚠️', 'Alert Dialog', _showAlertDialog, isError: true),
             ),
             SizedBox(width: isSmallScreen ? 8 : 12),
             Expanded(
@@ -669,11 +660,9 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.error_outline,
-                        size: 48, color: Color(0xFF64748B)),
+                    Icon(Icons.error_outline, size: 48, color: Color(0xFF64748B)),
                     SizedBox(height: 8),
-                    Text('Failed to load image',
-                        style: TextStyle(color: Color(0xFF64748B))),
+                    Text('Failed to load image', style: TextStyle(color: Color(0xFF64748B))),
                   ],
                 ),
               ),
@@ -699,8 +688,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
   }
 
   void _showTime() {
-    final time = DateTime.now()
-        .toCustomFormatter(formatter: DateTimeFormatter.HOUR_MINUTE);
+    final time = DateTime.now().toCustomFormatter(formatter: DateTimeFormatter.HOUR_MINUTE);
 
     _dateTimeOutput.value = "Current time: $time";
     ToastHelper.showCustomToast(
@@ -719,8 +707,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text('Alert Dialog'),
-        content:
-            const Text('This is an example alert dialog with modern styling.'),
+        content: const Text('This is an example alert dialog with modern styling.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -731,8 +718,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF6366F1),
               foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),
             child: const Text('OK'),
           ),
@@ -909,8 +895,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
     );
   }
 
-  Widget _buildInfoSection(
-      String title, List<String> points, Color color, bool isSmallScreen) {
+  Widget _buildInfoSection(String title, List<String> points, Color color, bool isSmallScreen) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(isSmallScreen ? 12 : 16),
@@ -1012,11 +997,9 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
         if (constraints.maxWidth < 300 || isSmallScreen) {
           return Column(
             children: [
-              _buildPermissionButton(
-                  '📍', 'Location Permission', _requestLocationPermission),
+              _buildPermissionButton('📍', 'Location Permission', _requestLocationPermission),
               SizedBox(height: isSmallScreen ? 8 : 12),
-              _buildPermissionButton(
-                  '📷', 'Camera Permission', _requestCameraPermission),
+              _buildPermissionButton('📷', 'Camera Permission', _requestCameraPermission),
             ],
           );
         }
@@ -1024,13 +1007,11 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
         return Row(
           children: [
             Expanded(
-              child: _buildPermissionButton(
-                  '📍', 'Location Permission', _requestLocationPermission),
+              child: _buildPermissionButton('📍', 'Location Permission', _requestLocationPermission),
             ),
             SizedBox(width: isSmallScreen ? 8 : 12),
             Expanded(
-              child: _buildPermissionButton(
-                  '📷', 'Camera Permission', _requestCameraPermission),
+              child: _buildPermissionButton('📷', 'Camera Permission', _requestCameraPermission),
             ),
           ],
         );
@@ -1038,31 +1019,24 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
     );
   }
 
-  Widget _buildPermissionButton(
-      String emoji, String label, VoidCallback onTap) {
+  Widget _buildPermissionButton(String emoji, String label, VoidCallback onTap) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmallScreen = screenWidth < 360;
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: isSmallScreen ? 16 : 20,
-            vertical: isSmallScreen ? 12 : 14),
+        padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 16 : 20, vertical: isSmallScreen ? 12 : 14),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Color.fromARGB(255, 22, 173, 249),
-              Color.fromARGB(255, 38, 102, 220)
-            ],
+            colors: [Color.fromARGB(255, 22, 173, 249), Color.fromARGB(255, 38, 102, 220)],
           ),
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: const Color.fromARGB(255, 22, 128, 249)
-                  .withValues(alpha: 0.3),
+              color: const Color.fromARGB(255, 22, 128, 249).withValues(alpha: 0.3),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -1123,5 +1097,76 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
       },
       permissionDeniedDialog: () {},
     );
+  }
+}
+
+class ErrorResponseModel {
+  int? statusCode;
+  String? timestamp;
+  String? path;
+  String? method;
+  List<String>? message;
+  List<String>? detail;
+
+  ErrorResponseModel({this.statusCode, this.timestamp, this.path, this.method, this.message, this.detail});
+
+  ErrorResponseModel.fromJson(Map<String, dynamic> json) {
+    statusCode = json['statusCode'];
+    timestamp = json['timestamp'];
+    path = json['path'];
+    method = json['method'];
+    message = json['message']?.cast<String>();
+    detail = json['detail']?.cast<String>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['statusCode'] = statusCode;
+    data['timestamp'] = timestamp;
+    data['path'] = path;
+    data['method'] = method;
+    data['message'] = message;
+    data['detail'] = detail;
+    return data;
+  }
+}
+
+class SuccessResponseModel {
+  Data? data;
+  int? status;
+
+  SuccessResponseModel({this.data, this.status});
+
+  SuccessResponseModel.fromJson(Map<String, dynamic> json) {
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    status = json['status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    data['status'] = status;
+    return data;
+  }
+}
+
+class Data {
+  String? message;
+  String? otp;
+
+  Data({this.message, this.otp});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    message = json['message'];
+    otp = json['otp'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['otp'] = otp;
+    return data;
   }
 }

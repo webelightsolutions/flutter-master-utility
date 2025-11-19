@@ -6,8 +6,12 @@ class ApiErrorModel {
   ApiErrorModel.fromJson(Map<String, dynamic> json) {
     if (json['detail'] != null) {
       detail = <ErrorDetails>[];
-      json['detail'].forEach((v) {
-        detail?.add(ErrorDetails.fromJson(v));
+      (json['detail'] as List<dynamic>).forEach((v) {
+        if (v is String) {
+          detail?.add(ErrorDetails(msg: v));
+        } else {
+          detail?.add(ErrorDetails.fromJson(v));
+        }
       });
     }
   }
