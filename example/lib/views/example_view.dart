@@ -46,14 +46,6 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
   final ValueNotifier<String?> _multimediaOutput = ValueNotifier<String?>(null);
   final ValueNotifier<String?> _dateTimeOutput = ValueNotifier<String?>(null);
 
-  final baseUrl = "https://insurance-bar-api-dev.webelight.co.in/api/v1/";
-  // final baseUrl = "https://svgsilh.com/svg/";
-  @override
-  void initState() {
-    super.initState();
-    dioClient.setConfiguration(baseUrl);
-  }
-
   @override
   void dispose() {
     _textController.dispose();
@@ -153,64 +145,6 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
     );
   }
 
-  void postCall() async {
-    final request = APIRequest(
-      url: "customers/signup",
-      methodType: MethodType.POST,
-      params: {
-        "fullName": "John Doe",
-        "gender": "male",
-        "dateOfBirth": "1990-01-01",
-        "email": "john@example.com",
-        "mobileNumber": "+916352371493",
-        "address": "123 Main St",
-        "referralCode": ""
-      },
-    );
-    final response = await APIService().getResponseWithMapperError(
-      request,
-      jsonMapper: (json) => SuccessResponseModel.fromJson(json),
-      errorMapper: (response) => ErrorResponseModel.fromJson(response),
-    );
-
-    response.fold((l) {
-      LogHelper.logError("Error: ${l.message?.join(", ")}");
-    }, (r) {
-      LogHelper.logSuccess("Response: ${r.data?.message}");
-    });
-  }
-
-  void getCall() async {
-    final request = APIRequest(
-      url: "2056977.svg",
-      methodType: MethodType.GET,
-      // params: {
-      //   "fullName": "John Doe",
-      //   "gender": "male",
-      //   "dateOfBirth": "1990-01-01",
-      //   "email": "john@example.com",
-      //   "mobileNumber": "+916352371493",
-      //   "address": "123 Main St",
-      //   "referralCode": ""
-      // },
-    );
-    final response = await APIService().getResponseWithMapperError(
-      request,
-      jsonMapper: (json) => getSvgUrl(json),
-      errorMapper: (response) => ErrorResponseModel.fromJson(response),
-    );
-
-    response.fold((l) {
-      LogHelper.logError("Error: ${l.message?.join(", ")}");
-    }, (r) {
-      LogHelper.logSuccess("Response: $r");
-    });
-  }
-
-  String getSvgUrl(String svgName) {
-    return svgName;
-  }
-
   Widget _buildContent() {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmallScreen = screenWidth < 360;
@@ -220,8 +154,6 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            OutlinedButton(onPressed: postCall, child: const Text("POST API call")),
-            OutlinedButton(onPressed: getCall, child: const Text("GET API call")),
             _buildSectionCard(
               title: 'Done Keyboard',
               description:
@@ -1120,78 +1052,5 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
       },
       permissionDeniedDialog: () {},
     );
-  }
-}
-
-class ErrorResponseModel {
-  int? statusCode;
-  String? timestamp;
-  String? path;
-  String? method;
-  List<String>? message;
-  List<String>? detail;
-
-  ErrorResponseModel({this.statusCode, this.timestamp, this.path, this.method, this.message, this.detail});
-
-  ErrorResponseModel.fromJson(Response<dynamic>? response) {
-    final json = response?.data as Map<String, dynamic>;
-
-    statusCode = json['statusCode'];
-    timestamp = json['timestamp'];
-    path = json['path'];
-    method = json['method'];
-    message = (json['message'] as List<dynamic>?)?.cast<String>();
-    detail = (json['detail'] as List<dynamic>?)?.cast<String>();
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['statusCode'] = statusCode;
-    data['timestamp'] = timestamp;
-    data['path'] = path;
-    data['method'] = method;
-    data['message'] = message;
-    data['detail'] = detail;
-    return data;
-  }
-}
-
-class SuccessResponseModel {
-  Data? data;
-  int? status;
-
-  SuccessResponseModel({this.data, this.status});
-
-  SuccessResponseModel.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
-    status = json['status'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    data['status'] = status;
-    return data;
-  }
-}
-
-class Data {
-  String? message;
-  String? otp;
-
-  Data({this.message, this.otp});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
-    otp = json['otp'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['message'] = message;
-    data['otp'] = otp;
-    return data;
   }
 }

@@ -419,6 +419,24 @@ class APIService {
       }
 
       return left(errorMapper(e.response));
+    } catch (e, stackTrace) {
+      LogHelper.logError(e.toString(), stackTrace: stackTrace);
+
+      if (request.mixPanelEventModel != null) {
+        MixPanelService.instance.trackEvent(
+          eventName: request.mixPanelEventModel?.eventName ?? _removeQueryParams(request.url),
+          data: request.mixPanelEventModel?.errorData,
+        );
+      }
+      if (request.mixPanelEventModel == null && request.enableMixpanelTracking == true) {
+        MixPanelService.instance.trackEvent(eventName: _removeQueryParams(request.url));
+      }
+
+      return left(errorMapper(Response(
+          requestOptions: RequestOptions(
+        path: '',
+        data: e,
+      ))));
     }
   }
 }
