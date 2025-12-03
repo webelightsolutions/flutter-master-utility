@@ -130,7 +130,7 @@ class JwtHeroInterceptor extends QueuedInterceptor
     /// If the JWT token is valid, retry the request.
     /// If the JWT token is not valid, refresh it and retry the request.
     try {
-      if (jwtToken.isValid) {
+      if (jwtToken.isValid && shouldRefresh(err.response)) {
         final previousRequest = await retry(
           retryClient: retryClient,
           requestOptions: err.requestOptions,
