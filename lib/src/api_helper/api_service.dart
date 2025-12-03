@@ -83,19 +83,16 @@ class APIService {
     FormData? formData,
   }) async {
     try {
-      final Response<dynamic>? response =
-          await _getResponse(request: request, formData: formData);
+      final Response<dynamic>? response = await _getResponse(request: request, formData: formData);
 
       if (response != null) {
         if (request.mixPanelEventModel != null) {
           MixPanelService.instance.trackEvent(
-            eventName: request.mixPanelEventModel?.eventName ??
-                _removeQueryParams(request.url),
+            eventName: request.mixPanelEventModel?.eventName ?? _removeQueryParams(request.url),
             data: request.mixPanelEventModel?.successData,
           );
         }
-        if (request.mixPanelEventModel == null &&
-            request.enableMixpanelTracking == true) {
+        if (request.mixPanelEventModel == null && request.enableMixpanelTracking == true) {
           MixPanelService.instance.trackEvent(
             eventName: _removeQueryParams(request.url),
             data: response.data,
@@ -112,13 +109,11 @@ class APIService {
     } on DioException catch (e) {
       if (request.mixPanelEventModel != null) {
         MixPanelService.instance.trackEvent(
-          eventName: request.mixPanelEventModel?.eventName ??
-              _removeQueryParams(request.url),
+          eventName: request.mixPanelEventModel?.eventName ?? _removeQueryParams(request.url),
           data: request.mixPanelEventModel?.errorData,
         );
       }
-      if (request.mixPanelEventModel == null &&
-          request.enableMixpanelTracking == true) {
+      if (request.mixPanelEventModel == null && request.enableMixpanelTracking == true) {
         MixPanelService.instance.trackEvent(
           eventName: _removeQueryParams(request.url),
           data: e.response?.data,
@@ -128,8 +123,7 @@ class APIService {
         final APIResponse<dynamic> errorModel;
         if (e.response?.statusCode == 422) {
           if (e.response?.data['detail']?.isNotEmpty ?? false) {
-            ApiErrorModel errorResponse =
-                ApiErrorModel.fromJson(e.response?.data);
+            ApiErrorModel errorResponse = ApiErrorModel.fromJson(e.response?.data);
             String errorMessage = setErrorData(errorResponse.detail);
 
             debugPrint(errorMessage);
@@ -182,18 +176,15 @@ class APIService {
 
         return errorModel;
       }
-      return APIResponse<dynamic>.custom(
-          message: ErrorHandler.instance.getDioError(e));
+      return APIResponse<dynamic>.custom(message: ErrorHandler.instance.getDioError(e));
     } catch (e) {
       if (request.mixPanelEventModel != null) {
         MixPanelService.instance.trackEvent(
-          eventName: request.mixPanelEventModel?.eventName ??
-              _removeQueryParams(request.url),
+          eventName: request.mixPanelEventModel?.eventName ?? _removeQueryParams(request.url),
           data: request.mixPanelEventModel?.errorData,
         );
       }
-      if (request.mixPanelEventModel == null &&
-          request.enableMixpanelTracking == true) {
+      if (request.mixPanelEventModel == null && request.enableMixpanelTracking == true) {
         MixPanelService.instance.trackEvent(
           eventName: _removeQueryParams(request.url),
         );
@@ -243,22 +234,18 @@ class APIService {
     /// Use this for if response is JsonArray
     final ListJsonMapper<T>? listJsonMapper,
   }) async {
-    assert(jsonMapper == null || listJsonMapper == null,
-        'Can not provide both json mapper!');
+    assert(jsonMapper == null || listJsonMapper == null, 'Can not provide both json mapper!');
     try {
-      final Response<dynamic>? response =
-          await _getResponse(request: request, formData: formData);
+      final Response<dynamic>? response = await _getResponse(request: request, formData: formData);
 
       if (response != null) {
         if (request.mixPanelEventModel != null) {
           MixPanelService.instance.trackEvent(
-            eventName: request.mixPanelEventModel?.eventName ??
-                _removeQueryParams(request.url),
+            eventName: request.mixPanelEventModel?.eventName ?? _removeQueryParams(request.url),
             data: request.mixPanelEventModel?.successData,
           );
         }
-        if (request.mixPanelEventModel == null &&
-            request.enableMixpanelTracking == true) {
+        if (request.mixPanelEventModel == null && request.enableMixpanelTracking == true) {
           MixPanelService.instance.trackEvent(
             eventName: _removeQueryParams(request.url),
             data: response.data,
@@ -266,12 +253,10 @@ class APIService {
         }
 
         if (response.data is Map<String, dynamic> && jsonMapper != null) {
-          final data =
-              await compute(jsonMapper, response.data as Map<String, dynamic>);
+          final data = await compute(jsonMapper, response.data as Map<String, dynamic>);
           return right(data);
         } else if (response.data is List<dynamic> && listJsonMapper != null) {
-          final data =
-              await compute(listJsonMapper, response.data as List<dynamic>);
+          final data = await compute(listJsonMapper, response.data as List<dynamic>);
 
           return right(data);
         }
@@ -282,13 +267,11 @@ class APIService {
     } on DioException catch (e) {
       if (request.mixPanelEventModel != null) {
         MixPanelService.instance.trackEvent(
-          eventName: request.mixPanelEventModel?.eventName ??
-              _removeQueryParams(request.url),
+          eventName: request.mixPanelEventModel?.eventName ?? _removeQueryParams(request.url),
           data: request.mixPanelEventModel?.errorData,
         );
       }
-      if (request.mixPanelEventModel == null &&
-          request.enableMixpanelTracking == true) {
+      if (request.mixPanelEventModel == null && request.enableMixpanelTracking == true) {
         MixPanelService.instance.trackEvent(
           eventName: _removeQueryParams(request.url),
           data: e.response?.data,
@@ -296,48 +279,55 @@ class APIService {
       }
 
       if (e.response != null) {
-        final APIResponse<T> errorModel;
+        final APIResponse<dynamic> errorModel;
 
-        if (e.response?.statusCode == 422) {
-          if (e.response?.data['detail']?.isNotEmpty ?? false) {
-            ApiErrorModel errorResponse =
-                ApiErrorModel.fromJson(e.response?.data);
-            String errorMessage = setErrorData(errorResponse.detail);
+        // If custom error mapper is provided, use it to map the error response
+        if (dioClient.customErrorMapper != null) {
+          errorModel = dioClient.customErrorMapper!.call(e.response!);
+        }
 
-            debugPrint(errorMessage);
+        // If custom error mapper is not provided, use the default error mapper
+        else {
+          if (e.response?.statusCode == 422) {
+            if (e.response?.data['detail']?.isNotEmpty ?? false) {
+              ApiErrorModel errorResponse = ApiErrorModel.fromJson(e.response?.data);
+              String errorMessage = setErrorData(errorResponse.detail);
 
+              debugPrint(errorMessage);
+
+              Response<dynamic> responseData = Response(
+                requestOptions: RequestOptions(path: ""),
+                data: {
+                  "hasError": true,
+                  "message": errorMessage,
+                  "statusCode": e.response?.statusCode,
+                  "data": e.response?.data,
+                },
+                statusCode: e.response?.statusCode,
+                statusMessage: errorMessage,
+              );
+
+              errorModel = APIResponse<T>.fromJson(responseData);
+            } else {
+              errorModel = APIResponse<T>.fromJson(e.response!);
+            }
+          } else if (e.response?.statusCode == 500) {
             Response<dynamic> responseData = Response(
               requestOptions: RequestOptions(path: ""),
               data: {
                 "hasError": true,
-                "message": errorMessage,
+                "message": e.response?.statusMessage,
                 "statusCode": e.response?.statusCode,
                 "data": e.response?.data,
               },
               statusCode: e.response?.statusCode,
-              statusMessage: errorMessage,
+              statusMessage: e.response?.statusMessage,
             );
 
             errorModel = APIResponse<T>.fromJson(responseData);
           } else {
             errorModel = APIResponse<T>.fromJson(e.response!);
           }
-        } else if (e.response?.statusCode == 500) {
-          Response<dynamic> responseData = Response(
-            requestOptions: RequestOptions(path: ""),
-            data: {
-              "hasError": true,
-              "message": e.response?.statusMessage,
-              "statusCode": e.response?.statusCode,
-              "data": e.response?.data,
-            },
-            statusCode: e.response?.statusCode,
-            statusMessage: e.response?.statusMessage,
-          );
-
-          errorModel = APIResponse<T>.fromJson(responseData);
-        } else {
-          errorModel = APIResponse<T>.fromJson(e.response!);
         }
 
         return left(
@@ -360,15 +350,12 @@ class APIService {
     } catch (e, stackTrace) {
       if (request.mixPanelEventModel != null) {
         MixPanelService.instance.trackEvent(
-          eventName: request.mixPanelEventModel?.eventName ??
-              _removeQueryParams(request.url),
+          eventName: request.mixPanelEventModel?.eventName ?? _removeQueryParams(request.url),
           data: request.mixPanelEventModel?.errorData,
         );
       }
-      if (request.mixPanelEventModel == null &&
-          request.enableMixpanelTracking == true) {
-        MixPanelService.instance
-            .trackEvent(eventName: _removeQueryParams(request.url));
+      if (request.mixPanelEventModel == null && request.enableMixpanelTracking == true) {
+        MixPanelService.instance.trackEvent(eventName: _removeQueryParams(request.url));
       }
       return left(
         ApiException(
