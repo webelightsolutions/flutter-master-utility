@@ -7,4 +7,4 @@ typedef JsonMapper<T> = T Function(Map<String, dynamic>);
 typedef ListJsonMapper<T> = T Function(List<dynamic>);
 
 /// Error Mapper
-typedef CustomErrorMapper<T> = APIResponse<T> Function(Response<dynamic>);
+typedef CustomErrorMapper<T> = APIResponse<T> Function(Response<dynamic> response);
