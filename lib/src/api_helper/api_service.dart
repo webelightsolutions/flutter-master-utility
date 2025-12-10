@@ -77,6 +77,8 @@ class APIService {
     }
   }
 
+  @Deprecated(
+      'This method will be removed in the future. Use `getResponseWithMapper` instead of this method')
   Future<APIResponse<dynamic>> getApiResponse(
     APIRequest request, {
     Function(dynamic)? apiResponse,
