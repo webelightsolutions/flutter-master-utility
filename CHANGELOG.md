@@ -1,3 +1,8 @@
+## 0.0.20
+
+- Added custom error mapper in API configurations.
+- Fixed JWT Token refresh issue.
+
 ## 0.0.19
 
 - Removed jailbreak dependency

@@ -2,7 +2,7 @@ name: master_utility
 description: All-in-one utility solution with Size, Navigation, Image Picker,
   Date Time, Auto Size Text, Toast, Email, Log, Dialog, Cache Image, Validation,
   API and Shared Preferences.
-version: 0.0.19
+version: 0.0.20
 homepage: https://github.com/webelightsolutions/flutter-master-utility.git
 repository: https://github.com/webelightsolutions/flutter-master-utility.git
 issue_tracker: https://github.com/webelightsolutions/flutter-master-utility/issues
