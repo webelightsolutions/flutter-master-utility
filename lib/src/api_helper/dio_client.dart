@@ -18,6 +18,8 @@ class DioClient {
 
   CustomErrorMapper<dynamic>? customErrorMapper;
 
+  void Function(DioException, ErrorInterceptorHandler)? globalOnErrorHandler;
+
   Dio getDioClient({
     bool isAuth = true,
     void Function(
@@ -44,9 +46,12 @@ class DioClient {
       _dio?.interceptors.add(LogarteDioInterceptor(_logarteClient!));
     }
 
-    interceptors.add(
+    interceptors.addAll([
       InterceptorsWrapper(onError: callback),
-    );
+      if (globalOnErrorHandler != null) ...[
+        InterceptorsWrapper(onError: globalOnErrorHandler)
+      ],
+    ]);
 
     if (_refreshTokenConfiguration != null && isAuth) {
       _addJWTInterceptor(_refreshTokenConfiguration!);
@@ -83,14 +88,24 @@ class DioClient {
     );
   }
 
-  DioClient setConfiguration(
-    String baseUrl, {
-    Map<String, dynamic>? headers,
-    Logarte? logarteClient,
-    CustomErrorMapper? customErrorMapper,
-  }) {
-    this.customErrorMapper = customErrorMapper;
+  DioClient setConfiguration(String baseUrl,
+      {Map<String, dynamic>? headers,
+      Logarte? logarteClient,
+      CustomErrorMapper? customErrorMapper,
 
+      /// This will handle the global error handler for the Dio client.
+      /// [globalOnErrorHandler] is the function that will be called when an error occurs.
+      /// for example:
+      /// ```dart
+      /// void globalOnErrorHandler(DioException error, ErrorInterceptorHandler handler) {
+      ///   //handle the error and return the error to the caller.
+      ///   return handler.next(error);
+      /// }
+      /// ```
+      void Function(DioException, ErrorInterceptorHandler)?
+          globalOnErrorHandler}) {
+    this.customErrorMapper = customErrorMapper;
+    this.globalOnErrorHandler = globalOnErrorHandler;
     BaseOptions options = BaseOptions(
       connectTimeout: const Duration(
         milliseconds: 30000,
