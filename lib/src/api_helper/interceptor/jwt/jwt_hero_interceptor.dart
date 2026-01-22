@@ -33,7 +33,6 @@ class JwtHeroInterceptor extends QueuedInterceptor
     required this.baseClient,
     required this.onRefresh,
     required this.sessionManager,
-    this.bodyData,
   }) {
     refreshClient = Dio();
     refreshClient.options = BaseOptions(baseUrl: baseClient.options.baseUrl);
@@ -59,8 +58,6 @@ class JwtHeroInterceptor extends QueuedInterceptor
 
   /// The session manager to expire the session.
   final SessionManager sessionManager;
-
-  final Object? bodyData;
 
   @override
   Future<void> onRequest(

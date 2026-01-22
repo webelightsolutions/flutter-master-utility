@@ -73,7 +73,6 @@ class DioClient {
   void _addJWTInterceptor(RefreshTokenConfiguration config) {
     _dio?.interceptors.add(
       JwtHeroInterceptor(
-        bodyData: config.bodyData,
         tokenStorage: config.tokenStorage,
         baseClient: _dio ?? Dio(),
         onRefresh: (refreshClient, refreshToken) async {
