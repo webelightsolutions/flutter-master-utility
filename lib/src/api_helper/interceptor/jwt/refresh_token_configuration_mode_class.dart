@@ -10,6 +10,8 @@ class RefreshTokenConfiguration {
   final TokenStorage tokenStorage;
   final SessionManager sessionManager;
   final ResponseMapper responseMapper;
+  final Object? bodyData;
+  final Map<String, dynamic>? headers;
 
   RefreshTokenConfiguration({
     required this.refreshTokenEndPoint,
@@ -17,5 +19,7 @@ class RefreshTokenConfiguration {
     required this.responseMapper,
     required this.tokenStorage,
     this.refreshTokenHeaderKey = HttpHeaders.authorizationHeader,
+    this.bodyData,
+    this.headers,
   });
 }

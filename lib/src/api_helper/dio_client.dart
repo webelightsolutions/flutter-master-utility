@@ -77,9 +77,12 @@ class DioClient {
         baseClient: _dio ?? Dio(),
         onRefresh: (refreshClient, refreshToken) async {
           refreshClient.options = refreshClient.options.copyWith(
-              headers: {config.refreshTokenHeaderKey: 'Bearer $refreshToken'});
-          final response =
-              await refreshClient.post(config.refreshTokenEndPoint);
+              headers: config.headers ??
+                  {config.refreshTokenHeaderKey: 'Bearer $refreshToken'});
+          final response = await refreshClient.post(
+            config.refreshTokenEndPoint,
+            data: config.bodyData,
+          );
           final token = config.responseMapper(response.data);
           return token;
         },
