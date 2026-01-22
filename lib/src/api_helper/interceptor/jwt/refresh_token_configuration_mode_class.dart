@@ -5,8 +5,8 @@ import 'package:master_utility/master_utility.dart';
 typedef ResponseMapper = JwtToken Function(dynamic responseData);
 
 // Define typedefs for the callbacks
-typedef BodyDataCallback = Object? Function();
-typedef HeadersCallback = Map<String, dynamic> Function();
+typedef BodyDataCallback = Future<Object>? Function();
+typedef HeadersCallback = Future<Map<String, dynamic>>? Function();
 
 class RefreshTokenConfiguration {
   final String refreshTokenEndPoint;
