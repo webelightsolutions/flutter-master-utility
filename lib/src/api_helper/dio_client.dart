@@ -37,8 +37,7 @@ class DioClient {
     }
 
     if (_isApiLogVisible) {
-      interceptors.add(
-          HttpFormatter(loggingFilter: (request, response, error) => true));
+      interceptors.add(HttpFormatter(loggingFilter: (request, response, error) => true));
       interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
     }
 
@@ -48,9 +47,7 @@ class DioClient {
 
     interceptors.addAll([
       InterceptorsWrapper(onError: callback),
-      if (globalOnErrorHandler != null) ...[
-        InterceptorsWrapper(onError: globalOnErrorHandler)
-      ],
+      if (globalOnErrorHandler != null) ...[InterceptorsWrapper(onError: globalOnErrorHandler)],
     ]);
 
     if (_refreshTokenConfiguration != null && isAuth) {
@@ -76,12 +73,11 @@ class DioClient {
         tokenStorage: config.tokenStorage,
         baseClient: _dio ?? Dio(),
         onRefresh: (refreshClient, refreshToken) async {
-          refreshClient.options = refreshClient.options.copyWith(
-              headers: config.headers ??
-                  {config.refreshTokenHeaderKey: 'Bearer $refreshToken'});
+          refreshClient.options = refreshClient.options
+              .copyWith(headers: config.headers?.call() ?? {config.refreshTokenHeaderKey: 'Bearer $refreshToken'});
           final response = await refreshClient.post(
             config.refreshTokenEndPoint,
-            data: config.bodyData,
+            data: config.bodyData?.call(),
           );
           final token = config.responseMapper(response.data);
           return token;
@@ -105,8 +101,7 @@ class DioClient {
       ///   return handler.next(error);
       /// }
       /// ```
-      void Function(DioException, ErrorInterceptorHandler)?
-          globalOnErrorHandler}) {
+      void Function(DioException, ErrorInterceptorHandler)? globalOnErrorHandler}) {
     this.customErrorMapper = customErrorMapper;
     this.globalOnErrorHandler = globalOnErrorHandler;
     BaseOptions options = BaseOptions(
