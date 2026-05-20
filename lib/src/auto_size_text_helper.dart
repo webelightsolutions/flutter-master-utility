@@ -1,11 +1,11 @@
 // ignore_for_file: comment_references
 
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-
+@Deprecated('AutoText is deprecated. and it will be removed in the next major release.')
 class AutoText extends StatelessWidget {
   final String text;
 

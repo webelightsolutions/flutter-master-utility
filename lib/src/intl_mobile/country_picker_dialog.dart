@@ -91,8 +91,7 @@ class CountryPickerDialogState extends State<CountryPickerDialog> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding:
-                  widget.style?.searchFieldPadding ?? const EdgeInsets.all(0),
+              padding: widget.style?.searchFieldPadding ?? const EdgeInsets.all(0),
               child: TextField(
                 cursorColor: widget.style?.searchFieldCursorColor,
                 decoration: widget.style?.searchFieldInputDecoration ??
@@ -101,15 +100,10 @@ class CountryPickerDialogState extends State<CountryPickerDialog> {
                       labelText: widget.searchText,
                     ),
                 onChanged: (value) {
-                  _filteredCountries = value.isNotEmpty &&
-                          double.tryParse(value) != null
-                      ? widget.countryList
-                          .where((country) => country.dialCode.contains(value))
-                          .toList()
+                  _filteredCountries = value.isNotEmpty && double.tryParse(value) != null
+                      ? widget.countryList.where((country) => country.dialCode.contains(value)).toList()
                       : widget.countryList
-                          .where((country) => country.name
-                              .toLowerCase()
-                              .contains(value.toLowerCase()))
+                          .where((country) => country.name.toLowerCase().contains(value.toLowerCase()))
                           .toList();
                   if (mounted) setState(() {});
                 },
@@ -131,13 +125,11 @@ class CountryPickerDialogState extends State<CountryPickerDialog> {
                       contentPadding: widget.style?.listTilePadding,
                       title: Text(
                         _filteredCountries[index].name,
-                        style: widget.style?.countryNameStyle ??
-                            const TextStyle(fontWeight: FontWeight.w700),
+                        style: widget.style?.countryNameStyle ?? const TextStyle(fontWeight: FontWeight.w700),
                       ),
                       trailing: Text(
                         '+${_filteredCountries[index].dialCode}',
-                        style: widget.style?.countryCodeStyle ??
-                            const TextStyle(fontWeight: FontWeight.w700),
+                        style: widget.style?.countryCodeStyle ?? const TextStyle(fontWeight: FontWeight.w700),
                       ),
                       onTap: () {
                         _selectedCountry = _filteredCountries[index];
@@ -145,8 +137,7 @@ class CountryPickerDialogState extends State<CountryPickerDialog> {
                         Navigator.of(context).pop();
                       },
                     ),
-                    widget.style?.listTileDivider ??
-                        const Divider(thickness: 1),
+                    widget.style?.listTileDivider ?? const Divider(thickness: 1),
                   ],
                 ),
               ),

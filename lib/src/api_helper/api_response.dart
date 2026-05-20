@@ -47,7 +47,8 @@ class APIResponse<T> {
     statusCode = response.statusCode;
     data = (response.data != null && create != null) ? create(response.data) : null;
     try {
-      if (response.headers[_setCookieKey] != null) {
+      final hasCookiesKey = response.headers.map.keys.contains(_setCookieKey);
+      if (hasCookiesKey && response.headers[_setCookieKey] != null) {
         refreshToken = response.headers[_setCookieKey]?.first ?? '';
         cookies = response.headers[_setCookieKey] ?? [];
       }

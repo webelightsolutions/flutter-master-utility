@@ -131,9 +131,8 @@ class APIService {
         // If custom error mapper is provided, use it to map the error response
         if (dioClient.customErrorMapper != null) {
           errorModel = dioClient.customErrorMapper!.call(e.response!);
-        }
-        // If custom error mapper is not provided, use the default error mapper
-        else {
+        } else {
+          // If custom error mapper is not provided, use the default error mapper
           if (e.response?.statusCode == 422) {
             if (e.response?.data['detail']?.isNotEmpty ?? false) {
               ApiErrorModel errorResponse = ApiErrorModel.fromJson(e.response?.data);
