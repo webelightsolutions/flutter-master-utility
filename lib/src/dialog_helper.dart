@@ -2,14 +2,11 @@
 // Package imports:
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
-// Project imports:
-import 'package:master_utility/src/material/material_widget.dart';
-import 'package:master_utility/src/network_image.dart';
+import 'package:master_utility/master_utility.dart';
 
 class DialogHelper {
   DialogHelper._();
-  static final BuildContext _context =
-      NavigationService.navigatorKey.currentContext!;
+  static final BuildContext? _context = NavigationService.navigatorKey.currentContext;
 
   /// SHOW OK DIALOG
   static Future<dynamic> showOkDialog({
@@ -17,8 +14,16 @@ class DialogHelper {
     String? message,
     String? okLabel,
   }) async {
+    if (_context == null) {
+      LogHelper.logError('Context is null', stackTrace: StackTrace.current);
+      return Future.value(null);
+    }
+    if (!(_context!.mounted)) {
+      LogHelper.logError('Context is not mounted', stackTrace: StackTrace.current);
+      return Future.value(null);
+    }
     OkCancelResult result = await showOkAlertDialog(
-      context: _context,
+      context: _context!,
       title: title,
       message: message,
       okLabel: okLabel,
@@ -36,8 +41,16 @@ class DialogHelper {
     bool barrierDismissible = true,
     bool useActionSheetForIOS = true,
   }) async {
+    if (_context == null) {
+      LogHelper.logError('Context is null', stackTrace: StackTrace.current);
+      return;
+    }
+    if (!(_context!.mounted)) {
+      LogHelper.logError('Context is not mounted', stackTrace: StackTrace.current);
+      return;
+    }
     return showAlertDialog(
-      context: _context,
+      context: _context!,
       title: title,
       message: message,
       onPopInvokedWithResult: (didPop, result) => onWillPop?.call(didPop),
@@ -56,8 +69,16 @@ class DialogHelper {
     String? okLabel,
     String? cancelLabel,
   }) async {
+    if (_context == null) {
+      LogHelper.logError('Context is null', stackTrace: StackTrace.current);
+      return Future.value(null);
+    }
+    if (!(_context!.mounted)) {
+      LogHelper.logError('Context is not mounted', stackTrace: StackTrace.current);
+      return Future.value(null);
+    }
     OkCancelResult result = await showOkCancelAlertDialog(
-      context: _context,
+      context: _context!,
       title: title,
       message: message,
       okLabel: okLabel,
@@ -67,8 +88,7 @@ class DialogHelper {
   }
 
   /// IMAGE DIALOG VIEW
-  static Future openImageDialog(
-      {required String url, double? height, double? width}) async {
+  static Future openImageDialog({required String url, double? height, double? width}) async {
     return showDialog(
         context: NavigationService.navigatorKey.currentContext!,
         builder: (BuildContext context) {
