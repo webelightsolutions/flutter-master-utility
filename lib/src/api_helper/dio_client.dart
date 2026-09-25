@@ -100,6 +100,7 @@ class DioClient {
       {Map<String, dynamic>? headers,
       Logarte? logarteClient,
       CustomErrorMapper? customErrorMapper,
+      int connectTimeoutMs= 30000
 
       /// This will handle the global error handler for the Dio client.
       /// [globalOnErrorHandler] is the function that will be called when an error occurs.
@@ -115,7 +116,7 @@ class DioClient {
     this.globalOnErrorHandler = globalOnErrorHandler;
     BaseOptions options = BaseOptions(
       connectTimeout: const Duration(
-        milliseconds: 30000,
+        milliseconds: connectTimeoutMs,
       ),
       baseUrl: baseUrl,
       responseType: ResponseType.json,
