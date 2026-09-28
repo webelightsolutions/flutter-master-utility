@@ -40,8 +40,7 @@ class DioClient {
 
     if (_isApiLogVisible) {
       if (showHttpLogging) {
-        interceptors.add(
-            HttpFormatter(loggingFilter: (request, response, error) => true));
+        interceptors.add(HttpFormatter(loggingFilter: (request, response, error) => true));
       }
       if (showCurlLogging) {
         interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
@@ -100,7 +99,7 @@ class DioClient {
       {Map<String, dynamic>? headers,
       Logarte? logarteClient,
       CustomErrorMapper? customErrorMapper,
-      int connectTimeoutMs= 30000
+      int connectTimeoutMs = 30000,
 
       /// This will handle the global error handler for the Dio client.
       /// [globalOnErrorHandler] is the function that will be called when an error occurs.
@@ -115,7 +114,7 @@ class DioClient {
     this.customErrorMapper = customErrorMapper;
     this.globalOnErrorHandler = globalOnErrorHandler;
     BaseOptions options = BaseOptions(
-      connectTimeout: const Duration(
+      connectTimeout: Duration(
         milliseconds: connectTimeoutMs,
       ),
       baseUrl: baseUrl,
