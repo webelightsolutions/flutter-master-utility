@@ -22,10 +22,21 @@ class APIResponse<T> {
       hasError = true;
     }
     try {
-      if (response.data[_messageKey] != null) {
-        message = response.data?[_messageKey];
-      } else if (response.data[_errorKey] != null) {
-        message = response.data?[_errorKey];
+      final isMap = response.data is Map<String, dynamic>;
+
+      if (isMap && response.data != null) {
+        final responseData = response.data as Map<String, dynamic>;
+
+        final hasMessageKey = responseData.containsKey(_messageKey) && responseData[_messageKey] != null;
+        final hasErrorKey = responseData.containsKey(_errorKey) && responseData[_errorKey] != null;
+
+        if (hasMessageKey) {
+          message = responseData[_messageKey];
+        } else if (hasErrorKey) {
+          message = responseData[_errorKey];
+        } else {
+          message = response.statusMessage;
+        }
       } else {
         message = response.statusMessage;
       }
@@ -34,11 +45,10 @@ class APIResponse<T> {
     }
 
     statusCode = response.statusCode;
-    data = (response.data != null && create != null)
-        ? create(response.data)
-        : null;
+    data = (response.data != null && create != null) ? create(response.data) : null;
     try {
-      if (response.headers[_setCookieKey] != null) {
+      final hasCookiesKey = response.headers.map.keys.contains(_setCookieKey);
+      if (hasCookiesKey && response.headers[_setCookieKey] != null) {
         refreshToken = response.headers[_setCookieKey]?.first ?? '';
         cookies = response.headers[_setCookieKey] ?? [];
       }

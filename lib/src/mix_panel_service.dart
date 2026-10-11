@@ -5,15 +5,14 @@ class MixPanelService {
   MixPanelService._();
   static final MixPanelService instance = MixPanelService._();
 
-  static late Mixpanel _mixPanelInstance;
+  static Mixpanel? _mixPanelInstance;
   static String? userId;
   static String? userName;
 
   Future<void> init({required String mixPanelToken}) async {
     try {
-      _mixPanelInstance =
-          await Mixpanel.init(mixPanelToken, trackAutomaticEvents: true);
-      _mixPanelInstance.setLoggingEnabled(true);
+      _mixPanelInstance = await Mixpanel.init(mixPanelToken, trackAutomaticEvents: true);
+      _mixPanelInstance?.setLoggingEnabled(true);
     } catch (e) {
       LogHelper.logError(e, stackTrace: StackTrace.current);
     }
@@ -24,24 +23,30 @@ class MixPanelService {
     required String userName,
     Map<String, dynamic>? properties,
   }) {
-    try {
-      _mixPanelInstance.identify(userId);
-      final people = _mixPanelInstance.getPeople();
+    if (_mixPanelInstance == null) {
+      throw Exception('Mixpanel not initialized');
+    }
 
-      people.set('name', userName);
+    try {
+      _mixPanelInstance?.identify(userId);
+      final people = _mixPanelInstance?.getPeople();
+
+      people?.set('name', userName);
 
       properties?.forEach((key, value) {
-        people.set(key, value);
+        people?.set(key, value);
       });
     } catch (e) {
-      LogHelper.logError('Failed to identify: $userId',
-          stackTrace: StackTrace.current);
+      LogHelper.logError('Failed to identify: $userId', stackTrace: StackTrace.current);
     }
   }
 
   void trackEvent({required String eventName, Map<String, dynamic>? data}) {
+    if (_mixPanelInstance == null) {
+      throw Exception('Mixpanel not initialized');
+    }
     try {
-      _mixPanelInstance.track(
+      _mixPanelInstance?.track(
         eventName,
         properties: {
           if (userId != null && userId!.isNotEmpty) 'userId': userId,
@@ -50,8 +55,7 @@ class MixPanelService {
         },
       );
     } catch (e) {
-      LogHelper.logError('Failed to track event: $eventName',
-          stackTrace: StackTrace.current);
+      LogHelper.logError('Failed to track event: $eventName', stackTrace: StackTrace.current);
     }
   }
 }

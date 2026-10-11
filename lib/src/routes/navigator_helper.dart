@@ -18,31 +18,38 @@ class NavigationHelper {
     }
   }
 
-  static final BuildContext _context =
-      NavigationService.navigatorKey.currentContext!;
+  static final BuildContext? _context = NavigationService.navigatorKey.currentContext;
 
-  static Future navigatePush({
+  static Future<T?> navigatePush<T>({
     required Widget route,
 
     /// For iOS only
     bool fullscreenDialog = false,
     NavigationType? type,
   }) {
+    if (_context == null) {
+      LogHelper.logError('Context is null', stackTrace: StackTrace.current);
+      return Future.value(null);
+    }
+    if (!(_context!.mounted)) {
+      LogHelper.logError('Context is not mounted', stackTrace: StackTrace.current);
+      return Future.value(null);
+    }
+
     _instance.setNavigationType(type);
 
-    LogHelper.logSuccess("navigationType:${_type.name} : $route",
-        stackTrace: StackTrace.current);
+    LogHelper.logSuccess("navigationType:${_type.name} : $route", stackTrace: StackTrace.current);
 
     if (_type == NavigationType.MATERIAL) {
       return Navigator.push(
-        _context,
+        _context!,
         MaterialPageRoute(
           builder: (context) => route,
         ),
       );
     } else {
       return Navigator.push(
-        _context,
+        _context!,
         CupertinoPageRoute(
           builder: (context) => route,
           fullscreenDialog: fullscreenDialog,
@@ -52,26 +59,40 @@ class NavigationHelper {
   }
 
   static void navigatePop<T extends Object?>([T? result]) {
+    if (_context == null) {
+      LogHelper.logError('Context is null', stackTrace: StackTrace.current);
+      return;
+    }
+    if (!(_context!.mounted)) {
+      LogHelper.logError('Context is not mounted', stackTrace: StackTrace.current);
+      return;
+    }
     LogHelper.logSuccess('', stackTrace: StackTrace.current);
-    final canPop = Navigator.canPop(_context);
+
+    final canPop = Navigator.canPop(_context!);
     if (canPop) {
-      return Navigator.pop(_context, result);
+      return Navigator.pop(_context!, result);
     }
   }
 
-  static Future navigatePushReplacement(
-      {required Widget route, NavigationType? type}) {
+  static Future navigatePushReplacement({required Widget route, NavigationType? type}) {
+    if (_context == null) {
+      LogHelper.logError('Context is null', stackTrace: StackTrace.current);
+      return Future.value(null);
+    }
+    if (!(_context!.mounted)) {
+      LogHelper.logError('Context is not mounted', stackTrace: StackTrace.current);
+      return Future.value(null);
+    }
     _instance.setNavigationType(type);
 
-    LogHelper.logSuccess("navigationType:${_type.name} : $route",
-        stackTrace: StackTrace.current);
+    LogHelper.logSuccess("navigationType:${_type.name} : $route", stackTrace: StackTrace.current);
 
     if (_type == NavigationType.MATERIAL) {
-      return Navigator.pushReplacement(
-          _context, MaterialPageRoute(builder: (context) => route));
+      return Navigator.pushReplacement(_context!, MaterialPageRoute(builder: (context) => route));
     } else {
       return Navigator.pushReplacement(
-        _context,
+        _context!,
         CupertinoPageRoute(
           builder: (context) => route,
         ),
@@ -85,19 +106,26 @@ class NavigationHelper {
     // for iOS only
     bool Function(Route<dynamic>)? predicate,
   }) {
+    if (_context == null) {
+      LogHelper.logError('Context is null', stackTrace: StackTrace.current);
+      return Future.value(null);
+    }
+    if (!(_context!.mounted)) {
+      LogHelper.logError('Context is not mounted', stackTrace: StackTrace.current);
+      return Future.value(null);
+    }
+
     _instance.setNavigationType(type);
 
-    LogHelper.logSuccess("navigationType:${_type.name} : $route",
-        stackTrace: StackTrace.current);
+    LogHelper.logSuccess("navigationType:${_type.name} : $route", stackTrace: StackTrace.current);
 
     if (_type == NavigationType.MATERIAL) {
-      return Navigator.pushAndRemoveUntil(_context,
-          MaterialPageRoute(builder: (context) => route), (route) => false);
+      return Navigator.pushAndRemoveUntil(_context!, MaterialPageRoute(builder: (context) => route), (route) => false);
     } else {
       final isTrue = predicate == null;
 
       return Navigator.pushAndRemoveUntil(
-        _context,
+        _context!,
         CupertinoPageRoute(builder: (context) => route),
         (route) => (isTrue ? !isTrue : predicate(route)),
       );

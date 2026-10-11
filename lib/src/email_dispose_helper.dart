@@ -2,27 +2,39 @@
 import 'package:master_utility/master_utility.dart';
 
 class EmailDisposeHelper {
-  static EmailDisposerResModel? _emailDisposerResModel;
+  EmailDisposeHelper._();
+  static const String _emailDisposerUrl = "https://disposable.debounce.io/";
+
+  static final Dio _dio = Dio(
+    BaseOptions(
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+      sendTimeout: const Duration(seconds: 10),
+    ),
+  );
 
   /// Email Disposer Checker
-  static Future<EmailDisposerResModel?> emailDisposerChecker(
-      {required String email}) async {
+  static Future<EmailDisposerResModel> emailDisposerChecker({
+    required String email,
+  }) async {
     try {
-      Response _response = await Dio().get("https://disposable.debounce.io/",
-          queryParameters: {"email": email});
+      final response = await _dio.get(
+        _emailDisposerUrl,
+        queryParameters: {'email': email},
+      );
 
-      int _responseStatusCode = _response.statusCode ?? 500;
+      final data = response.data;
 
-      if (_responseStatusCode >= 200 && _responseStatusCode <= 299) {
-        _emailDisposerResModel = EmailDisposerResModel.fromJson(_response.data);
-        return _emailDisposerResModel;
-      } else {
-        ToastHelper.showToast(message: _response.statusMessage.toString());
+      if (data is! Map<String, dynamic>) {
+        throw const FormatException('Invalid response format');
       }
-    } catch (e) {
-      throw Exception(e);
+
+      return EmailDisposerResModel.fromJson(data);
+    } on DioException {
+      rethrow;
+    } on FormatException {
+      rethrow;
     }
-    return _emailDisposerResModel;
   }
 }
 

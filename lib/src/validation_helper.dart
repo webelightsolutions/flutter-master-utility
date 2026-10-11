@@ -29,19 +29,15 @@ class ValidationHelper {
 
   // Password
   static const String _kPasswordIsEmpty = 'Please enter your password';
-  static const String _kPasswordContain =
-      'Password must contain UPPER/lowercase,\n special characters and numbers.';
+  static const String _kPasswordContain = 'Password must contain UPPER/lowercase,\n special characters and numbers.';
 
-  static const String _kPasswordLengthValidation =
-      'Please enter password at least 6 characters.';
+  static const String _kPasswordLengthValidation = 'Please enter password at least 6 characters.';
   static const String _kPasswordNotMatching = 'Passwords are not matching.';
-  static const String _kConfirmPasswordIsEmpty =
-      'Confirm password is required.';
+  static const String _kConfirmPasswordIsEmpty = 'Confirm password is required.';
 
   // Address
   static const String _kAddressIsEmpty = 'Please enter your address';
-  static const String _kAddressLengthValidation =
-      'Please enter address at least 4 characters.';
+  static const String _kAddressLengthValidation = 'Please enter address at least 4 characters.';
 
   static const String _kPaymentIsEmpty = 'Please enter received OTP.';
   static const String _kPaymentInvalid = 'Please enter valid OTP.';
@@ -53,8 +49,7 @@ class ValidationHelper {
   static const String _kBirthdateIsEmpty = 'Please enter your birthdate';
 
   static const String _kDescriptionIsEmpty = 'Please enter Description';
-  static const String _kDescriptionLengthValidation =
-      'Please enter Description at least 4 characters.';
+  static const String _kDescriptionLengthValidation = 'Please enter Description at least 4 characters.';
 
   static String? validatePassword(
     String? value, {
@@ -64,11 +59,9 @@ class ValidationHelper {
     bool isPasswordNotMatching = false,
   }) {
     final passwordLength = length ?? 6;
-    if (value!.isEmpty) {
+    if ((value ?? '').isEmpty || value == null) {
       return _kPasswordIsEmpty;
-    } else if (!RegExp(
-            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~])')
-        .hasMatch(value)) {
+    } else if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~])').hasMatch(value)) {
       return regexpValidation ?? _kPasswordContain;
     } else if (value.length <= passwordLength) {
       return lengthValidation ?? _kPasswordLengthValidation;
@@ -229,8 +222,7 @@ class ValidationHelper {
     return null;
   }
 
-  static final FilteringTextInputFormatter noSpaceFormatter =
-      FilteringTextInputFormatter.deny(RegExp(r'\s'));
+  static final FilteringTextInputFormatter noSpaceFormatter = FilteringTextInputFormatter.deny(RegExp(r'\s'));
   static final FilteringTextInputFormatter noDigitWithAlphabetFormatter =
       FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]'));
 }

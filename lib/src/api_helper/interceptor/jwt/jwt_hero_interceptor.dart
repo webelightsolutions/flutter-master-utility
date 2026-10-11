@@ -27,8 +27,7 @@ import 'token_validator_ext.dart';
 /// - [JwtRefresherMixin]: Provides functionality to refresh JWT tokens.
 /// - [RequestRetryMixin]: Provides functionality to retry requests.
 /// {@endtemplate}
-class JwtHeroInterceptor extends QueuedInterceptor
-    with JwtRefresherMixin, RequestRetryMixin<Response<dynamic>> {
+class JwtHeroInterceptor extends QueuedInterceptor with JwtRefresherMixin, RequestRetryMixin<Response<dynamic>> {
   /// {@macro jwt_hero_interceptor}
   JwtHeroInterceptor({
     required this.tokenStorage,
@@ -72,8 +71,7 @@ class JwtHeroInterceptor extends QueuedInterceptor
   final SessionManager sessionManager;
 
   @override
-  Future<void> onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+  Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     try {
       /// Load the JWT token from the storage.
       final jwtToken = await tokenStorage.loadToken();
@@ -117,8 +115,7 @@ class JwtHeroInterceptor extends QueuedInterceptor
   }
 
   @override
-  Future<void> onError(
-      DioException err, ErrorInterceptorHandler handler) async {
+  Future<void> onError(DioException err, ErrorInterceptorHandler handler) async {
     /// If the error is a RevokeTokenException, expire the session and reject
     /// the request.
     if (err is RevokeTokenException) {

@@ -1,13 +1,9 @@
-// Dart imports:
-import 'dart:io' show Platform;
-
-// Flutter imports:
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:cached_network_image/cached_network_image.dart';
-
+// Flutter imports:
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class AppNetworkImage extends StatelessWidget {
@@ -15,8 +11,7 @@ class AppNetworkImage extends StatelessWidget {
   final BoxFit? fit;
   final double? height;
   final double? width;
-  final Widget Function(BuildContext, String, DownloadProgress)?
-      progressIndicatorBuilder;
+  final Widget Function(BuildContext, String, DownloadProgress)? progressIndicatorBuilder;
   final Widget Function(BuildContext, String, dynamic)? errorWidget;
   final Widget Function(BuildContext, ImageProvider<Object>)? imageBuilder;
   final Widget Function(BuildContext, String)? placeholder;
@@ -83,10 +78,8 @@ class AppNetworkImage extends StatelessWidget {
       imageBuilder: imageBuilder,
       placeholder: placeholder,
       cacheManager: cacheManager,
-      progressIndicatorBuilder: progressIndicatorBuilder ??
-          (placeholder == null
-              ? (_, __, ___) => _buildProgressIndicator(context)
-              : null),
+      progressIndicatorBuilder:
+          progressIndicatorBuilder ?? (placeholder == null ? (_, __, ___) => _buildProgressIndicator(context) : null),
       fit: fit ?? BoxFit.cover,
       errorWidget: errorWidget ?? (context, url, error) => _onError(),
       httpHeaders: httpHeaders,
@@ -110,8 +103,9 @@ class AppNetworkImage extends StatelessWidget {
   }
 
   Widget _buildProgressIndicator(BuildContext context) {
+    final isAndroid = defaultTargetPlatform == TargetPlatform.android;
     return Center(
-        child: Platform.isAndroid
+        child: isAndroid
             ? CircularProgressIndicator(
                 color: Theme.of(context).primaryColor,
               )
