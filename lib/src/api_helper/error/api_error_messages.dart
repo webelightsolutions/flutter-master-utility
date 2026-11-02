@@ -94,7 +94,9 @@ class ErrorHandler {
       case DioExceptionType.connectionError:
         return APIConstError.connectionFailed;
 
+      // `default` also covers types newer Dio versions add (e.g. transformTimeout) without raising the ^5.7.0 floor.
       case DioExceptionType.unknown:
+      default:
         return APIConstError.somethingWentWrong;
     }
   }
