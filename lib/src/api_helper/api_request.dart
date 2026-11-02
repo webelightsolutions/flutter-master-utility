@@ -12,8 +12,6 @@ class APIRequest {
       this.paramList,
       this.onError,
       this.cancelToken,
-      this.enableMixpanelTracking,
-      this.mixPanelEventModel,
       this.onReceiveProgress,
       this.onSendProgress});
 
@@ -28,8 +26,6 @@ class APIRequest {
   Map<String, dynamic>? queryParams;
   Map<String, dynamic>? header;
   CancelToken? cancelToken;
-  bool? enableMixpanelTracking;
-  MixPanelEventModel? mixPanelEventModel;
   void Function(int, int)? onReceiveProgress;
   void Function(int, int)? onSendProgress;
 

@@ -89,20 +89,6 @@ class APIService {
           await _getResponse(request: request, formData: formData);
 
       if (response != null) {
-        if (request.mixPanelEventModel != null) {
-          MixPanelService.instance.trackEvent(
-            eventName: request.mixPanelEventModel?.eventName ??
-                _removeQueryParams(request.url),
-            data: request.mixPanelEventModel?.successData,
-          );
-        }
-        if (request.mixPanelEventModel == null &&
-            request.enableMixpanelTracking == true) {
-          MixPanelService.instance.trackEvent(
-            eventName: _removeQueryParams(request.url),
-            data: response.data,
-          );
-        }
         return APIResponse<dynamic>.fromJson(
           response,
           create: apiResponse,
@@ -112,20 +98,6 @@ class APIService {
         message: APIConstError.kSomethingWentWrong,
       );
     } on DioException catch (e) {
-      if (request.mixPanelEventModel != null) {
-        MixPanelService.instance.trackEvent(
-          eventName: request.mixPanelEventModel?.eventName ??
-              _removeQueryParams(request.url),
-          data: request.mixPanelEventModel?.errorData,
-        );
-      }
-      if (request.mixPanelEventModel == null &&
-          request.enableMixpanelTracking == true) {
-        MixPanelService.instance.trackEvent(
-          eventName: _removeQueryParams(request.url),
-          data: e.response?.data,
-        );
-      }
       if (e.response != null) {
         final APIResponse<dynamic> errorModel;
         // If custom error mapper is provided, use it to map the error response
@@ -194,19 +166,6 @@ class APIService {
       return APIResponse<dynamic>.custom(
           message: ErrorHandler.instance.getDioError(e));
     } catch (e) {
-      if (request.mixPanelEventModel != null) {
-        MixPanelService.instance.trackEvent(
-          eventName: request.mixPanelEventModel?.eventName ??
-              _removeQueryParams(request.url),
-          data: request.mixPanelEventModel?.errorData,
-        );
-      }
-      if (request.mixPanelEventModel == null &&
-          request.enableMixpanelTracking == true) {
-        MixPanelService.instance.trackEvent(
-          eventName: _removeQueryParams(request.url),
-        );
-      }
       return APIResponse<dynamic>.custom(
         message: APIConstError.kSomethingWentWrong,
       );
@@ -233,15 +192,6 @@ class APIService {
     return result;
   }
 
-  String _removeQueryParams(String url) {
-    try {
-      final uri = Uri.parse(url);
-      return uri.path.replaceFirst('/', '').replaceAll('/', '-');
-    } catch (e) {
-      return url;
-    }
-  }
-
   Future<Either<ApiException, T>> getResponseWithMapper<T>(
     APIRequest request, {
     FormData? formData,
@@ -259,21 +209,6 @@ class APIService {
           await _getResponse(request: request, formData: formData);
 
       if (response != null) {
-        if (request.mixPanelEventModel != null) {
-          MixPanelService.instance.trackEvent(
-            eventName: request.mixPanelEventModel?.eventName ??
-                _removeQueryParams(request.url),
-            data: request.mixPanelEventModel?.successData,
-          );
-        }
-        if (request.mixPanelEventModel == null &&
-            request.enableMixpanelTracking == true) {
-          MixPanelService.instance.trackEvent(
-            eventName: _removeQueryParams(request.url),
-            data: response.data,
-          );
-        }
-
         if (response.data is Map<String, dynamic> && jsonMapper != null) {
           final data =
               await compute(jsonMapper, response.data as Map<String, dynamic>);
@@ -289,21 +224,6 @@ class APIService {
 
       return left(ApiException(message: APIConstError.kSomethingWentWrong));
     } on DioException catch (e) {
-      if (request.mixPanelEventModel != null) {
-        MixPanelService.instance.trackEvent(
-          eventName: request.mixPanelEventModel?.eventName ??
-              _removeQueryParams(request.url),
-          data: request.mixPanelEventModel?.errorData,
-        );
-      }
-      if (request.mixPanelEventModel == null &&
-          request.enableMixpanelTracking == true) {
-        MixPanelService.instance.trackEvent(
-          eventName: _removeQueryParams(request.url),
-          data: e.response?.data,
-        );
-      }
-
       if (e.response != null) {
         final APIResponse<dynamic> errorModel;
 
@@ -375,18 +295,6 @@ class APIService {
         ),
       );
     } catch (e, stackTrace) {
-      if (request.mixPanelEventModel != null) {
-        MixPanelService.instance.trackEvent(
-          eventName: request.mixPanelEventModel?.eventName ??
-              _removeQueryParams(request.url),
-          data: request.mixPanelEventModel?.errorData,
-        );
-      }
-      if (request.mixPanelEventModel == null &&
-          request.enableMixpanelTracking == true) {
-        MixPanelService.instance
-            .trackEvent(eventName: _removeQueryParams(request.url));
-      }
       return left(
         ApiException(
           message: APIConstError.kSomethingWentWrong,
