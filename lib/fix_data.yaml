@@ -1,0 +1,305 @@
+# Lets apps migrate from deprecated master_utility names with `dart fix --apply`.
+# Verified by: cd test_fixes && dart fix --compare-to-golden
+version: 1
+transforms:
+  - title: "Rename 'params' to 'body'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      constructor: ''
+      inClass: 'APIRequest'
+    changes:
+      - kind: 'renameParameter'
+        oldName: 'params'
+        newName: 'body'
+  - title: "Rename 'params' to 'body'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      getter: 'params'
+      inClass: 'APIRequest'
+    changes:
+      - kind: 'rename'
+        newName: 'body'
+  - title: "Rename 'params' to 'body'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      setter: 'params'
+      inClass: 'APIRequest'
+    changes:
+      - kind: 'rename'
+        newName: 'body'
+  - title: "Rename 'paramList' to 'bodyList'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      constructor: ''
+      inClass: 'APIRequest'
+    changes:
+      - kind: 'renameParameter'
+        oldName: 'paramList'
+        newName: 'bodyList'
+  - title: "Rename 'paramList' to 'bodyList'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      getter: 'paramList'
+      inClass: 'APIRequest'
+    changes:
+      - kind: 'rename'
+        newName: 'bodyList'
+  - title: "Rename 'paramList' to 'bodyList'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      setter: 'paramList'
+      inClass: 'APIRequest'
+    changes:
+      - kind: 'rename'
+        newName: 'bodyList'
+  - title: "Rename 'header' to 'headers'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      constructor: ''
+      inClass: 'APIRequest'
+    changes:
+      - kind: 'renameParameter'
+        oldName: 'header'
+        newName: 'headers'
+  - title: "Rename 'header' to 'headers'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      getter: 'header'
+      inClass: 'APIRequest'
+    changes:
+      - kind: 'rename'
+        newName: 'headers'
+  - title: "Rename 'header' to 'headers'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      setter: 'header'
+      inClass: 'APIRequest'
+    changes:
+      - kind: 'rename'
+        newName: 'headers'
+  - title: "Rename 'isAuthorization' to 'requiresAuth'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      constructor: ''
+      inClass: 'APIRequest'
+    changes:
+      - kind: 'renameParameter'
+        oldName: 'isAuthorization'
+        newName: 'requiresAuth'
+  - title: "Rename 'isAuthorization' to 'requiresAuth'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      getter: 'isAuthorization'
+      inClass: 'APIRequest'
+    changes:
+      - kind: 'rename'
+        newName: 'requiresAuth'
+  - title: "Rename 'isAuthorization' to 'requiresAuth'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      setter: 'isAuthorization'
+      inClass: 'APIRequest'
+    changes:
+      - kind: 'rename'
+        newName: 'requiresAuth'
+  - title: "Rename 'kSomethingWentWrong' to 'somethingWentWrong'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      getter: 'kSomethingWentWrong'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'somethingWentWrong'
+  - title: "Rename 'kSomethingWentWrong' to 'somethingWentWrong'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      setter: 'kSomethingWentWrong'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'somethingWentWrong'
+  - title: "Rename 'kNoInternetConnection' to 'noInternetConnection'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      getter: 'kNoInternetConnection'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'noInternetConnection'
+  - title: "Rename 'kNoInternetConnection' to 'noInternetConnection'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      setter: 'kNoInternetConnection'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'noInternetConnection'
+  - title: "Rename 'kNoInternetConnection2' to 'connectionFailed'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      getter: 'kNoInternetConnection2'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'connectionFailed'
+  - title: "Rename 'kNoInternetConnection2' to 'connectionFailed'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      setter: 'kNoInternetConnection2'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'connectionFailed'
+  - title: "Rename 'kInternalServerError' to 'internalServerError'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      getter: 'kInternalServerError'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'internalServerError'
+  - title: "Rename 'kInternalServerError' to 'internalServerError'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      setter: 'kInternalServerError'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'internalServerError'
+  - title: "Rename 'kSendTimeOUT' to 'sendTimeout'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      getter: 'kSendTimeOUT'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'sendTimeout'
+  - title: "Rename 'kSendTimeOUT' to 'sendTimeout'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      setter: 'kSendTimeOUT'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'sendTimeout'
+  - title: "Rename 'kReceiveTimeOut' to 'receiveTimeout'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      getter: 'kReceiveTimeOut'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'receiveTimeout'
+  - title: "Rename 'kReceiveTimeOut' to 'receiveTimeout'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      setter: 'kReceiveTimeOut'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'receiveTimeout'
+  - title: "Rename 'kTimeOut' to 'connectionTimeout'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      getter: 'kTimeOut'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'connectionTimeout'
+  - title: "Rename 'kTimeOut' to 'connectionTimeout'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      setter: 'kTimeOut'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'connectionTimeout'
+  - title: "Rename 'kCancelled' to 'requestCancelled'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      getter: 'kCancelled'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'requestCancelled'
+  - title: "Rename 'kCancelled' to 'requestCancelled'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      setter: 'kCancelled'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'requestCancelled'
+  - title: "Rename 'errorLoginFailed' to 'loginFailed'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      getter: 'errorLoginFailed'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'loginFailed'
+  - title: "Rename 'errorLoginFailed' to 'loginFailed'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      setter: 'errorLoginFailed'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'loginFailed'
+  - title: "Rename 'kInvalidStatusCode' to 'invalidStatusCode'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      method: 'kInvalidStatusCode'
+      inClass: 'APIConstError'
+    changes:
+      - kind: 'rename'
+        newName: 'invalidStatusCode'
+  - title: "Rename 'getDioError' to 'messageFor'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      method: 'getDioError'
+      inClass: 'ErrorHandler'
+    changes:
+      - kind: 'rename'
+        newName: 'messageFor'
+  - title: "Rename 'setErrorData' to 'joinValidationMessages'"
+    date: 2026-11-02
+    element:
+      uris: ['master_utility.dart']
+      method: 'setErrorData'
+      inClass: 'APIService'
+    changes:
+      - kind: 'rename'
+        newName: 'joinValidationMessages'

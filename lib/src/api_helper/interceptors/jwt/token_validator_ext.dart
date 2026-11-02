@@ -11,21 +11,17 @@ extension TokenValidatorExt on JwtToken {
         return false;
       }
 
-      /// Decode the access token.
       final decodedJwt = JWT.decode(accessToken);
 
-      /// Get the expiration time from the decoded JWT.
       final expirationTimeEpoch =
           (decodedJwt.payload as Map<String, dynamic>)['exp'];
 
-      /// Convert the expiration time to a [DateTime] object.
       final expirationDateTime = DateTime.fromMillisecondsSinceEpoch(
         int.parse('$expirationTimeEpoch') * 1000,
       );
 
-      /// Check if the current time is before the expiration time.
       return DateTime.now().isBefore(expirationDateTime);
-    } catch (e) {
+    } catch (decodeError) {
       return false;
     }
   }

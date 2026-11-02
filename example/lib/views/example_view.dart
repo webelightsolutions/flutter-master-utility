@@ -866,7 +866,7 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
           '📡 Available Methods:',
           [
             'getResponseWithMapper() - Type-safe response mapping',
-            'MethodType.GET, POST, PATCH, PUT, DELETE support',
+            'MethodType.get, post, patch, put, delete support',
             'FormData support for file uploads',
             'Query parameters and custom headers',
             'Progress callbacks for upload/download',
@@ -894,8 +894,8 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
           '💡 Quick Usage:',
           [
             'Setup: dioClient.setConfiguration("https://api.example.com")',
-            'GET: APIService().getResponseWithMapper<User>(APIRequest(url: "/users", methodType: MethodType.GET), jsonMapper: User.fromJson)',
-            'POST: APIService().getResponseWithMapper<User>(APIRequest(url: "/users", methodType: MethodType.POST, params: {"name": "John"}), jsonMapper: User.fromJson)',
+            'GET: APIService().getResponseWithMapper<User>(APIRequest(url: "/users", methodType: MethodType.get), jsonMapper: User.fromJson)',
+            'POST: APIService().getResponseWithMapper<User>(APIRequest(url: "/users", methodType: MethodType.post, body: {"name": "John"}), jsonMapper: User.fromJson)',
             'With Mapper: APIService().getResponseWithMapper<User>(request, jsonMapper: User.fromJson)',
             'File Upload: APIService().getResponseWithMapper<User>(request, formData: FormData.fromMap({"file": file}), jsonMapper: User.fromJson)',
           ],

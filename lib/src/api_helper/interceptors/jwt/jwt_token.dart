@@ -1,8 +1,5 @@
-/// {@template jwt_token}
 /// A class that represents a JWT token.
-/// {@endtemplate}
 class JwtToken {
-  /// {@macro jwt_token}
   JwtToken({required this.accessToken, required this.refreshToken});
 
   /// The access token.

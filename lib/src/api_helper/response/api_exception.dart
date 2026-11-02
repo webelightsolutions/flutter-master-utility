@@ -1,5 +1,4 @@
-part of 'api_service.dart';
-
+/// The failure side of `APIService.getResponseWithMapper`.
 class ApiException {
   String message;
   Object? exception;
