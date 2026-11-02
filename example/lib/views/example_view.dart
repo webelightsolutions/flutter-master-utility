@@ -865,7 +865,6 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
         _buildInfoSection(
           '📡 Available Methods:',
           [
-            'getApiResponse() - Standard API response handling',
             'getResponseWithMapper() - Type-safe response mapping',
             'MethodType.GET, POST, PATCH, PUT, DELETE support',
             'FormData support for file uploads',
@@ -895,10 +894,10 @@ class _MasterUtilityScreenState extends State<MasterUtilityScreen> {
           '💡 Quick Usage:',
           [
             'Setup: dioClient.setConfiguration("https://api.example.com")',
-            'GET: APIService().getApiResponse(APIRequest(url: "/users", methodType: MethodType.GET))',
-            'POST: APIService().getApiResponse(APIRequest(url: "/users", methodType: MethodType.POST, params: {"name": "John"}))',
+            'GET: APIService().getResponseWithMapper<User>(APIRequest(url: "/users", methodType: MethodType.GET), jsonMapper: User.fromJson)',
+            'POST: APIService().getResponseWithMapper<User>(APIRequest(url: "/users", methodType: MethodType.POST, params: {"name": "John"}), jsonMapper: User.fromJson)',
             'With Mapper: APIService().getResponseWithMapper<User>(request, jsonMapper: User.fromJson)',
-            'File Upload: APIService().getApiResponse(request, formData: FormData.fromMap({"file": file}))',
+            'File Upload: APIService().getResponseWithMapper<User>(request, formData: FormData.fromMap({"file": file}), jsonMapper: User.fromJson)',
           ],
           const Color(0xFFF59E0B),
           isSmallScreen,

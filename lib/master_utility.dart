@@ -29,7 +29,6 @@ export 'package:master_utility/src/log/log.dart';
 export 'package:master_utility/src/material/material_widget.dart';
 export 'package:master_utility/src/network_image.dart';
 export 'package:master_utility/src/permission_helper/permission_helper.dart';
-export 'package:master_utility/src/pref_service_helper.dart';
 export 'package:master_utility/src/preference_helper.dart';
 export 'package:master_utility/src/readmore_helper.dart';
 export 'package:master_utility/src/routes/navigator_helper.dart';

@@ -336,7 +336,6 @@ For remove single value and clear all from Shared Preference
 
     String getValue = await PreferenceHelper().clearAll();
 
-**Note** : `Use PreferenceHelper instead of PreferenceServiceHelper`
 
 ## image cropper Helper
 
