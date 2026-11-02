@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:dio_http_formatter/dio_http_formatter.dart';
+import 'package:master_utility/src/api_helper/interceptor/curl_logger.dart';
 
 import 'jwt_refresher_mixin.dart';
 import 'refresh_typedef.dart';
@@ -39,6 +41,16 @@ class JwtHeroInterceptor extends QueuedInterceptor
 
     retryClient = Dio();
     retryClient.options = BaseOptions(baseUrl: baseClient.options.baseUrl);
+
+    _attachHttpLoggers(refreshClient);
+    _attachHttpLoggers(retryClient);
+  }
+
+  void _attachHttpLoggers(Dio client) {
+    client.interceptors.addAll([
+      HttpFormatter(loggingFilter: (request, response, error) => true),
+      CurlLoggerDioInterceptor(printOnSuccess: true),
+    ]);
   }
 
   /// The storage to load and save the JWT token.

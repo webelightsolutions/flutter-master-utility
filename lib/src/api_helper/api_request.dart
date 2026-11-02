@@ -1,19 +1,22 @@
 part of 'api_service.dart';
 
 class APIRequest {
-  APIRequest(
-      {this.file,
-      this.isAuthorization = true,
-      required this.url,
-      required this.methodType,
-      this.params,
-      this.queryParams,
-      this.header,
-      this.paramList,
-      this.onError,
-      this.cancelToken,
-      this.onReceiveProgress,
-      this.onSendProgress});
+  APIRequest({
+    this.file,
+    this.isAuthorization = true,
+    required this.url,
+    required this.methodType,
+    this.params,
+    this.queryParams,
+    this.header,
+    this.paramList,
+    this.onError,
+    this.cancelToken,
+    this.onReceiveProgress,
+    this.onSendProgress,
+    this.showHttpLogging = true,
+    this.showCurlLogging = true,
+  });
 
   File? file;
   String url;
@@ -28,6 +31,8 @@ class APIRequest {
   CancelToken? cancelToken;
   void Function(int, int)? onReceiveProgress;
   void Function(int, int)? onSendProgress;
+  bool showHttpLogging;
+  bool showCurlLogging;
 
   void Function(
     DioException dioException,

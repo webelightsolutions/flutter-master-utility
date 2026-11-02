@@ -22,6 +22,8 @@ class DioClient {
 
   Dio getDioClient({
     bool isAuth = true,
+    bool showHttpLogging = true,
+    bool showCurlLogging = true,
     void Function(
       DioException dioException,
       ErrorInterceptorHandler errorInterceptorHandler,
@@ -37,9 +39,12 @@ class DioClient {
     }
 
     if (_isApiLogVisible) {
-      interceptors.add(
-          HttpFormatter(loggingFilter: (request, response, error) => true));
-      interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
+      if (showHttpLogging) {
+        interceptors.add(HttpFormatter(loggingFilter: (request, response, error) => true));
+      }
+      if (showCurlLogging) {
+        interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
+      }
     }
 
     if (_logarteClient != null) {
@@ -48,9 +53,7 @@ class DioClient {
 
     interceptors.addAll([
       InterceptorsWrapper(onError: callback),
-      if (globalOnErrorHandler != null) ...[
-        InterceptorsWrapper(onError: globalOnErrorHandler)
-      ],
+      if (globalOnErrorHandler != null) ...[InterceptorsWrapper(onError: globalOnErrorHandler)],
     ]);
 
     if (_refreshTokenConfiguration != null && isAuth) {
@@ -76,12 +79,13 @@ class DioClient {
         tokenStorage: config.tokenStorage,
         baseClient: _dio ?? Dio(),
         onRefresh: (refreshClient, refreshToken) async {
-          refreshClient.options = refreshClient.options.copyWith(
-              headers: config.headers ??
-                  {config.refreshTokenHeaderKey: 'Bearer $refreshToken'});
+          final headers = await config.headers?.call() ?? {config.refreshTokenHeaderKey: 'Bearer $refreshToken'};
+          final body = await config.bodyData?.call();
+
+          refreshClient.options = refreshClient.options.copyWith(headers: headers);
           final response = await refreshClient.post(
             config.refreshTokenEndPoint,
-            data: config.bodyData,
+            data: body,
           );
           final token = config.responseMapper(response.data);
           return token;
@@ -95,6 +99,7 @@ class DioClient {
       {Map<String, dynamic>? headers,
       Logarte? logarteClient,
       CustomErrorMapper? customErrorMapper,
+      int connectTimeoutMs = 30000,
 
       /// This will handle the global error handler for the Dio client.
       /// [globalOnErrorHandler] is the function that will be called when an error occurs.
@@ -105,13 +110,12 @@ class DioClient {
       ///   return handler.next(error);
       /// }
       /// ```
-      void Function(DioException, ErrorInterceptorHandler)?
-          globalOnErrorHandler}) {
+      void Function(DioException, ErrorInterceptorHandler)? globalOnErrorHandler}) {
     this.customErrorMapper = customErrorMapper;
     this.globalOnErrorHandler = globalOnErrorHandler;
     BaseOptions options = BaseOptions(
-      connectTimeout: const Duration(
-        milliseconds: 30000,
+      connectTimeout: Duration(
+        milliseconds: connectTimeoutMs,
       ),
       baseUrl: baseUrl,
       responseType: ResponseType.json,

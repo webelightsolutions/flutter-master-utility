@@ -1,3 +1,8 @@
+## 0.0.21
+
+- API helper: Dynamic Mixpanel payloads via successDataBuilder / errorDataBuilder on MixPanelEventModel, used by APIService when tracking API success and failure paths.
+
+
 ## 0.0.20
 
 - Added custom error mapper in API configurations.

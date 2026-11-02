@@ -20,6 +20,8 @@ class APIService {
     Dio dio = dioClient.getDioClient(
       isAuth: request.isAuthorization,
       callback: request.onError,
+      showHttpLogging: request.showHttpLogging,
+      showCurlLogging: request.showCurlLogging,
     );
     switch (request.methodType) {
       case MethodType.GET:
@@ -77,16 +79,14 @@ class APIService {
     }
   }
 
-  @Deprecated(
-      'This method will be removed in the future. Use `getResponseWithMapper` instead of this method')
+  @Deprecated('This method will be removed in the future. Use `getResponseWithMapper` instead of this method')
   Future<APIResponse<dynamic>> getApiResponse(
     APIRequest request, {
     Function(dynamic)? apiResponse,
     FormData? formData,
   }) async {
     try {
-      final Response<dynamic>? response =
-          await _getResponse(request: request, formData: formData);
+      final Response<dynamic>? response = await _getResponse(request: request, formData: formData);
 
       if (response != null) {
         return APIResponse<dynamic>.fromJson(
@@ -108,8 +108,7 @@ class APIService {
         else {
           if (e.response?.statusCode == 422) {
             if (e.response?.data['detail']?.isNotEmpty ?? false) {
-              ApiErrorModel errorResponse =
-                  ApiErrorModel.fromJson(e.response?.data);
+              ApiErrorModel errorResponse = ApiErrorModel.fromJson(e.response?.data);
               String errorMessage = setErrorData(errorResponse.detail);
 
               debugPrint(errorMessage);
@@ -163,8 +162,7 @@ class APIService {
 
         return errorModel;
       }
-      return APIResponse<dynamic>.custom(
-          message: ErrorHandler.instance.getDioError(e));
+      return APIResponse<dynamic>.custom(message: ErrorHandler.instance.getDioError(e));
     } catch (e) {
       return APIResponse<dynamic>.custom(
         message: APIConstError.kSomethingWentWrong,
@@ -202,20 +200,16 @@ class APIService {
     /// Use this for if response is JsonArray
     final ListJsonMapper<T>? listJsonMapper,
   }) async {
-    assert(jsonMapper == null || listJsonMapper == null,
-        'Can not provide both json mapper!');
+    assert(jsonMapper == null || listJsonMapper == null, 'Can not provide both json mapper!');
     try {
-      final Response<dynamic>? response =
-          await _getResponse(request: request, formData: formData);
+      final Response<dynamic>? response = await _getResponse(request: request, formData: formData);
 
       if (response != null) {
         if (response.data is Map<String, dynamic> && jsonMapper != null) {
-          final data =
-              await compute(jsonMapper, response.data as Map<String, dynamic>);
+          final data = await compute(jsonMapper, response.data as Map<String, dynamic>);
           return right(data);
         } else if (response.data is List<dynamic> && listJsonMapper != null) {
-          final data =
-              await compute(listJsonMapper, response.data as List<dynamic>);
+          final data = await compute(listJsonMapper, response.data as List<dynamic>);
 
           return right(data);
         }
@@ -236,8 +230,7 @@ class APIService {
         else {
           if (e.response?.statusCode == 422) {
             if (e.response?.data['detail']?.isNotEmpty ?? false) {
-              ApiErrorModel errorResponse =
-                  ApiErrorModel.fromJson(e.response?.data);
+              ApiErrorModel errorResponse = ApiErrorModel.fromJson(e.response?.data);
               String errorMessage = setErrorData(errorResponse.detail);
 
               debugPrint(errorMessage);

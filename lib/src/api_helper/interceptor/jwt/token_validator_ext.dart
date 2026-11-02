@@ -6,19 +6,27 @@ import 'jwt_token.dart';
 extension TokenValidatorExt on JwtToken {
   /// Returns `true` if the access token is valid.
   bool get isValid {
-    /// Decode the access token.
-    final decodedJwt = JWT.decode(accessToken);
+    try {
+      if (accessToken.isEmpty) {
+        return false;
+      }
 
-    /// Get the expiration time from the decoded JWT.
-    final expirationTimeEpoch =
-        (decodedJwt.payload as Map<String, dynamic>)['exp'];
+      /// Decode the access token.
+      final decodedJwt = JWT.decode(accessToken);
 
-    /// Convert the expiration time to a [DateTime] object.
-    final expirationDateTime = DateTime.fromMillisecondsSinceEpoch(
-      int.parse('$expirationTimeEpoch') * 1000,
-    );
+      /// Get the expiration time from the decoded JWT.
+      final expirationTimeEpoch =
+          (decodedJwt.payload as Map<String, dynamic>)['exp'];
 
-    /// Check if the current time is before the expiration time.
-    return DateTime.now().isBefore(expirationDateTime);
+      /// Convert the expiration time to a [DateTime] object.
+      final expirationDateTime = DateTime.fromMillisecondsSinceEpoch(
+        int.parse('$expirationTimeEpoch') * 1000,
+      );
+
+      /// Check if the current time is before the expiration time.
+      return DateTime.now().isBefore(expirationDateTime);
+    } catch (e) {
+      return false;
+    }
   }
 }
