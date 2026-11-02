@@ -41,6 +41,7 @@ export 'package:master_utility/src/preference_helper.dart';
 export 'package:master_utility/src/readmore_helper.dart';
 export 'package:master_utility/src/routes/navigator_helper.dart';
 export 'package:master_utility/src/size_helper.dart';
+export 'package:master_utility/src/telemetry/telemetry.dart';
 export 'package:master_utility/src/toast_helper.dart';
 export 'package:master_utility/src/validation_helper.dart';
 export 'package:master_utility/src/api_helper/type_defs.dart';

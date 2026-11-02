@@ -1,5 +1,0 @@
-# Separate analysis context for `dart fix --compare-to-golden`; these files use deprecated names on purpose.
-# The lint makes the analyzer report same-package deprecations, which is what triggers lib/fix_data.yaml.
-linter:
-  rules:
-    - deprecated_member_use_from_same_package

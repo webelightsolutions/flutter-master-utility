@@ -9,9 +9,14 @@ import 'package:master_utility/src/api_helper/request/api_request.dart';
 import 'package:master_utility/src/api_helper/request/method_type.dart';
 import 'package:master_utility/src/api_helper/response/api_exception.dart';
 import 'package:master_utility/src/api_helper/type_defs.dart';
+import 'package:master_utility/src/telemetry/operation_telemetry.dart';
+import 'package:master_utility/src/telemetry/telemetry_operation.dart';
 
 class APIService {
-  Future<Either<ApiException, T>> getResponseWithMapper<T>(
+  /// Path segments that are ids (numbers, uuids, hashes), replaced by `:id` so names stay grouped.
+  static final RegExp _idSegment = RegExp(r'/(\d+|[0-9a-fA-F-]{16,})(?=/|$)');
+
+  FutureEither<T> getResponseWithMapper<T>(
     APIRequest request, {
     FormData? formData,
 
@@ -20,8 +25,28 @@ class APIService {
 
     /// Use this for if response is JsonArray
     final ListJsonMapper<T>? listJsonMapper,
-  }) async {
+  }) {
     assert(jsonMapper == null || listJsonMapper == null, 'Can not provide both json mapper!');
+
+    FutureEither<T> call() => _getResponse(request, formData, jsonMapper, listJsonMapper);
+
+    if (!request.trackTelemetry) return call();
+
+    final TelemetryOperation operation = request.telemetryOperation ?? _defaultOperation(request);
+    return OperationTelemetry.run(operation, call, attributes: request.telemetryAttributes);
+  }
+
+  TelemetryOperation _defaultOperation(APIRequest request) {
+    final String path = request.url.split('?').first.replaceAll(_idSegment, '/:id');
+    return TelemetryOperation('${request.methodType.name} $path');
+  }
+
+  FutureEither<T> _getResponse<T>(
+    APIRequest request,
+    FormData? formData,
+    JsonMapper<T>? jsonMapper,
+    ListJsonMapper<T>? listJsonMapper,
+  ) async {
     try {
       final Response<dynamic> response = await _send(request, formData);
       final dynamic responseBody = response.data;

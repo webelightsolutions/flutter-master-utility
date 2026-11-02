@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:master_utility/src/api_helper/request/method_type.dart';
+import 'package:master_utility/src/telemetry/telemetry_operation.dart';
 
 /// Everything needed to send one API call through `APIService`.
 class APIRequest {
@@ -19,6 +20,9 @@ class APIRequest {
     this.onSendProgress,
     this.showHttpLogging = true,
     this.showCurlLogging = true,
+    this.trackTelemetry = true,
+    this.telemetryOperation,
+    this.telemetryAttributes = const {},
     @Deprecated('Has no effect; it was never used.') this.file,
 
     // Old parameter names: still work, apps see a hint pointing to the new name.
@@ -54,6 +58,13 @@ class APIRequest {
   void Function(int, int)? onSendProgress;
   bool showHttpLogging;
   bool showCurlLogging;
+
+  /// Every call is timed and reported by `APIService`; set false to skip this one.
+  bool trackTelemetry;
+
+  /// Name for this call in telemetry. Defaults to the method and path, e.g. `GET /users/:id`.
+  TelemetryOperation? telemetryOperation;
+  Map<String, Object> telemetryAttributes;
 
   void Function(
     DioException dioException,
