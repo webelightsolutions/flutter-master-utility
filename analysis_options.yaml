@@ -7,6 +7,9 @@ analyzer:
     constant_identifier_names : ignore
     depend_on_referenced_packages : ignore
     use_build_context_synchronously : ignore
+  exclude:
+    - build/**
+    - test_fixes/** # dart fix golden files; they use deprecated names on purpose
   
 linter:
   rules:

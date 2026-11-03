@@ -1,3 +1,18 @@
+## Unreleased
+
+- API helper: internal restructure into `client/`, `request/`, `response/`, `error/`, `service/` and `interceptors/`. No behaviour change.
+- Internal files moved. Import `package:master_utility/master_utility.dart` only.
+- New names (the old ones still work, marked deprecated; run `dart fix --apply` to migrate):
+  - `APIRequest`: `params` → `body`, `paramList` → `bodyList`, `header` → `headers`, `isAuthorization` → `requiresAuth`.
+  - `MethodType.get / post / patch / put / delete` (aliases of `GET / POST / ...`).
+  - `APIConstError`: `kSomethingWentWrong` → `somethingWentWrong`, `kNoInternetConnection` → `noInternetConnection`,
+    `kNoInternetConnection2` → `connectionFailed`, `kInternalServerError` → `internalServerError`, `kSendTimeOUT` → `sendTimeout`,
+    `kReceiveTimeOut` → `receiveTimeout`, `kTimeOut` → `connectionTimeout`, `kCancelled` → `requestCancelled`,
+    `errorLoginFailed` → `loginFailed`, `kInvalidStatusCode` → `invalidStatusCode`.
+  - `ErrorHandler.getDioError` → `messageFor`, `APIService.setErrorData` → `joinValidationMessages`.
+- Added `dioClient.dio`.
+- Deprecated `APIRequest.file` (it was never used).
+
 ## 0.0.21
 
 - API helper: Dynamic Mixpanel payloads via successDataBuilder / errorDataBuilder on MixPanelEventModel, used by APIService when tracking API success and failure paths.

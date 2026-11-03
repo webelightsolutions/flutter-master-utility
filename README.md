@@ -252,47 +252,60 @@ First of all, you want to add the below line to the main method.
 
 FOR GET API CALL
 
-    Future`<void>` getApiCall() async {
+    Future<void> getApiCall() async {
         final request = APIRequest(
             url: url,
-            methodType: MethodType.GET,
+            methodType: MethodType.get,
         );
 
-    final response =
-            await APIService().GetApiResponse(request, apiResponse: (dynamic data) {
-            return Data.fromJson(data);
-        });
-        if (response.hasError) {
-            ToastHelper.showCustomToast(
-            backgroundColor: Colors.red,
-            message: response.message.toString());
-        } else {
-            _newData = response.data;
-        }
+        final response = await APIService().getResponseWithMapper<Data>(
+            request,
+            jsonMapper: Data.fromJson,
+        );
+        response.fold(
+            (apiException) => ToastHelper.showCustomToast(
+                backgroundColor: Colors.red,
+                message: apiException.message,
+            ),
+            (data) => _newData = data,
+        );
     }
 
 FOR POST API CALL
 
     final request = APIRequest(
        url: url,
-       methodType: MethodType.POST,
-       params: reqParam,
+       methodType: MethodType.post,
+       body: requestBody,
     );
 
 FOR PUT API CALL
 
     final request = APIRequest(
        url: url,
-       methodType: MethodType.PUT,
-       params: reqParam,
+       methodType: MethodType.put,
+       body: requestBody,
     );
 
 FOR DELETE API CALL
 
     final request = APIRequest(
        url: url,
-       methodType: MethodType.DELETE,
+       methodType: MethodType.delete,
     );
+
+PUBLIC ENDPOINTS (no `Authorization` header)
+
+    final request = APIRequest(
+       url: url,
+       methodType: MethodType.get,
+       requiresAuth: false,
+    );
+
+> Renamed in this release: `params` → `body`, `paramList` → `bodyList`, `header` → `headers`,
+> `isAuthorization` → `requiresAuth`, `APIConstError.kTimeOut` → `connectionTimeout` (and the other `k…` messages),
+> `setErrorData` → `joinValidationMessages`, `getDioError` → `messageFor`. The old names still work but are deprecated;
+> run `dart fix --apply` to update your code automatically.
 
 ## Shared Preference Helper
 
@@ -336,7 +349,6 @@ For remove single value and clear all from Shared Preference
 
     String getValue = await PreferenceHelper().clearAll();
 
-**Note** : `Use PreferenceHelper instead of PreferenceServiceHelper`
 
 ## image cropper Helper
 
@@ -475,7 +487,7 @@ Future<Either<ApiException, APIResponse<T>>> getResponseWithMapper<T>(
 Future<void> getUsers() async {
   final request = APIRequest(
     url: '/users',
-    methodType: MethodType.GET,
+    methodType: MethodType.get,
   );
   final response = await APIService().getResponseWithMapper<List<UserModel>>(
     request,
@@ -493,7 +505,7 @@ Future<void> getUsers() async {
 Future<void> getUser1() async {
   final request = APIRequest(
     url: '/users/1',
-    methodType: MethodType.GET,
+    methodType: MethodType.get,
   );
   final response = await APIService().getResponseWithMapper<UserModel>(
     request,
